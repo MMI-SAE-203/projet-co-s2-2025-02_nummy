@@ -3,20 +3,20 @@
 
 Éléménts à renseigner pour la soutenance :
 
-- [ ] Nom du projet :
+- [ ] Nom du projet : Ñummy
 - [ ] URL de la landing page :
 - [ ] URL de l'application finale :
 - [ ] URL de connexion au back office :
 - [ ] Identifiant de connexion au backoffice :
 - [ ] Mot de passe de connexion au backoffice :
 - [ ] URL de la maquette FIGMA :
-- [ ] Description du projet :
+- [ ] Description du projet : -
 
 ## 🚀 Équipe
 
 | Étudiants    | Prénom NOM  |
 | :----------- | :---------- |
-| Étudiant 1   | à compléter |
-| Étudiant 2   | à compléter |
-| Étudiant 3   | à compléter |
-| (Étudiant 4) | à compléter |
+| Étudiant 1   | Arthur Wicky |
+| Étudiant 2   | Juan Veloza |
+| Étudiant 3   | Maéan Rabusseau |
+
