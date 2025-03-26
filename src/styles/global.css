@@ -1,1 +1,47 @@
 @import "tailwindcss";
+@import '@fontsource/ranchers';
+@import '@fontsource/roboto';
+
+
+@theme {
+    --font-rancher: "Rancher";
+    --font-roboto: "Roboto";
+
+    /* couleur principale */
+    --color-gris: oklch(47.77% 0.0342 201.44);
+    /*#466365*/
+    --color-orange: oklch(80.47% 0.1606 70.99);
+    /*#ffab2e*/
+    --color-lin: oklch(95.89% 0.0226 78.22);
+    /*#faf0e1*/
+    --color-argent: oklch(98.51% 0 0);
+    /*#fafafa*/
+    --color-blanc: oklch(100% 0 0);
+    /*#ffffff*/
+    --color-noir: oklch(0% 0 0);
+    /*#000000*/
+
+    /* couleur secondaire */
+    --color-rouge: oklch(46.95% 0.1619 27.1);
+    /*#a22522*/
+    --color-bleu-fonce: oklch(22.23% 0.1391 269.3);
+    /*#09045a*/
+    --color-bleu: oklch(53.57% 0.133 250.72);
+    /*#2470b7*/
+    --color-vert: oklch(61.21% 0.1495 154.96);
+    /*#099d5a*/
+    --color-marron: oklch(63.26% 0.1313 55.79);
+    /*#c5722f*/
+  
+
+
+    --my-grid: repeat(12, minmax(0, 64px));
+
+}
+
+
+
+@layer components {
+    .grille {
+        @apply px-6 lg:grid lg:grid-cols-(--my-grid) lg:justify-center lg:gap-12;
+    }}

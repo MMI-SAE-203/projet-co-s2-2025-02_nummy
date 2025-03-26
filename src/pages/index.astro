@@ -1,11 +1,27 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from '../layouts/Layout.astro';
+import Button from '../components/Button.astro';
+import imagefille from "../assets/img/imgfilleavecfruit.avif";
+import { Image } from "astro:assets";
+
+
 ---
 
 <Layout>
-	<Welcome />
+	<main>
+<h1 class="text-white pl-199 ">LE GOÛT DE CHEZ TOI OÙ QUE TU SOIS ! </h1>
+<h3 class="text-white pl-199">PLUS BESOIN DE CHERCHER PENDANT DES HEURES SUR INTERNET !</h3>
+<a href="/" class="flex items-center gap-2">
+	<Image
+		src={imagefille}
+		alt="Logo"
+		class="w-40  lg:w-75"
+		loading="lazy"
+	/>
+
+<div class="flex items-center justify-center gap-4 px-4">
+	<Button  text="DÉCOUVREZ VOS PRODUITS ! " />
+</div>
+</main>
 </Layout>
