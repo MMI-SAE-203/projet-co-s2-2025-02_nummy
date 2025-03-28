@@ -1,14 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Ranchers&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 @import "tailwindcss";
-@import '@fontsource/ranchers';
-@import '@fontsource/roboto';
-
 
 @theme {
-    --font-rancher: "Rancher";
-    --font-roboto: "Roboto";
+    --font-header: "Ranchers", "sans-serif";
+    --font-text: "Roboto", "sans-serif";
 
     /* couleur principale */
-    --color-gris: oklch(47.77% 0.0342 201.44);
+    --color-green: oklch(47.77% 0.0342 201.44);
     /*#466365*/
     --color-orange: oklch(80.47% 0.1606 70.99);
     /*#ffab2e*/
@@ -35,13 +34,52 @@
   
 
 
-    --my-grid: repeat(12, minmax(0, 64px));
+    --my-grid: repeat(11, minmax(0, 64px));
 
 }
 
+@layer base {
 
+    h1 {
+        @apply font-header text-4xl font-normal leading-2;
+    }
+    h2 {
+        @apply font-text text-2xl font-bold leading-2;
+    }
+    h3 {
+        @apply font-text text-[24px] font-bold leading-2;
+    }
+    p {
+        @apply font-text 
+    }
+    button {
+        @apply font-text font-normal text-sm tracking-wider;
+    }
+}
 
 @layer components {
     .grille {
         @apply px-6 lg:grid lg:grid-cols-(--my-grid) lg:justify-center lg:gap-12;
-    }}
+    }
+    .h3-header {
+        @apply font-header font-normal text-2xl leading-2;
+    }
+    .p-body1{
+        @apply font-medium text-[20px] leading-2; 
+    }
+    .p-body2{
+        @apply font-normal text-base leading-2;
+    }
+    .p-body3{
+        @apply font-normal text-xs leading-2;  
+    }
+    .p-small{
+        @apply font-normal text-[10px] tracking-wide;
+    }
+
+
+
+    .nonscroll{
+        @apply overflow-hidden;
+    }
+}
