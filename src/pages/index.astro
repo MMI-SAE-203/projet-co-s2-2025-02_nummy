@@ -1,27 +1,99 @@
 ---
-
-import Layout from '../layouts/Layout.astro';
-import Button from '../components/Button.astro';
+import Layout from "../layouts/Layout.astro";
+import Button from "../components/Button.astro";
 import imagefille from "../assets/img/imgfilleavecfruit.avif";
 import { Image } from "astro:assets";
-
-
+import iconeconversation from "../assets/icones/bulleconversation.avif";
+import iconecarte from "../assets/icones/carte.avif";
+import iconeassiete from "../assets/icones/assiete.avif";
+import iconeutilisateur from "../assets/icones/utilisateur.avif";
+import imglegume from "../assets/img/imglegume.avif";
+import Rectangle from "../components/Rectangle.astro";
 ---
 
 <Layout>
 	<main>
-<h1 class="text-white pl-199 ">LE GOÛT DE CHEZ TOI OÙ QUE TU SOIS ! </h1>
-<h3 class="text-white pl-199">PLUS BESOIN DE CHERCHER PENDANT DES HEURES SUR INTERNET !</h3>
-<a href="/" class="flex items-center gap-2">
-	<Image
-		src={imagefille}
-		alt="Logo"
-		class="w-40  lg:w-75"
-		loading="lazy"
-	/>
+		<h1 class="text-white pl-199">LE GOÛT DE CHEZ TOI OÙ QUE TU SOIS !</h1>
+		<h3 class="text-white pl-199">
+			PLUS BESOIN DE CHERCHER PENDANT DES HEURES SUR INTERNET !
+		</h3>
+		<a href="/" class="flex items-center gap-2">
+			<Image
+				src={imagefille}
+				alt="Logo"
+				class="w-40 lg:w-75"
+				loading="lazy"
+			/>
 
-<div class="flex items-center justify-center gap-4 px-4">
-	<Button  text="DÉCOUVREZ VOS PRODUITS ! " />
-</div>
-</main>
+			<div class="flex items-center justify-center gap-4 px-4 m-8">
+				<Button text="DÉCOUVREZ VOS PRODUITS ! " />
+			</div>
+			<h2 class="bg-[var(--color-gris)] pl-5">
+				Tout les pays dans un seul lieu !
+			</h2>
+			<Image
+				src={imglegume}
+				alt="Logo"
+				class="w-10 lg:w-55"
+				loading="lazy"
+			/>
+
+			<p class="bg-[var(--color-gris)] pl-5">
+				Découvrez la culture culinaire du monde entier à travers les
+				nombreuses fonctionnalités que notre site propose !
+			</p>
+			<ul class="bg-[var(--color-gris)] pl-5">
+				<li>PARTAGEZ VOS OPINIONS</li>
+				<Image
+					src={iconeconversation}
+					alt="Logo"
+					class="w-10 lg:w-20"
+					loading="lazy"
+				/>
+				<li>CARTE INTERACTIVE</li>
+				<Image
+					src={iconecarte}
+					alt="Logo"
+					class="w-10 lg:w-20"
+					loading="lazy"
+				/>
+				<li>DÉLICIEUSES RECETTES</li>
+				<Image
+					src={iconeassiete}
+					alt="Logo"
+					class="w-10 lg:w-20"
+					loading="lazy"
+				/>
+				<li>DEVENEZ PARTENAIRES</li>
+				<Image
+					src={iconeutilisateur}
+					alt="Logo"
+					class="w-10 lg:w-20"
+					loading="lazy"
+				/>
+			</ul>
+			<h3 class="text-black bg-[var(--color-blanc)]">ET ENCORE PLUS !</h3>
+			<Rectangle />
+			<ul class="bg-[var(--color-blanc)] text-black">
+				<li>
+					NEWSLETTER Abonnez-vous à notre newsletter pour découvrir
+					nos nouveautés, offres exclusives et inspirations
+					directement dans votre boîte mail.
+				</li>
+				<li>
+					Devenir partenaire Découvrez comment collaborer avec nous
+					pour donner plus d'ampleur à nos projets
+				</li>
+				<li>
+					Nous soutenir ! Soutenez notre projet et participez à son
+					développement ! Chaque contribution compte pour nous aider à
+					grandir !
+				</li>
+				<li>
+					Recettes Ñummy! Découvrez des recettes du monde entier et
+					régalez-vous avec des saveurs authentiques !
+				</li>
+			</ul>
+		</a>
+	</main>
 </Layout>
