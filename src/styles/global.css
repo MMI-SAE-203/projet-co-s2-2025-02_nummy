@@ -40,14 +40,17 @@
 
 @layer base {
 
+    *{
+        @apply box-border;
+    }
     h1 {
-        @apply font-header text-4xl font-normal leading-2;
+        @apply font-header text-4xl font-normal;
     }
     h2 {
-        @apply font-text text-2xl font-bold leading-2;
+        @apply font-text text-2xl font-bold;
     }
     h3 {
-        @apply font-text text-[24px] font-bold leading-2;
+        @apply font-text text-[24px] font-bold;
     }
     p {
         @apply font-text 
@@ -61,17 +64,20 @@
     .grille {
         @apply px-6 lg:grid lg:grid-cols-(--my-grid) lg:justify-center lg:gap-12;
     }
+    .h2-header {
+        @apply font-header font-normal text-4xl tracking-wider;
+    }
     .h3-header {
-        @apply font-header font-normal text-2xl leading-2;
+        @apply font-header font-normal text-2xl;
     }
     .p-body1{
-        @apply font-medium text-[20px] leading-2; 
+        @apply font-medium text-[20px]; 
     }
     .p-body2{
-        @apply font-normal text-base leading-2;
+        @apply font-normal text-base;
     }
     .p-body3{
-        @apply font-normal text-xs leading-2;  
+        @apply font-normal text-xs;  
     }
     .p-small{
         @apply font-normal text-[10px] tracking-wide;

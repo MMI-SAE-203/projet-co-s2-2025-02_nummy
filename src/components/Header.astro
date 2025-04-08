@@ -1,135 +1,127 @@
 ---
-import logo_nummy10 from "../assets/logo/logo_nummy10.png";
-
-import { Image } from "astro:assets";
+import Logo_1 from "../assets/logo/logo2.svg";
 ---
 
+
 <header
-    class="flex items-center justify-between px-4 gap-8 border-b-2 bg-[var(--color-orange)] h-20"
+  class="px-8 py-6  top-0 fixed z-10 w-full flex items-stretch justify-between transition-all duration-300 ease-in-out lg:py-0 lg:bg-white"
+  id="header"
 >
-    <a href="/" class="flex items-center gap-2">
-        <Image
-            src={logo_nummy10}
-            alt="Logo"
-            class="w-35  lg:w-40"
-            loading="lazy"
-        />
-
-        <button
-            id="menu-btn"
-            class="group relative z-10 flex h-3 w-6 flex-col justify-between lg:hidden *:block *:ease *:h-0.5 *:w-full *:transform *:rounded-full *:bg-white *:transition *:duration-300"
-            aria-label="Menu"
-            aria-controls="menu"
-            aria-expanded="false"
-        >
-            <span
-                class="group-aria-expanded:translate-y-[5px] group-aria-expanded:rotate-45"
-            ></span>
-            <span
-                class="group-aria-expanded:-translate-y-[5px] group-aria-expanded:-rotate-45"
-            ></span>
-        </button>
-        <nav
-            id="menu"
-            class="flex-1 px-6 py-12 flex justify-between mt-20 flex-col fixed z-10 inset-0 bg-[var(--color-orange)] visible opacity-100 max-lg:aria-hidden:invisible max-lg:aria-hidden:opacity-0 lg:mt-0 lg:flex-row lg:static lg:bg-transparent lg:py-6 lg:visible lg:opacity-100"
-            aria-hidden="true"
-        >
-            <ul class="flex flex-col gap-4 lg:flex-row">
-                <li>
-                    <a
-                        class={` font-bold block p-4 rounded-lg justify-center items-center text-white    --font-roboto   max-lg:rounded-lg" : ""}`}
-                        href="/">CONTINENTS</a
-                    >
-                </li>
-                <li>
-                    <a
-                        class="font-bold block p-4 rounded-lg py-4 text-white"
-                        href="/recette">RECETTES</a
-                    >
-                </li>
-                <li>
-                    <a
-                        class="font-bold block p-4 rounded-lgpy-4 text-white"
-                        href="/restaurant">RESTAURANTS & BOUTIQUES</a
-                    >
-                </li>
-                <li>
-                    <a
-                        class="font-bold block p-4 rounded-lgpy-4 text-white"
-                        href="/partenaire"
-                        >DEVENIR PARTENAIRE
-                    </a>
-                </li>
-                <li>
-                    <a
-                        class="font-bold block p-4 rounded-lg py-4 text-white"
-                        href="/newsletter">NEWSLETTER</a
-                    >
-                </li>
-            </ul>
-            <div class="flex items-center justify-center gap-4 px-4">
-            </div>
-        </nav>
+  <div class="flex items-center relative z-20">
+    <a href="/" aria-label="Accueil">
+      <Logo_1 />
     </a>
+  </div>
 
-    <script>
-        // On cible les éléments à modifier
-        const toggle = document.querySelector("#menu-btn");
-        const nav = document.querySelector("#menu");
-        const page = document.body;
+  <div class="flex items-center gap-4 lg:flex-row-reverse">
+    <button class="w-12 flex justify-center" aria-label="Recherche">
+    </button>
 
-        // Vérifier si les éléments existent avant d'ajouter l'événement
-        if (toggle && nav) {
-            toggle.addEventListener("click", () => {
-                const isOpen = toggle.ariaExpanded === "true";
-                const isClosed = !isOpen;
-                // Mise à jour des attributs ARIA pour accessibilité
-                toggle.ariaExpanded = String(isClosed);
-                nav.ariaHidden = String(isOpen);
-                page.classList.toggle("noscroll", isClosed);
-            });
-        }
+    <button
+      class="group relative z-20 flex h-6 w-8 flex-col justify-between *:h-[4px] *:w-full *:bg-white *:transition-all *:duration-300 *:ease lg:hidden"
+      id="menu-btn"
+      aria-label="Menu"
+      aria-controls="menu"
+      aria-expanded="false"
+    >
+      <span
+        class="group-aria-expanded:translate-y-[10.5px] group-aria-expanded:rotate-45 rounded-2xl"
+      ></span>
+      <span class="group-aria-expanded:opacity-0 rounded-2xl"></span>
+      <span
+        class="group-aria-expanded:-translate-y-[10.5px] group-aria-expanded:-rotate-45 rounded-2xl"
+      ></span>
+    </button>
 
-        /*------------------------------------*\
+    <nav
+      class="visible top-0 fixed z-10 inset-0 bg-(--color-orange) text-xl font-medium text-white opacity-100 transition-all duration-300 ease-in-out max-lg:aria-hidden:invisible max-lg:aria-hidden:opacity-100 lg:relative lg:flex lg:items-center lg:bg-transparent lg:text-sm lg:font-bold lg:uppercase lg:tracking-wide lg:text-black lg:opacity-100"
+      id="menu"
+      aria-hidden="true"
+    >
+      <ul
+        class="mt-[25vh] mx-16 lg:m-0 lg:flex *:relative *:overflow-hidden *:lg:before:absolute *:lg:before:bottom-0 *:lg:before:left-0 *:lg:before:h-2 *:lg:before:w-full *:lg:before:translate-y-2 *:lg:before:bg-black *:lg:before:transition-all *:lg:before:duration-300 *:lg:before:ease-in-out *:lg:hover:before:translate-y-0"
+      >
+        <li>
+          <a class="block py-4 lg:py-8" href="/continents"
+            >Continents</a
+          >
+        </li>
+        <li>
+          <a class="block py-4 lg:py-8" href="/recettes"
+            >Recettes</a
+          >
+        </li>
+        <li>
+          <a class="block py-4 lg:py-8" href="/restaurants">Restaurants & boutiques</a>
+        </li>
+        <li>
+          <a class="block py-4 lg:py-8" href="/partenaire">Devenir partenaire</a>
+        </li>
+        <li>
+          <a
+            class="block py-4 lg:py-8 lg:bg-black lg:text-white lg:px-8"
+            href="/newsletter">Newsletter</a
+          >
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  // On cible les éléments à modifier
+  const toggle = document.querySelector("#menu-btn");
+  const nav = document.querySelector("#menu");
+  const page = document.body;
+
+  // Vérifier si les éléments existent avant d'ajouter l'événement
+  if (toggle && nav) {
+    toggle.addEventListener("click", () => {
+      const isOpen = toggle.ariaExpanded === "true";
+      const isClosed = !isOpen;
+      // Mise à jour des attributs ARIA pour accessibilité
+      toggle.ariaExpanded = String(isClosed);
+      nav.ariaHidden = String(isOpen);
+      page.classList.toggle("noscroll", isClosed);
+    });
+  }
+
+  /*------------------------------------*\
     # MASQUER LE HEADER AU SCROLL
   \*------------------------------------*/
 
-        const navBar = document.querySelector("#header");
-        let lastScrollY = window.scrollY; // Position précédente du défilement
-        let ticking = false; // Pour éviter trop de calculs inutiles
-        const offset = 205; // Distance avant de cacher/montrer la barre
+  const navBar = document.querySelector("#header");
+  let lastScrollY = window.scrollY; // Position précédente du défilement
+  let ticking = false; // Pour éviter trop de calculs inutiles
+  const offset = 205; // Distance avant de cacher/montrer la barre
 
-        function handleScroll() {
-            const currentScrollY = window.scrollY;
+  function handleScroll() {
+    const currentScrollY = window.scrollY;
 
-            // Ajouter une classe quand on dépasse 205px
-            if (currentScrollY > offset) {
-                navBar.classList.add("bg-white");
-            } else {
-                navBar.classList.remove("bg-white");
-            }
+    // Ajouter une classe quand on dépasse 205px
+    if (currentScrollY > offset) {
+      navBar.classList.add("bg-white");
+    } else {
+      navBar.classList.remove("bg-white");
+    }
 
-            if (currentScrollY > lastScrollY && currentScrollY > offset) {
-                // Vers le bas et dépassé l'offset
-                navBar.classList.add("-translate-y-full");
-            } else if (
-                currentScrollY < lastScrollY ||
-                currentScrollY <= offset
-            ) {
-                // Vers le haut ou revenu en haut de la page
-                navBar.classList.remove("-translate-y-full");
-            }
+    if (currentScrollY > lastScrollY && currentScrollY > offset) {
+      // Vers le bas et dépassé l'offset
+      navBar.classList.add("-translate-y-full");
+    } else if (currentScrollY < lastScrollY || currentScrollY <= offset) {
+      // Vers le haut ou revenu en haut de la page
+      navBar.classList.remove("-translate-y-full");
+    }
 
-            lastScrollY = currentScrollY;
-            ticking = false; // Permet de relancer l'écoute
-        }
+    lastScrollY = currentScrollY;
+    ticking = false; // Permet de relancer l'écoute
+  }
 
-        // Ajout de l'écouteur de défilement avec throttle
-        window.addEventListener("scroll", () => {
-            if (!ticking) {
-                window.requestAnimationFrame(handleScroll);
-                ticking = true;
-            }
-        });
-    </script>
-</header>
+  // Ajout de l'écouteur de défilement avec throttle
+  window.addEventListener("nonscroll", () => {
+    if (!ticking) {
+      window.requestAnimationFrame(handleScroll);
+      ticking = true;
+    }
+  });
+</script>

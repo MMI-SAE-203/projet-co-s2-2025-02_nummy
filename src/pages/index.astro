@@ -1,27 +1,151 @@
 ---
-
-import Layout from '../layouts/Layout.astro';
-import Button from '../components/Button.astro';
-import imagefille from "../assets/img/imgfilleavecfruit.avif";
-import { Image } from "astro:assets";
-
-
+import Layout from "../layouts/Layout.astro";
+import Button from "../components/Button.astro";
+import imagefille from "../assets/img/image.webp";
+import IconPlanet from "../assets/icones/planet.svg";
+import IconBulle from "../assets/icones/bulle.svg";
 ---
 
 <Layout>
-	<main>
-<h1 class="text-white pl-199 ">LE GOÛT DE CHEZ TOI OÙ QUE TU SOIS ! </h1>
-<h3 class="text-white pl-199">PLUS BESOIN DE CHERCHER PENDANT DES HEURES SUR INTERNET !</h3>
-<a href="/" class="flex items-center gap-2">
-	<Image
-		src={imagefille}
-		alt="Logo"
-		class="w-40  lg:w-75"
-		loading="lazy"
-	/>
+  <div
+    id="hero-section"
+    class="bg-gradient-to-b from-[var(--color-orange)] from-40% to-[#F5B97D] to-100% w-screen pt-5 pb-25 px-8 rounded-b-[36px] transition-colors duration-1000 z-10"
+  >
+    <!-- Image -->
+    <div
+      id="image-container"
+      class="w-350px h-250px flex justify-center items-center pt-15 transition-opacity duration-500"
+    >
+      <img
+        id="hero-image"
+        src={imagefille.src}
+        alt="Fille avec des fruits et légumes qui sourit et tient un panier"
+        class="w-100% h-100% object-contain"
+        loading="eager"
+      />
+    </div>
 
-<div class="flex items-center justify-center gap-4 px-4">
-	<Button href="/" variant="orange1">button test</Button>
-</div>
-</main>
+    <!-- Slogan -->
+    <div>
+      <div class="flex items-center tracking-widest text-white pt-12 pl-2">
+        <h1
+          class="text-[40px]"
+          style="-webkit-text-stroke: 1px var(--color-orange); color: white"
+        >
+          LE GOÛT DE CHEZ TOI OÙ QUE TU SOIS !
+        </h1>
+      </div>
+      <div>
+        <span class="flex h-[4px] w-30 bg-white my-5 ml-2"></span>
+      </div>
+      <div class="flex text-white pl-2 font-bold">
+        <p class="p-body2 font-medium leading-6 pr-30">
+          Plus besoin de chercher pendant des heures sur internet !
+        </p>
+      </div>
+    </div>
+
+    <!-- Button -->
+    <div class="text-sm flex justify-center pt-8">
+      <Button class="px-4" variant="vert" href="/" classes="px-10 py-3">
+        DÉCOUVREZ VOS PRODUITS !
+      </Button>
+    </div>
+  </div>
+
+  <!-- information -->
+
+  <div class="relative w-full">
+    <div
+      class="bg-[var(--color-green)] absolute w-full h-[500px] top-[-40px] -z-10"
+    >
+    </div>
+  </div>
+
+  <!-- text -->
+  <div class="z-10 pt-10 px-8">
+    <div class="w-20px h-20px">
+      <IconPlanet />
+    </div>
+
+    <!-- contenu -->
+    <div class="pt-5">
+      <h2 class="h2-header text-white">Tout les pays dans un seul lieu !</h2>
+      <div>
+        <span class="flex h-[4px] w-50 bg-white my-5"></span>
+      </div>
+      <p class="text-white">
+        Découvrez la culture culinaire du monde entier à travers de les
+        nombreuses fonctionnalités que notre site propose !
+      </p>
+
+      <!-- icones -->
+      <div class="grid grid-cols-2">
+        <div class="">
+          <IconBulle />
+          <p class="upeercase text-white">Partager vos opinions</p>
+        </div>
+      </div>
+
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
 </Layout>
+
+<!-- script -->
+<script>
+  const backgrounds = [
+    "from-[var(--color-orange)] from-40% to-[#F5B97D] to-100%",
+    "from-[var(--color-rouge)] from-40% to-[var(--color-orange)] to-100%",
+    "from-[var(--color-marron)] from-40% to-[#F5B97D] to-100%",
+    "from-[var(--color-vert)] from-40% to-[var(--color-bleu)] to-100%",
+    "from-[var(--color-bleu)] from-40% to-[var(--color-vert)] to-100%",
+    "from-[var(--color-bleu-fonce)] from-40% to-[var(--color-bleu)] to-100%",
+  ];
+
+  const images = [
+    "/src/assets/img/image.webp",
+    "src/assets/img/imagech.webp",
+    "/src/assets/img/imageA.webp",
+    "/src/assets/img/imageAM.webp",
+    "/src/assets/img/imageT.webp",
+    "/src/assets/img/imageUE.webp",
+  ];
+
+  const section = document.getElementById("hero-section");
+  const container = document.getElementById("image-container");
+  const heroImage = document.getElementById("hero-image");
+
+  let currentIndex = 0;
+
+  function changeContent() {
+    container.style.opacity = "0";
+
+    setTimeout(() => {
+      currentIndex =
+        (currentIndex + 1) % Math.min(backgrounds.length, images.length);
+
+      section.className = section.className.replace(
+        /from-\[.*?\] from-40% to-\[.*?\] to-100%/,
+        backgrounds[currentIndex]
+      );
+
+      heroImage.onload = () => {
+        container.style.opacity = "1";
+      };
+
+      heroImage.src = images[currentIndex];
+    }, 500);
+  }
+
+  setInterval(changeContent, 5000);
+
+  window.addEventListener("load", () => {
+    images.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  });
+</script>
