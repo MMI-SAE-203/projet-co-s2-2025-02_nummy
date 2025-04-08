@@ -6,9 +6,10 @@ import { Image } from "astro:assets";
 ---
 
 <Layout>
+  <div class="bg-[var(--color-argent)]">
   <h1 class="p-8">Politiques & confidentialité</h1>
   <div class="px-8">
-    <p class="mt-5">
+    <p class="">
       La présente politique de confidentialité s'applique au site Ñummy,
       exploité à titre académique dans le cadre d’un projet universitaire. Elle
       vise à informer les utilisateurs sur la manière dont leur données
@@ -17,26 +18,28 @@ import { Image } from "astro:assets";
       la loi française nª78-17 du janvier 1978 modifiée (informatique et
       libertés), ainsi que les recommandations de la CNIL.
     </p>
-    <p class=""><strong>1.Identité des responsables de traitement</strong></p>
+    <p class="mt-5">
+      <strong>1.Identité des responsables de traitement</strong>
+    </p>
     <ul>
       <li>
-        Responsable(s) de traitement : Arthur Wicky, Maéna Rabusseau, Juan
+        <strong>   Responsable(s) de traitement : </strong> Arthur Wicky, Maéna Rabusseau, Juan
         Camilo Veloza - Projet Universitaire
       </li>
-      <li>Statut : Entreprise individuelle (Projet académique)</li>
-      <li>
-        Adresse : Département MMI - 4 Pl. Lucien Tharradin, 25200 Montbéliard -
+      <li><strong>Statut :</strong> Entreprise individuelle (Projet académique)</li>
+      <li><strong>
+        Adresse :</strong> Département MMI - 4 Pl. Lucien Tharradin, 25200 Montbéliard -
         France
       </li>
-      <li>Téléphone : 07 49 84 90 46</li>
-      <li>Courriel : nummy2025@gmail.com</li>
+      <li><strong>Téléphone :</strong> 07 49 84 90 46</li>
+      <li><strong>Courriel :</strong> nummy2025@gmail.com</li>
     </ul>
     <p>
       Pour plus d'informations légales (hébergeur, statut, etc.), veuillez
       consulter nos Mentions Légales publiés sur le site.
     </p>
     <p class="mt-5">
-      <strong>2.Données personnelles collectées</strong>Nous collectons
+      <strong>2.Données personnelles collectées</strong> Nous collectons
       différents types de données personnelles concernant l'utilisateur, en
       fonction de l’utilisation du site et des services proposés. 2.1 Données
       fournies par l’utilisateur Formulaire de création de compte : nom, prénom,
@@ -94,7 +97,7 @@ import { Image } from "astro:assets";
       l’informatique et de libertés) s’il estime que ses droits ne sont pas
       respectés.
     </p>
-    <p>
+    <p class="mt-5">
       <strong> 3. Finalités et bases légales du traitement </strong> I.Gestion du
       compte utilisateur (création de profil, connexion, sécurisée) Base légale :
       Exécution d’un contrat (CGU) ou mesures précontractuelles II. Envoi de la NewsLetter
@@ -108,8 +111,8 @@ import { Image } from "astro:assets";
       et l’interaction sur le site, et consentement de l’utilisateur lorsqu’il publie
       volontairement ses contenus.
     </p>
-    <p>
-      <strong>4.Durée de conservation des données</strong>Compte utilisateur :
+    <p class="mt-5">
+      <strong>4.Durée de conservation des données</strong> Compte utilisateur :
       les données sont conservés tant que le compte est actif; en cas
       d'inactivité prolongé (ex: 24 mois), le compte peut être supprimé après
       information préalable de l’utilisateur Newsletter: Nous conserverons
@@ -122,7 +125,7 @@ import { Image } from "astro:assets";
       proches ; elles ne sont pas stockées durablement et sont toujours
       conformes au consentement de l’utilisateur.
     </p>
-    <p>
+    <p class="mt-5">
       <strong>5.Destinataires des données</strong> I. Éditeur(s) du site : l'équipe
       chargée de l’administration du site, dans la limite de leurs attributions respectives.
       II. Fournisseurs de services tiers : Hébergeurs web (infrastructure technique)
@@ -135,7 +138,7 @@ import { Image } from "astro:assets";
       sur base légale appropriée. Nous ne vendons ni louons les données personnelles
       à des tiers à des fins marketing.
     </p>
-    <p>
+    <p class="mt-5">
       <strong>6. Droits des utilisateurs</strong>
       Conformément au RGPD et à la loi française, l’utilisateur dispose : Droit d'accès
       : Obtenir la confirmation que des données le concernant sont traitées, et en
@@ -145,14 +148,17 @@ import { Image } from "astro:assets";
       du traitement : restreindre temporairement l’utilisation des données. Droit
       à la portabilité: Recevoir les données personnelles fournies dans un format
       structuré et couramment utilisé, et éventuellement les transmettre à une responsable.
-      Pour exercer ses droits, l’Utilisateur peut contacter : E-mail : nummy2025@gmail.com
-      Adresse postale : Département MMI - 4 Pl. Lucien Tharradin, 25200 Montbéliard
-      - France Une réponse sera fournie dans les meilleurs délais et au plus tard
-      dans le délai d’un mois, prolongeable de deux mois en cas de complexité ou
+      Pour exercer ses droits, l’Utilisateur peut contacter : 
       de nombre élevé de demandes.
     </p>
-    <p>
-      <strong>7. Sécurité des données</strong>Nous mettons en œuvre des mesures
+    <p class="mt-5"> <strong> E-mail :</strong> nummy2025@gmail.com
+ 
+      <p> <strong>  Adresse postale :</strong> Département MMI - 4 Pl. Lucien Tharradin, 25200 Montbéliard
+        - France Une réponse sera fournie dans les meilleurs délais et au plus tard
+        dans le délai d’un mois, prolongeable de deux mois en cas de complexité ou
+        de nombre élevé de demandes.</p></p>
+    <p class="mt-5">
+      <strong>7. Sécurité des données</strong> Nous mettons en œuvre des mesures
       techniques et organisationnelles appropriées (protocole HTTPS, etc..) pour
       protéger les données personnelles contre tout accès non autorisé,
       altération ou divulgation. Malgré ces précautions, aucune méthode de
@@ -162,42 +168,42 @@ import { Image } from "astro:assets";
       compétentes (CNIL) et, si nécessaire, les utilisateurs concernés dans les
       délais légaux.
     </p>
-    <p>
-      <strong>8.Liens externes</strong>Les sites peuvent contenir des liens vers
+    <p class="mt-5">
+      <strong>8.Liens externes</strong> Les sites peuvent contenir des liens vers
       des sites tiers (boutiques affiliés, etc.). Cette politique ne couvre pas
       les traitements de données opérés par ces sites, qui disposent de leurs
       propres politiques de confidentialité. Nous invitons l’utilisateur à
       prendre connaissance de celle-ci avant de communiquer ses informations
       personnelles.
     </p>
-    <p>
-      <strong>9. Mise à jour de la présente politique</strong>Nous nous
+    <p class="mt-5">
+      <strong>9. Mise à jour de la présente politique</strong> Nous nous
       réservons le droit de modifier ou actualiser la présente politique afin de
       refléter les changements législatifs, techniques ou organisationnels. En
       cas de modification substantielle, l’utilisateur sera averti via e-mail ou
       le site (banner, notification,etc.) avec une délai raisonnable avant
       l’entrée en vigueur de nouvelles dispositions.
     </p>
-    <p>
-      <strong>10.Contact et réclamation</strong>Pour toute question relative à
+    <p class="mt-5">
+      <strong>10.Contact et réclamation</strong> Pour toute question relative à
       la présente Politique de Confidentialité ou pour exercer vos droits, vous
       pouvez nous contacter:
     </p>
-    <ul>
-      <li>E-mail : nummy2025@gmail.com</li>
+    <ul class="mt-5">
+      <li> <strong>E-mail :</strong> nummy2025@gmail.com</li>
       <li>
-        Adresse postale : Département MMI - 4 Pl. Lucien Tharradin, 25200
+        <strong>Adresse postale :</strong> Département MMI - 4 Pl. Lucien Tharradin, 25200
         Montbéliard - France
       </li>
-      <li>Section “ Nous contacter “</li>
+      <li> <strong>Section</strong> “ Nous contacter “</li>
     </ul>
     <p>
       Si, après nous avoir contactés, vous estimez que vos droits ne sont pas
       respectés, vous avez la possibilité de déposer une réclamation auprès de
       la CNIL (Commission Nationale de l’Informatique et des Libertés).
     </p>
-    <p>
-      <strong>11. Caractère Académique - Projet universitaire</strong>Le présent
+    <p class="mt-5">
+      <strong>11. Caractère Académique - Projet universitaire</strong> Le présent
       site “Ñummy” est réalisé dans le cadre d’un projet universitaire, sans
       qu’il n'existe d’activité commerciale réelle ni d’immatriculation
       effective, au RCS, hormis sa valeur démonstrative. L’utilisation de
@@ -209,5 +215,6 @@ import { Image } from "astro:assets";
     <p class="p-8">
       <strong>Dernière mise à jour : 8 mars 2025</strong>
     </p>
+  </div>
   </div>
 </Layout>
