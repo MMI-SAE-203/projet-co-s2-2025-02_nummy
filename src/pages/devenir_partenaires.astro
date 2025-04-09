@@ -12,74 +12,79 @@ import Buttonsign from "../components/Buttonsign.astro";
 
 <Layout>
     <div>
-        <h1 class="mt-5 mb-2">
-            Rejoignez cette grande communauté et rendez votre entreprise
-            visible!
-        </h1>
-        <h3 class="mb-2">
-            Rejoignez notre projet et donnez de la visibilité à votre entreprise
-            ! Ensemble, mettons en avant vos produits et savoir-faire auprès
-            d’un public plus large ! Profitez d’une plateforme dédiée pour
-            toucher de nouveaux clients et partager votre passion.
-        </h3>
+        <div class="px-8">
+            <h1 class="mt-5 mb-2">
+                Rejoignez cette grande communauté et rendez votre entreprise
+                visible!
+            </h1>
+            <h3 class="mb-2">
+                Rejoignez notre projet et donnez de la visibilité à votre
+                entreprise ! Ensemble, mettons en avant vos produits et
+                savoir-faire auprès d’un public plus large ! Profitez d’une
+                plateforme dédiée pour toucher de nouveaux clients et partager
+                votre passion.
+            </h3>
 
-        <div class="flex items-center justify-center gap-4 px-4 p-5">
-            <Buttonorange href="/nous-contacter" text="Nous rejoindre !" />
+            <div class="flex items-center justify-center gap-4 px-4 p-5">
+                <Buttonorange href="/nous-contacter" text="Nous rejoindre !" />
+            </div>
+            <br class="bg-gray-100" />
+            <h3 class="text-center">
+                “Quels sont les avantages de devenir partenaire”
+            </h3>
+
+            <Image
+                src={imageordinateurlike}
+                alt="Logo"
+                class="w-55 lg:w-85 flex justify-center"
+                loading="lazy"
+            />
+            <h3 class="text-center mb-2">
+                Une visibilité accrue de vos produits ou services !
+            </h3>
+            <p class="text-center">
+                En rejoignant notre plateforme, les magasins affiliés
+                bénéficient d'une meilleure visibilité et d'un meilleur
+                positionnement sur notre site. Cela leur permet d'attirer un
+                flux de clients plus important que celui auquel une boutique non
+                affiliée pourrait accéder, augmentant ainsi leurs chances de
+                vente.
+            </p>
+            <Image
+                src={imagejeuxsociete}
+                alt="Logo"
+                class="w-55 lg:w-85 flex justify-center"
+                loading="lazy"
+            />
+            <h3 class="mb-2 text-center">
+                Élargir le champ d'action à de nouveaux types de clients !
+            </h3>
+            <p>
+                En rejoignant notre plateforme, les magasins affiliés gagnent en
+                visibilité auprès d'un public dynamique et en constante
+                évolution. Cela leur permet d’atteindre de nouveaux clients,
+                tout en restant adaptés aux tendances actuelles, favorisant
+                ainsi une croissance continue de leurs ventes.
+            </p>
+            <Image
+                src={imageequipe}
+                alt="Logo"
+                class="w-55 lg:w-85 align-center justify-center items-center block"
+                loading="lazy"
+            />
+            <h3 class="mb-2 text-center">
+                Réduction des coûts d'acquisition des clients !
+            </h3>
+            <p>
+                En rejoignant notre plateforme, vous réduirez considérablement
+                vos coûts d'acquisition de clients en profitant de notre trafic
+                et de notre base d'utilisateurs pour atteindre des acheteurs
+                intéressés, sans avoir à investir dans la publicité ou le
+                marketing digital, bénéficiant ainsi d'un flux constant de
+                trafic qualifié.
+            </p>
         </div>
-        <br class="bg-gray-100" />
-        <h3 class="text-center">
-            “Quels sont les avantages de devenir partenaire”
-        </h3>
-
-        <Image
-            src={imageordinateurlike}
-            alt="Logo"
-            class="w-55 lg:w-85 flex justify-center"
-            loading="lazy"
-        />
-        <h3 class="text-center mb-2">
-            Une visibilité accrue de vos produits ou services !
-        </h3>
-        <p class="text-center">
-            En rejoignant notre plateforme, les magasins affiliés bénéficient
-            d'une meilleure visibilité et d'un meilleur positionnement sur notre
-            site. Cela leur permet d'attirer un flux de clients plus important
-            que celui auquel une boutique non affiliée pourrait accéder,
-            augmentant ainsi leurs chances de vente.
-        </p>
-        <Image
-            src={imagejeuxsociete}
-            alt="Logo"
-            class="w-55 lg:w-85 flex justify-center"
-            loading="lazy"
-        />
-        <h3 class="mb-2 text-center">
-            Élargir le champ d'action à de nouveaux types de clients !
-        </h3>
-        <p>
-            En rejoignant notre plateforme, les magasins affiliés gagnent en
-            visibilité auprès d'un public dynamique et en constante évolution.
-            Cela leur permet d’atteindre de nouveaux clients, tout en restant
-            adaptés aux tendances actuelles, favorisant ainsi une croissance
-            continue de leurs ventes.
-        </p>
-        <Image
-            src={imageequipe}
-            alt="Logo"
-            class="w-55 lg:w-85  align-center justify-center items-center block "
-            loading="lazy"
-        />
-        <h3 class="mb-2 text-center">
-            Réduction des coûts d'acquisition des clients !
-        </h3>
-        <p>
-            En rejoignant notre plateforme, vous réduirez considérablement vos
-            coûts d'acquisition de clients en profitant de notre trafic et de
-            notre base d'utilisateurs pour atteindre des acheteurs intéressés,
-            sans avoir à investir dans la publicité ou le marketing digital,
-            bénéficiant ainsi d'un flux constant de trafic qualifié.
-        </p>
-        <div class="bg-[var(--color-orange]">
+        <div class="bg-[var(--color-orange)]">
             <h1 class="text-center mb-5 mt-5">
                 “Devenez membre de cette grande famille !”
             </h1>
@@ -93,7 +98,7 @@ import Buttonsign from "../components/Buttonsign.astro";
                     <span class="">NOM</span>
                     <input
                         type="text"
-                        class="mt-1 block w-full rounded-lg bg-gray-200 p-2"
+                        class="mt-1 block w-full rounded-lg bg-gray-100 p-2"
                         placeholder="Indique votre nom de famille"
                     />
                 </label>
@@ -101,7 +106,7 @@ import Buttonsign from "../components/Buttonsign.astro";
                     <span class="">PRÉNOM</span>
                     <input
                         type="text"
-                        class="mt-1 block w-full rounded-lg bg-gray-200 p-2"
+                        class="mt-1 block w-full rounded-lg bg-gray-100 p-2"
                         placeholder="Indiquez votre prénom"
                     />
                 </label>
@@ -109,7 +114,7 @@ import Buttonsign from "../components/Buttonsign.astro";
                     <span class="">TYPE D'ENTREPRISE</span>
                     <input
                         type="text"
-                        class="mt-1 block w-full rounded-lg bg-gray-200 p-2"
+                        class="mt-1 block w-full rounded-lg bg-gray-100 p-2"
                         placeholder="RESTAUTRANT"
                     />
                 </label>
@@ -117,7 +122,7 @@ import Buttonsign from "../components/Buttonsign.astro";
                     <span class="">CONTINENT/PAYS</span>
                     <input
                         type="text"
-                        class="mt-1 block w-full rounded-lg bg-gray-200 p-2"
+                        class="mt-1 block w-full rounded-lg bg-gray-100 p-2"
                         placeholder="Indiquez le pays "
                     />
                 </label>
@@ -125,7 +130,7 @@ import Buttonsign from "../components/Buttonsign.astro";
                     <span class="">TÉLÉPHONE</span>
                     <input
                         type="text"
-                        class="mt-1 block w-full rounded-lg bg-gray-200 p-2"
+                        class="mt-1 block w-full rounded-lg bg-gray-100 p-2"
                         placeholder="Ex: 07 xx xx xx xx"
                     />
                 </label>
@@ -133,7 +138,7 @@ import Buttonsign from "../components/Buttonsign.astro";
                     <span class="">E-MAIL</span>
                     <input
                         type="text"
-                        class="mt-1 block w-full rounded-lg bg-gray-200 p-2"
+                        class="mt-1 block w-full rounded-lg bg-gray-100 p-2"
                         placeholder="Ex: email.exemple@gmail.com"
                     />
                 </label>
