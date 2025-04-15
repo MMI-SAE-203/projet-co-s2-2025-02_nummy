@@ -12,7 +12,7 @@ import Buttonsign from "../components/Buttonsign.astro";
 
 <Layout>
     <div>
-        <div class="bg-[var(--color-orange)]  ">
+        <div class="bg-[var(--color-orange)]">
             <Image
                 src={imageimgenveloppe}
                 alt="Logo"
@@ -20,7 +20,7 @@ import Buttonsign from "../components/Buttonsign.astro";
                 loading="lazy"
             />
 
-            <h1 class="mt-5 mb-2">
+            <h1 class="mt-5 mb-2 lg:text-center">
                 "Restez à l'affût des nouveautés dans notre NEWSLETTER !"
             </h1>
             <p>
@@ -29,65 +29,69 @@ import Buttonsign from "../components/Buttonsign.astro";
                 nouveautés
             </p>
 
-            <div class="flex items-center justify-center gap-4 px-4 p-5">
+            <div class="flex items-center lg:justify-center gap-4 px-4 p-5">
                 <Buttonsign href="/nous-contacter" text="S'INSCRIRE" />
             </div>
         </div>
         <div class="px-8">
-        <br class="bg-gray-100" />
-        <h3 class="text-center">
-            “Quels sont les avantages de vous inscrire à la Newsletter”
-        </h3>
+            <br class="bg-gray-100" />
+            <h3 class="lg:text-center">
+                “Quels sont les avantages de vous inscrire à la Newsletter”
+            </h3>
 
-        <Image
-            src={imageordinateurnewsletter}
-            alt="Logo"
-            class="w-55 lg:w-85 flex justify-center"
-            loading="lazy"
-        />
-        <h3 class="text-center mb-2">
-            Restez informé des dernières recettes fraîches et savoureuses !
-        </h3>
-        <p class="text-center">
-            Restez au courant des nouvelles recettes de saison créées par notre
-            communauté ! Découvrez des plats délicieux du monde entier – Asie,
-            Europe et bien plus encore. Ne manquez pas ces nouvelles expériences
-            gustatives et laissez-vous surprendre par de nouvelles saveurs !
-        </p>
-        <Image
-            src={imagecuistot}
-            alt="Logo"
-            class="w-55 lg:w-85 flex justify-center"
-            loading="lazy"
-        />
-        <h3 class="mb-2 text-center">
-            Ne manquez pas les informations sur le monde de la gastronomie !
-        </h3>
-        <p>
-            Découvrez les dernières tendances culinaires, des recettes simples à
-            essayer chez vous et des conseils pratiques pour améliorer votre
-            cuisine. Ne ratez pas les nouveautés qui font parler du monde de la
-            gastronomie !
-        </p>
-        <Image
-            src={imagesolidaire}
-            alt="Logo"
-            class="w-55 lg:w-85 align-center justify-center items-center block"
-            loading="lazy"
-        />
-        <h3 class="mb-2 text-center">
-            Bénéficiez d'offres et de nouvelles de nos partenaires !
-        </h3>
-        <p>
-            Bénéficiez d'offres exclusives et restez informé des promotions, des
-            nouvelles boutiques et des événements de nos partenaires. Vous serez
-            toujours au courant des meilleures opportunités et des nouveautés
-            pour profiter pleinement de leurs services et produits.
-        </p>
+            <Image
+                src={imageordinateurnewsletter}
+                alt="Logo"
+                class="w-55 lg:w-85 flex justify-center"
+                loading="lazy"
+            />
+            <h3 class="lg:text-center mb-2">
+                Restez informé des dernières recettes fraîches et savoureuses !
+            </h3>
+            <p class="lg:text-center">
+                Restez au courant des nouvelles recettes de saison créées par
+                notre communauté ! Découvrez des plats délicieux du monde entier
+                – Asie, Europe et bien plus encore. Ne manquez pas ces nouvelles
+                expériences gustatives et laissez-vous surprendre par de
+                nouvelles saveurs !
+            </p>
+            <Image
+                src={imagecuistot}
+                alt="Logo"
+                class="w-55 lg:w-85 flex justify-center"
+                loading="lazy"
+            />
+            <h3 class="mb-2 lg:text-center">
+                Ne manquez pas les informations sur le monde de la gastronomie !
+            </h3>
+            <p>
+                Découvrez les dernières tendances culinaires, des recettes
+                simples à essayer chez vous et des conseils pratiques pour
+                améliorer votre cuisine. Ne ratez pas les nouveautés qui font
+                parler du monde de la gastronomie !
+            </p>
+            <Image
+                src={imagesolidaire}
+                alt="Logo"
+                class="w-55 lg:w-85 align-center justify-center items-center block"
+                loading="lazy"
+            />
+            <h3 class="mb-2 lg:text-center">
+                Bénéficiez d'offres et de nouvelles de nos partenaires !
+            </h3>
+            <p>
+                Bénéficiez d'offres exclusives et restez informé des promotions,
+                des nouvelles boutiques et des événements de nos partenaires.
+                Vous serez toujours au courant des meilleures opportunités et
+                des nouveautés pour profiter pleinement de leurs services et
+                produits.
+            </p>
         </div>
         <div class="bg-[var(--color-lin)]">
-            <h1 class="text-center mb-5 mt-5">“S’INSCRIRE À LA NEWSLETTER”</h1>
-            <p>
+            <h1 class="lg:text-center mb-5 mt-5">
+                “S’INSCRIRE À LA NEWSLETTER”
+            </h1>
+            <p class="lg:text-center mb-5">
                 Abonnez-vous à la Newsletter sans frais supplémentaires et ne
                 manquez rien des nouveautés du monde !
             </p>
@@ -110,11 +114,11 @@ import Buttonsign from "../components/Buttonsign.astro";
                     />
                 </label>
             </div>
-            <p>
+            <p class="lg:text-center mb-5">
                 En cochant cette case., je valide de recevoir ou être informé(e)
                 offres et promotions de Ñummy par e-mail
             </p>
-            <p class="text-center mb-5">
+            <p class="lg:text-center mb-5">
                 En cochant cette case, vous acceptez les conditions générales de
                 Ñummy pour la publication d'un article sur le site web. Pour en
                 savoir plus sur notre politique de confidentialité, cliquez ici.
