@@ -16,42 +16,92 @@ if (Astro.request.method === "POST") {
 ---
 
 <Layout>
-<h1 >Ajouter une recette </h1>
+<h1 class="text-center">PARTAGEZ-NOUS  VOS RECETTES !</h1>
 {message && <p class="text-red-600">{}</p>}
 <form action="/recette/add" method="POST" enctype="multipart/form-data">
+
+
+    <label for="hero_recette" class="block mt-4 font-semibold text-black uppercase">Image du plat</label>
+
+    <input type="file" name="hero_recette"   class=" text-center w-105 mt-2 p-2 border border-gray-300 rounded-md"/>
+
+    <label for="pays_recette" class="block mt-4 font-semibold text-black uppercase">Pays</label>
     <input
         type="text"
-        name="Nom"
-        placeholder="Nom de la recette"
+        name="pays_recette"
+        placeholder="Ex: Colombie"
         required
-        class="w-full mt-2 p-2 border border-gray-300 rounded-md"
+        class="w-105 mt-2 p-2 border border-gray-300 rounded-md"
     />
+
+    <label for="continent_recette" class="block mt-4 font-semibold text-black uppercase">Continent</label>
+
+    <input
+    type="text"
+    name="continent_recette"
+    placeholder="Selectionnez un continent"
+    required
+    class="w-105 mt-2 p-2 border border-gray-300 rounded-md"
+/>
+
+<label for="personnes_recette" class="block mt-4 font-semibold text-black uppercase">COMBIEN de PERSONNES</label>
+
   <input
   type="text"
-  name="Nombre de personnes"
-  placeholder ="Nombre de personnes"
+  name="personnes_recette"
+  placeholder ="Ex: 4 "
   required
+  class="w-105 mt-2 p-2 border border-gray-300 rounded-md"
   />
-  <input 
-  type="text"
-  name="Temps de préparation"
-  placeholder="Temps de préparation"
-  />
-  <input 
-  type="text"
-  name="Ingrédients"
-  placeholder="Ingrédients"
-  />
-  <input 
-  type="text"
-  name="Préparation"
-  placeholder="Etape de préparation"
-  />
- 
-  
-    <input type="file" name="images" />
 
-    <button class="" type="submit">Ajouter</button>
+
+  <label for="temps_recette" class="block mt-4 font-semibold text-black uppercase">tEMPS DE PRÉPARATION</label>
+
+  <input 
+  type="text"
+  name="temps_recette"
+  placeholder="Ex: 30"
+  class="w-105 mt-2 p-2 border border-gray-300 rounded-md"
+  />
+
+
+  <label for="ingrédients_recette" class="block mt-4 font-semibold text-black uppercase">ingrédients</label>
+
+  <input 
+  type="text"
+  name="ingrédients_recette"
+  placeholder="Décrivez les ingrédients nécessaires à la préparation de la recette"
+    class="w-105 mt-2 p-2 border border-gray-300 rounded-md"
+
+    />
+
+    <label for="images_recette" class="block mt-4 font-semibold text-black uppercase">Images (optionnelleS)</label>
+
+ 
+  <input type="file" name="images_recette"   class="w-105 mt-2 p-2 border border-gray-300 rounded-md" />
+
+
+  <label for="préparation_recette" class="block mt-4 font-semibold text-black uppercase">PRÉPARATION</label>
+
+  <input 
+  type="text"
+  name="préparation_recette"
+  placeholder="Décrivez les pas de préparation..."
+    class="w-105 mt-2 p-2 border border-gray-300 rounded-md"
+  />
+
+  <label for="images_recette" class="block mt-4 font-semibold text-black uppercase">Images (optionnelles)</label>
+
+ 
+  <input type="file" name="images_recette"   class="w-105 mt-2 p-2 border border-gray-300 rounded-md" />
+
+
+<p class="text-center">  En cochant cette case, vous acceptez les conditions générales de Ñummy 
+    pour la publication d'un article sur le site web. Pour en savoir plus sur 
+    notre politique de confidentialité, cliquez ici.</p>
+
+ 
+    <button class="" type="submit">PUBLIER</button>
 </form> 
 
 </Layout>

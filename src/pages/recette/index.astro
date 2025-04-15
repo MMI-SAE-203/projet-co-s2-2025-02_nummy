@@ -1,15 +1,12 @@
 ---
-import { filterByContinent, sortedrecette } from "../../../pocketbase/backend.mjs";
+import {
+    filterByContinent,
+    sortedrecette,
+} from "../../../pocketbase/backend.mjs";
 import Card from "../../components/Card.astro";
 import Layout from "../../layouts/Layout.astro";
 const recette = Astro.props;
-import { addrecette } from '../../../pocketbase/backend.mjs';
-
-
-
-
-
-
+import { addrecette } from "../../../pocketbase/backend.mjs";
 
 /*Filtrage d’une liste via une route dynamique permettant d’afficher uniquement les éléments correspondants, comme par exemple l’affichage des films par catégorie ou par langue.*/
 
@@ -39,12 +36,19 @@ if (Astro.request.method === "POST") {
 
 <Layout>
     <div>
-        <h2 class="text-center p-5"> <strong>DES RECETTES DELICIEUSES</strong></h2>
-       
+        <h2 class="text-center p-5">
+            <strong>DES RECETTES DELICIEUSES</strong>
+        </h2>
 
-    <!-- //Création des formulaires pour saisir et modifier des données. -->
+        <!-- //Création des formulaires pour saisir et modifier des données. -->
+        <a
+            href="/recette/add"
+            class="inline-block bg-[var(--color-orange)] text-black font-semibold py-2 px-4 rounded-3xl mb-6"
+        >
+            Ajouter une recette
+        </a>
 
-    <h1 >Ajouter une recette </h1>
+        <!-- <h1 >Ajouter une recette </h1>
     {message && <p class="text-red-600">{}</p>}
     <form action="/recette/add" method="POST" enctype="multipart/form-data">
         <input
@@ -81,37 +85,31 @@ if (Astro.request.method === "POST") {
     
         <button class="" type="submit">Ajouter</button>
     </form> 
-    
+     -->
 
-    <!-- Filtre par continent -->
+        <!-- Filtre par continent -->
 
-    <form method="POST">
-     
+        <form method="POST">
+            <select class="m-15" name="role" id="role">
+                <option value="">Sélectionnez un continent</option>
+                <option value="Europe">Europe</option>
+                <option value="Asie">Asie</option>
+                <option value="Amérique">Amérique</option>
+                <option value="Amérique du Sud">Amérique du Sud</option>
+                <option value="Afrique">Afrique</option>
+            </select>
+            <input
+                class="p-2 border-2 border-gray-300 rounded-lg bg-white shadow-md"
+                type="submit"
+                value="Filtrer par continent"
+            />
+        </form>
 
-        <select class="m-15" name="role" id="role">
-            <option value="">Sélectionnez un continent</option>
-            <option value="Europe">Europe</option>
-            <option value="Asie">Asie</option>
-            <option value="Amérique">Amérique</option>
-            <option value="Amérique du Sud">Amérique du Sud</option>
-            <option value="Afrique">Afrique</option>
-        </select
-        >
-        <input class=" p-2 border-2 border-gray-300 rounded-lg bg-white shadow-md" type="submit" value="Filtrer par continent" />
-    </form>
+        <!-- Affichage d’une liste de collection -->
 
-    <!-- Affichage d’une liste de collection -->
-
-    <div class="flex justify-center list-none flex-wrap gap-5 pt- 15 pb-40">
-      
-      <h2 class="m-8">Toutes les recettes</h2> 
-        {recettes.map((recette) => <Card {...recette} />)}
-     
+        <div class="flex justify-center list-none flex-wrap gap-5 pt- 15 pb-40">
+            <h2 class="m-8">Toutes les recettes</h2>
+            {recettes.map((recette) => <Card {...recette} />)}
+        </div>
     </div>
-
-
-
-
-  
 </Layout>
-

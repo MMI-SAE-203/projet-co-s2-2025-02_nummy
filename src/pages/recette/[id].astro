@@ -11,8 +11,6 @@ const recette = await oneIDRecette(id);
 if (!recette) {
     return Astro.redirect("/recette");
 }
-
-
 ---
 
 <Layout titre={recette.nom_recette}>
@@ -29,7 +27,7 @@ if (!recette) {
                 classPicture="flex "
                 classImg="w-50  m-10 rounded-lg"
             />
-        
+
             <li class="p-4">
                 <p class="p-4"><strong>Continent : </strong></p>
                 <span>{recette.continent_recette}</span>
@@ -47,15 +45,13 @@ if (!recette) {
                 <span>{recette.produits_recette}</span>
             </li>
             <li class="p-4">
-                <p class="p-4"><strong>Ingrédients  :</strong></p>
+                <p class="p-4"><strong>Ingrédients :</strong></p>
                 <span>{recette.ingredients_recette}</span>
             </li>
             <li class="p-4">
                 <p class="p-4"><strong>Préparation :</strong></p>
                 <span>{recette.preparation_recette}</span>
             </li>
-
-           
         </ul>
     </div>
 </Layout>
