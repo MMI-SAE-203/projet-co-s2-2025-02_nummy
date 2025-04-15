@@ -1,0 +1,57 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+import { addrecette } from '../../../pocketbase/backend.mjs';
+//import Button from "../../components/Button.astro";  ajouter bouton orange la 
+
+
+let message = "";
+if (Astro.request.method === "POST") {
+    const formData = await Astro.request.formData();
+    const response = await addrecette(formData);
+    message = response.message;
+}
+
+//Création des formulaires pour saisir et modifier des données = invités
+---
+
+<Layout>
+<h1 >Ajouter une recette </h1>
+{message && <p class="text-red-600">{}</p>}
+<form action="/recette/add" method="POST" enctype="multipart/form-data">
+    <input
+        type="text"
+        name="Nom"
+        placeholder="Nom de la recette"
+        required
+        class="w-full mt-2 p-2 border border-gray-300 rounded-md"
+    />
+  <input
+  type="text"
+  name="Nombre de personnes"
+  placeholder ="Nombre de personnes"
+  required
+  />
+  <input 
+  type="text"
+  name="Temps de préparation"
+  placeholder="Temps de préparation"
+  />
+  <input 
+  type="text"
+  name="Ingrédients"
+  placeholder="Ingrédients"
+  />
+  <input 
+  type="text"
+  name="Préparation"
+  placeholder="Etape de préparation"
+  />
+ 
+  
+    <input type="file" name="images" />
+
+    <button class="" type="submit">Ajouter</button>
+</form> 
+
+</Layout>

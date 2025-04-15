@@ -1,0 +1,117 @@
+---
+import { filterByContinent, sortedrecette } from "../../../pocketbase/backend.mjs";
+import Card from "../../components/Card.astro";
+import Layout from "../../layouts/Layout.astro";
+const recette = Astro.props;
+import { addrecette } from '../../../pocketbase/backend.mjs';
+
+
+
+
+
+
+
+/*Filtrage d’une liste via une route dynamique permettant d’afficher uniquement les éléments correspondants, comme par exemple l’affichage des films par catégorie ou par langue.*/
+
+let message = "";
+let recettes = [];
+
+if (Astro.request.method === "POST") {
+    const data = await Astro.request.formData();
+    const continent = data.get("continent") as string;
+
+    if (continent) {
+        recettes = await filterByContinent(continent);
+
+        if (recettes.length === 0) {
+            message = `Aucune recette trouvé pour le continent "${continent}".`;
+        } else {
+            message = `Liste des recettes pour le contienent "${continent}"`;
+        }
+    } else {
+        message = "Veuillez sélectionner un continent.";
+    }
+} else {
+    recettes = await sortedrecette();
+    message = "Liste des recettes pour tous les continents.";
+}
+---
+
+<Layout>
+    <div>
+        <h2 class="text-center p-5"> <strong>DES RECETTES DELICIEUSES</strong></h2>
+       
+
+    <!-- //Création des formulaires pour saisir et modifier des données. -->
+
+    <h1 >Ajouter une recette </h1>
+    {message && <p class="text-red-600">{}</p>}
+    <form action="/recette/add" method="POST" enctype="multipart/form-data">
+        <input
+            type="text"
+            name="Nom"
+            placeholder="Nom de la recette"
+            required
+            class="w-full mt-2 p-2 border border-gray-300 rounded-md"
+        />
+      <input
+      type="text"
+      name="Nombre de personnes"
+      placeholder ="Nombre de personnes"
+      required
+      />
+      <input 
+      type="text"
+      name="Temps de préparation"
+      placeholder="Temps de préparation"
+      />
+      <input 
+      type="text"
+      name="Ingrédients"
+      placeholder="Ingrédients"
+      />
+      <input 
+      type="text"
+      name="Préparation"
+      placeholder="Etape de préparation"
+      />
+     
+      
+        <input type="file" name="images" />
+    
+        <button class="" type="submit">Ajouter</button>
+    </form> 
+    
+
+    <!-- Filtre par continent -->
+
+    <form method="POST">
+     
+
+        <select class="m-15" name="role" id="role">
+            <option value="">Sélectionnez un continent</option>
+            <option value="Europe">Europe</option>
+            <option value="Asie">Asie</option>
+            <option value="Amérique">Amérique</option>
+            <option value="Amérique du Sud">Amérique du Sud</option>
+            <option value="Afrique">Afrique</option>
+        </select
+        >
+        <input class=" p-2 border-2 border-gray-300 rounded-lg bg-white shadow-md" type="submit" value="Filtrer par continent" />
+    </form>
+
+    <!-- Affichage d’une liste de collection -->
+
+    <div class="flex justify-center list-none flex-wrap gap-5 pt- 15 pb-40">
+      
+      <h2 class="m-8">Toutes les recettes</h2> 
+        {recettes.map((recette) => <Card {...recette} />)}
+     
+    </div>
+
+
+
+
+  
+</Layout>
+

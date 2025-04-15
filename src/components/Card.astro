@@ -1,0 +1,24 @@
+---
+const recette = Astro.props;
+import ImagePB from "./ImagePB.astro";
+
+/*Affichage d’une liste de collection*/
+---
+
+<div>
+    <li class="font-bold">{recette.nom}</li>
+
+
+    <!-- affichage des recettes -->
+    <ImagePB
+        record={recette}
+        field="images-recette"
+        alt={recette.imgAlt}
+        classPicture="flex justify-center"
+        classImg="w-50 h-75 m-10 rounded-lg"
+    />
+
+    <a href={`/recette/${recette.id}`} class="m-15 text-black underline"
+        >Voir plus</a
+    >
+</div>
