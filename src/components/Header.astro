@@ -1,10 +1,23 @@
 ---
 import Logo_1 from "../assets/logo/logo2.svg";
+
+export interface props {
+  variant?: "default" | "transparent" | "colored";
+  bgColor?: string;
+  textColor?: string;
+  isFixed?: boolean;
+}
+let headerClasses ="px-8 py-6  top-0 fixed z-20 w-full flex items-stretch justify-between transition-all duration-300 ease-in-out lg:py-0";
+
+let navClasses ="visible top-0 fixed z-10 inset-0 bg-(--color-orange) text-xl font-medium text-white opacity-100 transition-all duration-300 ease-in-out max-lg:aria-hidden:invisible max-lg:aria-hidden:opacity-100 lg:relative lg:flex lg:items-center lg:bg-transparent lg:text-sm lg:font-bold lg:uppercase lg:tracking-wide lg:text-white";
+
+let hamburguerClasses = "group relative z-20 flex h-6 w-8 flex-col justify-between *:h-[4px] *:w-full *:bg-white *:transition-all *:duration-300 *:ease lg:hidden";
+
+import Button from "../components/Button.astro";
 ---
 
-
 <header
-  class="px-8 py-6  top-0 fixed z-10 w-full flex items-stretch justify-between transition-all duration-300 ease-in-out lg:py-0 lg:bg-white"
+  class={headerClasses}
   id="header"
 >
   <div class="flex items-center relative z-20">
@@ -14,11 +27,10 @@ import Logo_1 from "../assets/logo/logo2.svg";
   </div>
 
   <div class="flex items-center gap-4 lg:flex-row-reverse">
-    <button class="w-12 flex justify-center" aria-label="Recherche">
-    </button>
+    <button class="w-12 flex justify-center" aria-label="Recherche"> </button>
 
     <button
-      class="group relative z-20 flex h-6 w-8 flex-col justify-between *:h-[4px] *:w-full *:bg-white *:transition-all *:duration-300 *:ease lg:hidden"
+      class={hamburguerClasses}
       id="menu-btn"
       aria-label="Menu"
       aria-controls="menu"
@@ -34,33 +46,36 @@ import Logo_1 from "../assets/logo/logo2.svg";
     </button>
 
     <nav
-      class="visible top-0 fixed z-10 inset-0 bg-(--color-orange) text-xl font-medium text-white opacity-100 transition-all duration-300 ease-in-out max-lg:aria-hidden:invisible max-lg:aria-hidden:opacity-100 lg:relative lg:flex lg:items-center lg:bg-transparent lg:text-sm lg:font-bold lg:uppercase lg:tracking-wide lg:text-black lg:opacity-100"
+      class={navClasses}
       id="menu"
       aria-hidden="true"
     >
       <ul
-        class="mt-[25vh] mx-16 lg:m-0 lg:flex *:relative *:overflow-hidden *:lg:before:absolute *:lg:before:bottom-0 *:lg:before:left-0 *:lg:before:h-2 *:lg:before:w-full *:lg:before:translate-y-2 *:lg:before:bg-black *:lg:before:transition-all *:lg:before:duration-300 *:lg:before:ease-in-out *:lg:hover:before:translate-y-0"
+        class="lg:*:p-button mt-[25vh] mx-16 lg:m-0 lg:flex *:relative *:overflow-hidden lg:gap-5"
       >
         <li>
-          <a class="block py-4 lg:py-8" href="/continents"
-            >Continents</a
+          <a class="block py-4 lg:py-8" href="/continents">Continents</a>
+        </li>
+        <li>
+          <a class="block py-4 lg:py-8" href="/recettes">Recettes</a>
+        </li>
+        <li>
+          <a class="block py-4 lg:py-8" href="/restaurants"
+            >Restaurants & boutiques</a
           >
         </li>
         <li>
-          <a class="block py-4 lg:py-8" href="/recettes"
-            >Recettes</a
+          <a class="block py-4 lg:py-8" href="/partenaire">Devenir partenaire</a
           >
         </li>
         <li>
-          <a class="block py-4 lg:py-8" href="/restaurants">Restaurants & boutiques</a>
+          <a class="block py-4 lg:py-8 lg:text-white" href="/newsletter"
+            >Newsletter</a
+          >
         </li>
-        <li>
-          <a class="block py-4 lg:py-8" href="/partenaire">Devenir partenaire</a>
-        </li>
-        <li>
-          <a
-            class="block py-4 lg:py-8 lg:bg-black lg:text-white lg:px-8"
-            href="/newsletter">Newsletter</a
+        <li class="block pt-6">
+          <Button classes="px-2" class="px-3" variant="lin" href="/contact"
+            >Se connecter</Button
           >
         </li>
       </ul>

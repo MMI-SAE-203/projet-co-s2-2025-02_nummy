@@ -53,10 +53,16 @@
         @apply font-text text-[24px] font-bold;
     }
     p {
-        @apply font-text 
+        @apply font-text ;
     }
     button {
         @apply font-text font-normal text-sm tracking-wider;
+    }
+    ul,li {
+        @apply font-text;
+    }
+    a {
+        @apply font-text;
     }
 }
 
@@ -79,6 +85,9 @@
     .p-body3{
         @apply font-normal text-xs;  
     }
+    .button{
+        @apply font-black text-[14px] tracking-wide;
+    }
     .p-small{
         @apply font-normal text-[10px] tracking-wide;
     }
@@ -87,5 +96,8 @@
 
     .nonscroll{
         @apply overflow-hidden;
+    }
+    .colorPage #menu-btn span {
+        @apply !bg-black;
     }
 }

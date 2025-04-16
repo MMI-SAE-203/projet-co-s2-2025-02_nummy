@@ -1,61 +1,94 @@
 ---
 import IconFacebook from "../assets/icones/icon_facebook.svg";
 import IconInstagram from "../assets/icones/icon_instagram.svg";
-import { Image } from "astro:assets";
-import logo_nummy10 from "../assets/logo/logo_nummy10.png";
+import IconTikTok from "../assets/icones/tiktok1.svg";
+import IconWhatsapp from "../assets/icones/whatsapp.svg";
 
+import Logo from "../assets/logo/logo.svg";
 ---
-<!-- <nav
-  class="text-center px-5 columns-2 gap-8 space-y-8 text-sm lg:text-base lg:columns-3 lg:col-span-3 lg:px-0 *:break-inside-avoid *:space-y-3 bg-[var(--color-green)] lg:col-start-7"
->
-  <div>
-    <ul class="text-white ">
-      <li><a class=" uppercase" href="/contact">Contact</a></li>
-      <li>+33 07 29 76 45 76 </li>
-      <li>nummy2025.s2@gmail.com</li>
-      <li>Nous contacter </li>
-    </ul>
- 
-  </div>
-  <div>
-    <ul class="text-white ">
-      <li><a class="text-white uppercase" href="/apropos">À propos</a></li>
-      <li>Mentions légales</li>
-      <li>Politique de confidentialité</li>
-    </ul>
+
+<footer class="bg-[var(--color-green)]">
+  <div
+    class="grille space-y-6 text-sm bg-[var(--color-green)] py-8 px-8 text-white lg:space-y-0"
+  >
+    <a class="block" href="/" aria-label="Accueil">
+      <Logo />
+    </a>
+
+    <nav class="space-y-3 lg:col-span-2 lg:col-start-3">
+      <h3 class="uppercase text-sm tracking-wide text-white">CONTACT</h3>
+      <ul class="*:py-1 p-body3 *:font-normal *:tracking-wide">
+        <li>
+          <p>+33 07 29 76 45 76</p>
+        </li>
+        <li>
+          <p>nummy2025.se@gmail.com</p>
+        </li>
+        <li>
+          <a class="underline-offset-1" href="/">Nous contacter</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="space-y-3 lg:col-span-2 lg:col-start-5">
+      <h3 class="uppercase text-sm tracking-wide text-white">À PROPOS</h3>
+      <address class="not-italic">
+        <ul class="list-none *:py-1 p-body3 *:font-normal *:tracking-wide">
+          <li><a href="/">Mentions légales</a></li>
+          <li><a href="/">Politiques de confidentialité</a></li>
+        </ul>
+      </address>
+    </div>
+
+    <div class="lg:col-span-2 lg;col-start-7">
+      <a class="text-sm tracking-wide text-white font-bold" href="/"
+        >DEVENIR<br /> PARTENAIRE</a
+      >
+    </div>
+
+    <div class="space-y-3 lg:col-span-2 lg:col-start-9">
+      <h3 class="uppercase text-sm tracking-wide text-white">COMMUNAUTÉ</h3>
+      <ul class="list-none *:py-1 p-body3 *:font-normal *:tracking-wider">
+        <li><a href="/">Recettes</a></li>
+        <li><a href="/">Newsletter</a></li>
+        <li><a href="/">Nous soutenir</a></li>
+      </ul>
+    </div>
   </div>
 
   <div>
-    <ul class="text-white ">
-      <li><a class="text-white uppercase" >Devenir partenaire</a></li>
-    </ul>
-  </div>
-  <div>
-    <ul class="text-white ">
-      <li><a class="text-white uppercase" >Communauté </a></li>
-      <li>Recettes</li>
-      <li>Newsletter</li>
-      <li>Nous soutenir</li>
-    </ul>
-  </div>
-</nav>
+    <hr class="h-1 bg-white mx-8" />
+    <div
+      class="flex space-between gap-6 itemss-center justify-center py-6 items-center px-8"
+    >
+      <h3 class="uppercase text-sm tracking-wide text-white">Nous suivre</h3>
+      <ul class="flex items-center gap-10 h-full object-contain">
+        <li>
+          <a href="https://facebook.com" aria-label="facebook">
+            <IconFacebook class="fill-white" />
+          </a>
+        </li>
+        <li>
+          <a href="https://tiktok.com" aria-label="TikTok">
+            <IconTikTok class="fill-white" />
+          </a>
+        </li>
+        <li>
+          <a href="https://instagram.com" aria-label="instagram">
+            <IconInstagram class="fill-white" />
+          </a>
+        </li>
+        <li>
+          <a href="/" aria-label="WhatSapp">
+            <IconWhatsapp class="fill-white" />
+          </a>
+        </li>
+      </ul>
+    </div>
+    <hr class="h-1 bg-white mx-8" />
 
-<div
-  class="px-5 py-8 space-y-6 text-center lg:col-span-4 lg:flex lg:justify-around lg:items-center lg:space-y-0 bg-[var(--color-gris)] lg:col-start-10"
->
-  <ul class="flex gap-12 justify-center">
- 
-  
-    <li>
-      <a href="https://instagram.com" aria-label="Instagram"
-        ><IconInstagram class="fill-white" /></a
-      >
-    </li>
-    <li>
-      <a href="https://facebook.com" aria-label="Facebook"
-        ><IconFacebook class="fill-white" /></a
-      >
-    </li>
-  </ul>
-  <p class="text-white">©2025 ÑUMMY</p>
-</div> -->
+    <div class="flex justify-center items-center text-white py-5">
+      <p class="p-body3">©2025 Ñummy</p>
+    </div>
+  </div>
+</footer>

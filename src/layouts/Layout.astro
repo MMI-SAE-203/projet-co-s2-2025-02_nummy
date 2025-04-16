@@ -1,20 +1,25 @@
 ---
-import '../styles/global.css';
-import '@fontsource/ranchers/400.css';  
-import '@fontsource/roboto/400.css';    
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import "../styles/global.css";
+import "@fontsource/ranchers/400.css";
+import "@fontsource/roboto/400.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+const { classBody } = Astro.props;
 ---
+
 <!doctype html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width" />
-</head>
-<body>
-	<Header />
-	<main>
-		<slot />
-	</main>
-	<Footer />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <!-- <meta-description></meta-description> -->
+  </head>
+  <body class={classBody}>
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </body>
 </html>

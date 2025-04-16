@@ -1,0 +1,43 @@
+---
+import Button from "../components/Button.astro";
+
+export interface Props {
+  bgColor?: string;
+  href?: string;
+}
+
+const { bgColor = "var(--color-orange)", href = "/" } = Astro.props;
+---
+
+<div
+  class="rounded-2xl overflow-hidden shadow-md mx-8 relative flex"
+  style={`background-color: ${bgColor};`}
+>
+  <div class="px-10 py-15 relative z-10">
+    <h3 class="text-4xl text-white font-header font-normal mb-2 tracking-wider">
+      <slot name="title">Titre par défaut</slot>
+    </h3>
+    <p class="text-white p-body3">
+      <slot name="description">Description par défaut</slot>
+    </p>
+    <div class="pt-5">
+      <slot name="button">
+        <Button variant="lin" href={href}>Voir plus</Button>
+      </slot>
+    </div>
+  </div>
+  
+  <div class="image-container">
+    <slot name="image" />
+  </div>
+</div>
+
+<style>
+  .image-container :global(img) {
+    max-width: 100%;
+  }
+
+  .image-container :global(.absolute) {
+    position: absolute;
+  }
+</style>
