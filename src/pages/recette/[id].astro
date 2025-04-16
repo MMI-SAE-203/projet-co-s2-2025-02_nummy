@@ -4,7 +4,7 @@ import Layout from "../../layouts/Layout.astro";
 import Card from "../../components/Card.astro";
 import ImagePB from "../../components/ImagePB.astro";
 
-/*Affichage du détail d’un élément de la collection en utilisant une route dynamique.    Affichage d'un invité */
+/*Affichage du détail d’un élément de la collection en utilisant une route dynamique.   recette */
 
 const { id } = Astro.params;
 const recette = await oneIDRecette(id);
@@ -16,41 +16,44 @@ if (!recette) {
 <Layout titre={recette.nom_recette}>
     <div>
         <ul class="p-8 p-4 border-2 border-gray-300 rounded-lg shadow-md">
+            <li class="p-4 list-none">
+                <span
+                    >{recette.continent_recette} | <span
+                        >{recette.pays_recette}</span
+                    ></span
+                >
+            </li>
+
             <li class="p-4">
                 <span>{recette.nom_recette}</span>
             </li>
 
             <ImagePB
                 record={recette}
-                field="Photo"
+                field="hero_recette"
                 alt={recette.imgAlt}
                 classPicture="flex "
                 classImg="w-50  m-10 rounded-lg"
             />
 
             <li class="p-4">
-                <p class="p-4"><strong>Continent : </strong></p>
-                <span>{recette.continent_recette}</span>
-            </li>
-            <li class="p-4">
-                <p class="p-4"><strong>Nombre de personnes : </strong></p>
-                <span>{recette.personnes_recette}</span>
-            </li>
-            <li class="p-4">
-                <p class="p-4"><strong>Temps : </strong></p>
+                <p class="p-4"><strong>emoji temps à mettre </strong></p>
                 <span>{recette.temps_recette}</span>
             </li>
+
             <li class="p-4">
-                <p class="p-4"><strong>Produits : </strong></p>
-                <span>{recette.produits_recette}</span>
+                <p class="p-4"><strong>emoji personne à mettre </strong></p>
+                <span>{recette.personnes_recette} personnes</span>
             </li>
+
             <li class="p-4">
                 <p class="p-4"><strong>Ingrédients :</strong></p>
-                <span>{recette.ingredients_recette}</span>
+                <div set:html={recette.ingredients_recette} />
             </li>
+
             <li class="p-4">
                 <p class="p-4"><strong>Préparation :</strong></p>
-                <span>{recette.preparation_recette}</span>
+                <div set:html={recette.preparation_recette} />
             </li>
         </ul>
     </div>

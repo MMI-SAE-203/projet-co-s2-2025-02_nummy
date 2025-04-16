@@ -20,14 +20,19 @@ export async function Allevents() {
 
 
 
-//une fonction qui retourne les infos d'une recette en donnant son id en paramètre
+// fonction pour les recettes
+
+
+//fonction qui retourne les infos d'une recette en donnant son id en paramètre
 
 export async function oneIDRecette(id) {
     const Onerecords = await pb.collection('Recette').getOne(id, { expand: 'Produit' });
     return Onerecords;
 }
 
+
 // fonction pour la création des formulaires pour saisir et modifier des données des recettes
+
 export async function addrecette(recette) {
     try {
         await pb.collection('Recette').create(recette);
@@ -80,5 +85,14 @@ export async function sortedrecette() {
         continent_recette.imageUrl = pb.files.getURL(continent_recette, continent_recette.images);
         return continent_recette;
     });
+    return records;
+}
+
+
+
+//fonction qui retourne toutes les recettes en favori 
+
+export async function allRecetteFavori() {
+    const records = await pb.collection('Recette').getFullList({ filter: 'favori = true', });
     return records;
 }

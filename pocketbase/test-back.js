@@ -1,8 +1,9 @@
-import { oneIDRecette , sortedrecette } from './backend.mjs'
-
-//une fonction qui retourne les infos d'un film en donnant son id en paramètre
+import { oneIDRecette, sortedrecette, allRecetteFavori } from './backend.mjs'
 
 
+// fonction pour les recettes
+
+//fonction qui retourne les infos d'une recette en donnant son id en paramètre
 
 try {
     const Onerecords = await oneIDRecette('n3ruaoyq5hegf54');
@@ -17,11 +18,19 @@ try {
 
 
 
-    try {
-        const records = await sortedrecette();
-        console.table((records));
-    } catch (e) {
-        console.error(e);
-    }
+try {
+    const records = await sortedrecette();
+    console.table((records));
+} catch (e) {
+    console.error(e);
+}
 
 
+//fonction qui retourne toutes les recettes en favori 
+
+try {
+    const records = await allRecetteFavori();
+    console.table((records));
+} catch (e) {
+    console.error(e);
+}
