@@ -7,19 +7,19 @@ export interface props {
   textColor?: string;
   isFixed?: boolean;
 }
-let headerClasses ="px-8 py-6  top-0 fixed z-20 w-full flex items-stretch justify-between transition-all duration-300 ease-in-out lg:py-0";
+let headerClasses =
+  "px-8 py-6  top-0 fixed z-20 w-full flex items-stretch justify-between transition-all duration-300 ease-in-out lg:py-0";
 
-let navClasses ="visible top-0 fixed z-10 inset-0 bg-(--color-orange) text-xl font-medium text-white opacity-100 transition-all duration-300 ease-in-out max-lg:aria-hidden:invisible max-lg:aria-hidden:opacity-100 lg:relative lg:flex lg:items-center lg:bg-transparent lg:text-sm lg:font-bold lg:uppercase lg:tracking-wide lg:text-white";
+let navClasses =
+  "visible top-0 fixed z-10 inset-0 bg-(--color-orange) text-xl font-medium text-white opacity-100 transition-all duration-300 ease-in-out max-lg:aria-hidden:invisible max-lg:aria-hidden:opacity-100 lg:relative lg:flex lg:items-center lg:bg-transparent lg:text-sm lg:font-bold lg:uppercase lg:tracking-wide lg:text-white";
 
-let hamburguerClasses = "group relative z-20 flex h-6 w-8 flex-col justify-between *:h-[4px] *:w-full *:bg-white *:transition-all *:duration-300 *:ease lg:hidden";
+let hamburguerClasses =
+  "group relative z-20 flex h-6 w-8 flex-col justify-between *:h-[4px] *:w-full *:bg-white *:transition-all *:duration-300 *:ease lg:hidden";
 
 import Button from "../components/Button.astro";
 ---
 
-<header
-  class={headerClasses}
-  id="header"
->
+<header class={headerClasses} id="header">
   <div class="flex items-center relative z-20">
     <a href="/" aria-label="Accueil">
       <Logo_1 />
@@ -45,30 +45,26 @@ import Button from "../components/Button.astro";
       ></span>
     </button>
 
-    <nav
-      class={navClasses}
-      id="menu"
-      aria-hidden="true"
-    >
+    <nav class={navClasses} id="menu" aria-hidden="true">
       <ul
-        class="lg:*:p-button mt-[25vh] mx-16 lg:m-0 lg:flex *:relative *:overflow-hidden lg:gap-5"
+        id="nav_b" class="lg:*:p-button mt-[25vh] mx-16 lg:m-0 lg:flex *:relative *:overflow-hidden lg:gap-5"
       >
-        <li>
+        <li id="nav_1">
           <a class="block py-4 lg:py-8" href="/continents">Continents</a>
         </li>
-        <li>
+        <li id="nav_1">
           <a class="block py-4 lg:py-8" href="/recettes">Recettes</a>
         </li>
-        <li>
+        <li id="nav_1">
           <a class="block py-4 lg:py-8" href="/restaurants"
             >Restaurants & boutiques</a
           >
         </li>
-        <li>
+        <li id="nav_1">
           <a class="block py-4 lg:py-8" href="/partenaire">Devenir partenaire</a
           >
         </li>
-        <li>
+        <li id="nav_1">
           <a class="block py-4 lg:py-8 lg:text-white" href="/newsletter"
             >Newsletter</a
           >
@@ -137,6 +133,17 @@ import Button from "../components/Button.astro";
     if (!ticking) {
       window.requestAnimationFrame(handleScroll);
       ticking = true;
+    }
+  });
+
+  const header = document.querySelector("#header");
+
+  window.addEventListener("scroll", () => {
+    // Si se ha desplazado más de 50px, agregar clases de fondo
+    if (window.scrollY > 50) {
+      header.classList.add("bg-white/40", "backdrop-blur-none", "shadow-md");
+    } else {
+      header.classList.remove("bg-white/40", "backdrop-blur-none", "shadow-md");
     }
   });
 </script>

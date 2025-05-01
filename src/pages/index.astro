@@ -20,62 +20,71 @@ import CardLP from "../components/CardLP.astro";
 <Layout>
   <div
     id="hero-section"
-    class="bg-gradient-to-b from-[var(--color-orange)] from-40% to-[#F5B97D] to-100% w-screen pt-5 pb-25 px-8 rounded-b-[36px] transition-colors duration-1000 z-10"
+    class="bg-gradient-to-b from-[var(--color-orange)] from-40% to-[#F5B97D] to-100% w-screen pt-5 pb-25 px-8 lg:px-0 rounded-b-[36px] transition-colors duration-1000 z-10"
   >
-    <!-- Image -->
-    <div
-      id="image-container"
-      class="w-350px h-250px flex justify-center items-center pt-15 transition-opacity duration-500"
-    >
-      <img
-        id="hero-image"
-        src={imagefille.src}
-        alt="Fille avec des fruits et légumes qui sourit et tient un panier"
-        class="w-100% h-100% object-contain"
-        loading="eager"
-      />
-    </div>
+    <div class="lg:max-w-screen-xl lg:mx-auto lg:grid lg:grid-cols-11 lg:gap-5">
+      <!-- Image -->
+      <div
+        id="image-container"
+        class="w-350px h-[450px] flex justify-center items-center pt-15 transition-opacity duration-500 lg:col-span-5 lg:h-[750px] lg:pt-10"
+      >
+        <div class="relative w-full h-full flex items-center justify-center">
+          <img
+            id="hero-image"
+            src={imagefille.src}
+            alt="Fille avec des fruits et légumes qui sourit et tient un panier"
+            class="max-w-full max-h-full object-contain"
+            loading="eager"
+          />
+        </div>
+      </div>
 
-    <!-- Slogan -->
-    <div>
-      <div class="flex items-center tracking-widest text-white pt-12 pl-2">
-        <h1
-          class="text-[40px]"
-          style="-webkit-text-stroke: 1px var(--color-orange); color: white"
+      <!-- Slogan -->
+      <div class="lg:col-span-6 lg:pt-80">
+        <div
+          class="flex items-center tracking-widest text-white pt-12 pl-2 lg:pt-0"
         >
-          LE GOÛT DE CHEZ TOI OÙ QUE TU SOIS !
-        </h1>
-      </div>
-      <div>
-        <span class="flex h-[4px] w-30 bg-white my-5 ml-2"></span>
-      </div>
-      <div class="flex text-white pl-2 font-bold">
-        <p class="p-body2 font-medium leading-6 pr-30">
-          Plus besoin de chercher pendant des heures sur internet !
-        </p>
-      </div>
-    </div>
+          <h1
+            class="text-[40px] lg:text-[60px]"
+            style="-webkit-text-stroke: 1px var(--color-orange); color: white"
+          >
+            LE GOÛT DE CHEZ TOI OÙ QUE TU SOIS !
+          </h1>
+        </div>
+        <div>
+          <span class="flex h-[4px] w-30 bg-white my-5 ml-2"></span>
+        </div>
+        <div class="flex text-white pl-2 font-bold">
+          <p class="p-body2 font-medium leading-6 pr-30 lg:text-xl lg:pr-0">
+            Plus besoin de chercher pendant des heures sur internet !
+          </p>
+        </div>
 
-    <!-- Button -->
-    <div class="text-sm flex justify-center pt-8">
-      <Button class="px-4" variant="vert" href="/" classes="px-10 py-3">
-        DÉCOUVREZ VOS PRODUITS !
-      </Button>
-    </div>
+        <!-- Button -->
+        <div class="text-sm flex lg:justify-start justify-center pt-8">
+          <Button class="px-4" variant="vert" href="/" classes="px-10 py-3">
+            DÉCOUVREZ VOS PRODUITS !
+          </Button>
+        </div>
+      </div>
 
-    <!-- Point carousel -->
-    <div id="carousel-indicators" class="flex justify-center gap-3 pt-8">
-      <div class="w-3 h-3 rounded-full bg-white opacity-50" data-index="0">
-      </div>
-      <div class="w-3 h-3 rounded-full bg-white opacity-50" data-index="1">
-      </div>
-      <div class="w-3 h-3 rounded-full bg-white opacity-50" data-index="2">
-      </div>
-      <div class="w-3 h-3 rounded-full bg-white opacity-50" data-index="3">
-      </div>
-      <div class="w-3 h-3 rounded-full bg-white opacity-50" data-index="4">
-      </div>
-      <div class="w-3 h-3 rounded-full bg-white opacity-50" data-index="5">
+      <!-- Point carousel -->
+      <div
+        id="carousel-indicators"
+        class="flex justify-center gap-3 pt-8 lg:col-span-11"
+      >
+        <div class="w-3 h-3 rounded-full bg-white opacity-50" data-index="0">
+        </div>
+        <div class="w-3 h-3 rounded-full bg-white opacity-50" data-index="1">
+        </div>
+        <div class="w-3 h-3 rounded-full bg-white opacity-50" data-index="2">
+        </div>
+        <div class="w-3 h-3 rounded-full bg-white opacity-50" data-index="3">
+        </div>
+        <div class="w-3 h-3 rounded-full bg-white opacity-50" data-index="4">
+        </div>
+        <div class="w-3 h-3 rounded-full bg-white opacity-50" data-index="5">
+        </div>
       </div>
     </div>
   </div>
@@ -254,7 +263,7 @@ import CardLP from "../components/CardLP.astro";
 
   const images = [
     "/src/assets/img/image.webp",
-    "src/assets/img/imagech.webp",
+    "/src/assets/img/imagech.webp",
     "/src/assets/img/imageA.webp",
     "/src/assets/img/imageAM.webp",
     "/src/assets/img/imageT.webp",
@@ -279,11 +288,17 @@ import CardLP from "../components/CardLP.astro";
         backgrounds[currentIndex]
       );
 
-      heroImage.onload = () => {
+      const newImg = new Image();
+      newImg.onload = () => {
+        heroImage.src = newImg.src;
+
+        heroImage.style.maxWidth = "100%";
+        heroImage.style.maxHeight = "100%";
+        heroImage.style.objectFit = "contain";
         container.style.opacity = "1";
       };
 
-      heroImage.src = images[currentIndex];
+      newImg.src = images[currentIndex];
 
       updateIndicators();
     }, 500);

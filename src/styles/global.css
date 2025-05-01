@@ -100,4 +100,7 @@
     .colorPage #menu-btn span {
         @apply !bg-black;
     }
+    .colorNav #menu a {
+            @apply lg:!text-black;
+    }
 }
