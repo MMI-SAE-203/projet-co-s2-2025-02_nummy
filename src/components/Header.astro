@@ -1,5 +1,6 @@
 ---
 import Logo_1 from "../assets/logo/logo2.svg";
+import UserNav from "./userNav.astro";
 
 export interface props {
   variant?: "default" | "transparent" | "colored";
@@ -26,7 +27,6 @@ import Button from "../components/Button.astro";
     </a>
   </div>
 
-  <div class="flex items-center gap-4 lg:flex-row-reverse">
     <button class="w-12 flex justify-center" aria-label="Recherche"> </button>
 
     <button
@@ -69,14 +69,18 @@ import Button from "../components/Button.astro";
             >Newsletter</a
           >
         </li>
-        <li class="block pt-6">
-          <Button classes="px-2" class="px-3" variant="lin" href="/contact"
-            >Se connecter</Button
-          >
-        </li>
       </ul>
+        <div class="flex items-center">
+        <button class="mr-4 p-1 rounded-full text-gray-600 hover:text-gray-900 focus:outline-none">
+          </svg>
+        </button>
+        
+        <UserNav />
+      </div>
     </nav>
   </div>
+
+  
 </header>
 
 <script>

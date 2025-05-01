@@ -1,0 +1,116 @@
+---
+import { isLoggedIn, initAuthentication } from "../js/login.js";
+initAuthentication();
+---
+
+<div id="user-nav-container" class="flex items-center"></div>
+
+<script>
+  import {
+    isLoggedIn,
+    pb,
+    logoutUser,
+    initAuthentication,
+  } from "../js/login.js";
+
+  function updateUserNav() {
+    const container = document.getElementById("user-nav-container");
+    if (!container) return;
+
+    initAuthentication();
+    const isAuthenticated = isLoggedIn();
+
+    console.log("État d'authentification dans updateUserNav:", isAuthenticated);
+    console.log("Utilisateur connecté:", pb.authStore.model?.email);
+
+    const defaultAvatar =
+      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+
+      const currentUser = pb.authStore.model;
+    if (isAuthenticated && pb.authStore.model) {
+      let avatarUrl = defaultAvatar;
+
+      if (currentUser?.avatar) {
+        try {
+          avatarUrl = pb.getFileUrl(currentUser, currentUser.avatar);
+        } catch (e) {
+          console.error("Erreur URL avatar:", e);
+        }
+      }
+
+      const userName =
+        currentUser?.nom_user || currentUser?.prenom_user || "Utilisateur";
+      console.log("Nom utilisateur à afficher:", userName);
+
+      container.innerHTML = `
+        <div class="relative group">
+          <button class="flex items-center space-x-2">
+            <span class="text-sm font-medium hidden sm:block">${userName}</span>
+            <img
+              src="${avatarUrl}"
+              alt="Avatar de l'utilisateur"
+              class="w-8 h-8 rounded-full object-cover border border-gray-200"
+              onerror="this.onerror=null; this.src='${defaultAvatar}';"
+            />
+          </button>
+
+          <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 hidden group-hover:block">
+            <a href="/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+              Mon profil
+            </a>
+            <a href="/favorites" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+              Mes favoris
+            </a>
+            <a href="/my-recipes" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+              Mes recettes
+            </a>
+            <hr class="my-1 border-gray-200" />
+            <button id="logout-btn" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">
+              Se déconnecter
+            </button>
+          </div>
+        </div>
+      `;
+
+      const logoutBtn = document.querySelector("#logout-btn");
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", () => {
+          logoutUser();
+          window.location.href = "/";
+        });
+      }
+    } else {
+      container.innerHTML = `
+        <div class="space-x-4">
+          <a href="/login" class="text-sm font-medium hover:text-[var(--color-orange)]">
+            Se connecter
+          </a>
+          <a href="/register" class="bg-[var(--color-orange)] text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-opacity-90">
+            S'inscrire
+          </a>
+        </div>
+      `;
+    }
+  }
+
+  function initializeUserNav() {
+    initAuthentication();
+    updateUserNav();
+    setTimeout(() => {
+      initAuthentication();
+      updateUserNav();
+    }, 200);
+  }
+
+  document.addEventListener("DOMContentLoaded", initializeUserNav);
+  window.addEventListener("storage", (event) => {
+    if (event.key === "pocketbase_auth") {
+      console.log("Changement dans le localStorage détecté");
+      initializeUserNav();
+    }
+  });
+
+  document.addEventListener("astro:after-swap", initializeUserNav);
+
+  window.addEventListener("focus", initializeUserNav);
+</script>

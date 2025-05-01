@@ -28,5 +28,36 @@ const { classBody } = Astro.props;
       <slot />
     </main>
     <Footer />
+
+    <script>
+      const redirectionHandled = sessionStorage.getItem("redirectionHandled");
+
+      if (!redirectionHandled) {
+        sessionStorage.setItem("redirectionHandled", "true");
+
+        setTimeout(() => {
+          sessionStorage.removeItem("redirectionHandled");
+        }, 2000);
+
+        const currentPath = window.location.pathname;
+        const isLoginPage = currentPath === "/login";
+        const isRegisterPage = currentPath === "/register";
+        const isProfilePage = currentPath === "/profile";
+
+
+        setTimeout(() => {
+          import("../js/login.js").then((module) => {
+            const { isLoggedIn } = module;
+            const authenticated = isLoggedIn();
+
+            if (!authenticated && isProfilePage) {
+              window.location.href = "/login";
+            } else if (authenticated && (isLoginPage || isRegisterPage)) {
+              window.location.href = "/profile";
+            }
+          });
+        }, 300);
+      }
+    </script>
   </body>
 </html>

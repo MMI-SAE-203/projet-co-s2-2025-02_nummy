@@ -1,0 +1,206 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Button from "../components/Button.astro";
+---
+
+<Layout title="Inscription | Ñummy" classBody="colorNav">
+  <div class="min-h-screen py-16 px-6">
+    <div
+      class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-lg"
+    >
+      <div class="md:flex">
+        <div class="p-8 w-full">
+          <div class="text-center mb-8">
+            <h1 class="text-2xl font-bold text-gray-900 mb-2">
+              Créer un compte
+            </h1>
+            <p class="text-sm text-gray-500">Rejoignez la communauté Ñummy</p>
+          </div>
+
+          <form id="register-form" class="space-y-5">
+            <div>
+              <label
+                for="username"
+                class="block text-sm font-medium text-gray-700"
+                >Nom d'utilisateur</label
+              >
+              <input
+                type="text"
+                id="username"
+                name="username"
+                required
+                class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-orange)]"
+              />
+            </div>
+
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700"
+                >Email</label
+              >
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-orange)]"
+              />
+            </div>
+
+            <div>
+              <label for="name" class="block text-sm font-medium text-gray-700"
+                >Nom complet</label
+              >
+              <input
+                type="text"
+                id="name"
+                name="name"
+                class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-orange)]"
+              />
+            </div>
+
+            <div>
+              <label
+                for="password"
+                class="block text-sm font-medium text-gray-700"
+                >Mot de passe</label
+              >
+              <input
+                type="password"
+                id="password"
+                name="password"
+                required
+                class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-orange)]"
+              />
+            </div>
+
+            <div>
+              <label
+                for="passwordConfirm"
+                class="block text-sm font-medium text-gray-700"
+                >Confirmer le mot de passe</label
+              >
+              <input
+                type="password"
+                id="passwordConfirm"
+                name="passwordConfirm"
+                required
+                class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-orange)]"
+              />
+            </div>
+
+            <div class="flex items-center">
+              <input
+                type="checkbox"
+                id="terms"
+                name="terms"
+                required
+                class="h-4 w-4 text-[var(--color-orange)]"
+              />
+              <label for="terms" class="ml-2 block text-sm text-gray-700">
+                J'accepte les <a
+                  href="/politiquesconfi"
+                  class="text-[var(--color-orange)] hover:underline"
+                  >conditions d'utilisation</a
+                >
+              </label>
+            </div>
+
+            <div id="error-message" class="text-red-600 text-sm hidden"></div>
+
+            <div>
+              <button
+                type="submit"
+                class="w-full bg-[var(--color-orange)] text-white font-bold py-2 px-4 rounded-md hover:bg-opacity-90 transition duration-300"
+              >
+                S'inscrire
+              </button>
+            </div>
+          </form>
+
+          <div class="mt-6 text-center">
+            <p class="text-sm text-gray-600">
+              Vous avez déjà un compte ?
+              <a
+                href="/login"
+                class="text-[var(--color-orange)] hover:underline"
+                >Se connecter</a
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  import { registerUser } from "../js/login.js";
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("register-form");
+    const errorMessage = document.getElementById("error-message");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      errorMessage.classList.add("hidden");
+
+      try {
+        const password = form.password.value;
+        const passwordConfirm = form.passwordConfirm.value;
+
+        if (password !== passwordConfirm) {
+          errorMessage.textContent = "Les mots de passe ne correspondent pas.";
+          errorMessage.classList.remove("hidden");
+          return;
+        }
+
+          if (password.length < 8) {
+          errorMessage.textContent = "Le mot de passe doit comporter au moins 8 caractères";
+          errorMessage.classList.remove("hidden");
+          return;
+        }
+
+        if (!form.email.value || !form.username.value || !password) {
+          errorMessage.textContent =
+            "Veuillez remplir tous les champs obligatoires.";
+          errorMessage.classList.remove("hidden");
+          return;
+        }
+
+        const userData = {
+          email: form.email.value,
+          prenom_user: form.name.value || "",
+          nom_user: form.username.value,
+          password: password,
+        };
+
+        console.log("Enviando datos de usuario:", userData);
+
+        const result = await registerUser(userData);
+        console.log("Resultado del registro:", result);
+
+          if (result.success) {
+            const successMessage = document.createElement('div');
+            successMessage.textContent = 'Compte créé avec succès! Redirection...';
+            successMessage.className = 'text-green-600 text-sm font-medium mt-3 text-center';
+            form.appendChild(successMessage);
+   
+            setTimeout(() => {
+              window.location.href = "/login"; 
+            }, 2000); 
+          } else {
+          let formattedError = result.error;
+          if (formattedError.includes('\n')) {
+            formattedError = formattedError.split('\n').join('<br>');
+          }
+          errorMessage.innerHTML = formattedError || "Erreur lors de l'inscription";
+          errorMessage.classList.remove("hidden");
+        }
+      } catch (err) {
+        console.error("Error en el proceso de registro:", err);
+        errorMessage.textContent = "Une erreur s'est produite lors de l'inscription.";
+        errorMessage.classList.remove("hidden");
+      }
+    });
+  });
+</script>
