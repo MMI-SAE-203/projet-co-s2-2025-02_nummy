@@ -3,6 +3,8 @@ import { oneIDRecette } from "../../../pocketbase/backend.mjs";
 import Layout from "../../layouts/Layout.astro";
 import Card from "../../components/Card.astro";
 import ImagePB from "../../components/ImagePB.astro";
+import Clock from "../../assets/icones/clock.svg";
+import Nb_personnes from "../../assets/icones/nb_personnes.svg";
 
 /*Affichage du détail d’un élément de la collection en utilisant une route dynamique.   recette */
 
@@ -11,12 +13,21 @@ const recette = await oneIDRecette(id);
 if (!recette) {
     return Astro.redirect("/recette");
 }
+
+let recettes = [];
 ---
 
 <Layout titre={recette.nom_recette}>
     <div>
         <ul class="p-8 p-4 border-2 border-gray-300 rounded-lg shadow-md">
             <li class="p-4 list-none">
+                <ImagePB
+                    record={recette}
+                    field="images_recette"
+                    alt={recette.imgAlt}
+                    classPicture="flex justify-center"
+                    classImg="w-50 h-75 m-2 "
+                />
                 <span
                     >{recette.continent_recette} | <span
                         >{recette.pays_recette}</span
@@ -35,26 +46,30 @@ if (!recette) {
                 classPicture="flex "
                 classImg="w-50  m-10 rounded-lg"
             />
-
+            <li class="p-4"><Clock /></li>
             <li class="p-4">
-                <p class="p-4"><strong>emoji temps à mettre </strong></p>
                 <span>{recette.temps_recette}</span>
             </li>
 
-            <li class="p-4">
-                <p class="p-4"><strong>emoji personne à mettre </strong></p>
+            <li class="p-5"><Nb_personnes /></li>
+            <li class="pt-8">
                 <span>{recette.personnes_recette} personnes</span>
             </li>
 
             <li class="p-4">
-                <p class="p-4"><strong>Ingrédients :</strong></p>
-                <div set:html={recette.ingredients_recette} />
+                <p class=""><strong>Ingrédients :</strong></p>
+                <div class="m-5" set:html={recette.ingredients_recette} />
             </li>
 
             <li class="p-4">
-                <p class="p-4"><strong>Préparation :</strong></p>
-                <div set:html={recette.preparation_recette} />
+                <p class=""><strong>Préparation :</strong></p>
+                <div class="m-5" set:html={recette.preparation_recette} />
             </li>
         </ul>
+
+          <div class="flex justify-center list-none flex-wrap gap-5 pt- 15 pb-40">
+            <h2 class="m-8"></h2>
+            {recettes.map((recette) => <Card {...recette} />)}
+        </div>
     </div>
 </Layout>
