@@ -96,3 +96,26 @@ export async function allRecetteFavori() {
     const records = await pb.collection('Recette').getFullList({ filter: 'favori = true', });
     return records;
 }
+
+
+
+//fonction qui retourne les commentaires d'une recette 
+
+
+export async function commentaires() {
+    let records = await pb.collection('commentaire').getFullList({
+        sort: '-created',
+        expand: 'nom_user,recette',
+    });
+
+    records = records.map((commentaire) => {
+
+        if (commentaire.expand?.auteur?.avatar) {
+            commentaire.avatarUrl = pb.files.getUrl(commentaire.expand.auteur, commentaire.expand.auteur.avatar);
+        }
+
+        return commentaire;
+    });
+
+    return records;
+}

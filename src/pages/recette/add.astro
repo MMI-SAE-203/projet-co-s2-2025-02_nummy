@@ -21,12 +21,29 @@ if (Astro.request.method === "POST") {
 {message && <p class="text-red-600">{}</p>}
 <form action="/recette/add" method="POST" enctype="multipart/form-data">
 
-  <div>
+   <div>
 
-    <label for="hero_recette" class="block mt-4 font-semibold text-black uppercase">Image du plat</label>
+    <label for="hero_recette" class="block mt-4 font-semibold text-black uppercase  w-full max-w-sm">Image du plat</label>
 
-    <input type="file" name="hero_recette"  placeholder="Cliquez pour télécharger une image"  class=" text-center w-105 h-25 lg:w-full mt-2 p-2 rounded-md bg-gray-200"/>
+    <input type="file" name="hero_recette"  placeholder="Cliquez pour télécharger une image"  />
+</div> 
+
+  <label
+    for="hero_recette"
+    class="h-32 w-full flex flex-col items-center justify-center gap-2 cursor-pointer border border-dashed border-gray-200 bg-gray-200 rounded-md hover:bg-gray-200 transition"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 fill-gray-500" viewBox="0 0 24 24">
+      <path
+        fill="currentColor"
+        d="M10 1C9.73 1 9.48 1.11 9.29 1.29L3.29 7.29C3.11 7.48 3 7.73 3 8V20C3 21.66 4.34 23 6 23H7C7.55 23 8 22.55 8 22C8 21.45 7.55 21 7 21H6C5.45 21 5 20.55 5 20V9H10C10.55 9 11 8.55 11 8V3H18C18.55 3 19 3.45 19 4V9C19 9.55 19.45 10 20 10C20.55 10 21 9.55 21 9V4C21 2.34 19.66 1 18 1H10Z"
+      />
+    </svg>
+    <span class="text-sm text-gray-600"> Cliquez pour télécharger une image</span>
+  </label>
+
+  <input type="file" name="hero_recette" id="hero_recette" class="hidden" />
 </div>
+
 
 
     <div class="flex flex-wrap gap-6 mt-4">
@@ -83,7 +100,7 @@ if (Astro.request.method === "POST") {
 
 <div>
 
-  <label for="ingrédients_recette" class="block mt-4 font-semibold text-black uppercase">ingrédients</label>
+  <label for="ingrédients_recette" class="block mt-4 font-semibold text-black uppercase">Ingrédients</label>
 
   <input 
   type="text"
@@ -95,7 +112,7 @@ if (Astro.request.method === "POST") {
 
     </div>
 
-    <div>
+    <!-- <div>
 
 
     <label for="images_recette" class="block mt-4 font-semibold text-black uppercase">Images (optionnelleS)</label>
@@ -103,7 +120,21 @@ if (Astro.request.method === "POST") {
  
   <input type="file" name="images_recette"   placeholder="Ajouter une image"    class="w-105 mt-2 p-2 rounded-md bg-gray-200 lg:w-full " />
 
-  </div>
+  </div> -->
+    <label for="images_recette" class="block mt-4 font-semibold text-black uppercase">Images (optionnelleS)</label>
+
+ <label
+    for="hero_recette"
+    class=" block mt-4 font-semibold text-black uppercase  w-full flex flex-col items-center justify-center gap-2 cursor-pointer border border-dashed border-gray-200 bg-gray-200 rounded-md hover:bg-gray-200 transition"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 fill-gray-500" viewBox="0 0 24 24">
+      <path
+        fill="currentColor"
+        d="M10 1C9.73 1 9.48 1.11 9.29 1.29L3.29 7.29C3.11 7.48 3 7.73 3 8V20C3 21.66 4.34 23 6 23H7C7.55 23 8 22.55 8 22C8 21.45 7.55 21 7 21H6C5.45 21 5 20.55 5 20V9H10C10.55 9 11 8.55 11 8V3H18C18.55 3 19 3.45 19 4V9C19 9.55 19.45 10 20 10C20.55 10 21 9.55 21 9V4C21 2.34 19.66 1 18 1H10Z"
+      />
+    </svg>
+    <span class="text-sm text-gray-600"> Cliquez pour télécharger une image</span>
+  </label>
 
 
   <div>
@@ -117,20 +148,50 @@ if (Astro.request.method === "POST") {
   />
   </div>
 
-<div>
+<!-- <div>
 
   <label for="images_recette" class="block mt-4 font-semibold text-black uppercase">Images (optionnelles)</label>
 
  
   <input type="file" name="images_recette"  placeholder="Ajouter une image"   class="w-105 mt-2 p-2   rounded-md bg-gray-200 lg:w-full " />
-</div>
+</div> -->
 
-<p class="text-center">  En cochant cette case, vous acceptez les conditions générales de Ñummy 
+
+ <label for="images_recette" class="block mt-4 font-semibold text-black uppercase">Images (optionnelleS)</label>
+    
+ <label
+    for="hero_recette"
+    class=" block mt-4 font-semibold text-black uppercase  w-full flex flex-col items-center justify-center gap-2 cursor-pointer border border-dashed border-gray-200 bg-gray-200 rounded-md hover:bg-gray-200 transition"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 fill-gray-500" viewBox="0 0 24 24">
+      <path
+        fill="currentColor"
+        d="M10 1C9.73 1 9.48 1.11 9.29 1.29L3.29 7.29C3.11 7.48 3 7.73 3 8V20C3 21.66 4.34 23 6 23H7C7.55 23 8 22.55 8 22C8 21.45 7.55 21 7 21H6C5.45 21 5 20.55 5 20V9H10C10.55 9 11 8.55 11 8V3H18C18.55 3 19 3.45 19 4V9C19 9.55 19.45 10 20 10C20.55 10 21 9.55 21 9V4C21 2.34 19.66 1 18 1H10Z"
+      />
+    </svg>
+    <span class="text-sm text-gray-600"> Cliquez pour télécharger une image</span>
+  </label>
+
+
+<p class="text-center m-3">  En cochant cette case, vous acceptez les conditions générales de Ñummy 
     pour la publication d'un article sur le site web. Pour en savoir plus sur 
     notre politique de confidentialité, cliquez ici.</p>
 
  
-    <button class="" type="submit">PUBLIER</button>
+  
+
+    
+        <div class="flex justify-center lg:justify-center">
+            <a
+                href="/recette/add"
+                class="inline-block bg-[var(--color-orange)] text-black font-semibold py-2 px-4 rounded-3xl mb-6"
+            >
+                PUBLIER
+            </a>
+        </div>
+
 </form> 
+
+
 
 </Layout>

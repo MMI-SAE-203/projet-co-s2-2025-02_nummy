@@ -8,18 +8,20 @@ console.log(recette);
 ---
 
 <div>
-    <li class="font-bold text-center ">{recette.nom_recette}</li>
+    <li class="font-bold text-center">{recette.nom_recette}</li>
 
     <!-- affichage des recettes -->
-    <ImagePB
-        record={recette}
-        field="images_recette"
-        alt={recette.imgAlt}
-        classPicture="flex justify-center"
-        classImg="w-50 h-75 m-10 rounded-lg"
-    />
+    <a href=`/recette/${recette.id}`>
+        <ImagePB
+            record={recette}
+            field="images_recette"
+            alt={recette.imgAlt}
+            classPicture="flex justify-center "
+            classImg="w-75 h-75 m-10 rounded-lg object-cover"
+        />
+    </a>
 
-    <a href={`/recette/${recette.id}`} class=" text-black underline text-center "
+    <a href={`/recette/${recette.id}`} class="text-black underline "
         >Voir plus</a
     >
 </div>
