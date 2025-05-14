@@ -44,9 +44,20 @@ if (Astro.request.method === "POST") {
         <div class="flex justify-center lg:justify-end">
             <a
                 href="/recette/add"
-                class="inline-block bg-[var(--color-orange)] text-black font-semibold py-2 px-4 rounded-3xl mb-6"
+                class="inline-block bg-[var(--color-orange)] text-black font-semibold py-2 px-4 rounded-3xl mb-6 uppercase"
             >
                 Ajouter une recette
+            </a>
+        </div>
+
+        <!-- favori  -->
+
+          <div class="flex justify-center lg:justify-end">
+            <a
+                href="/recette/favori"
+                class="inline-block bg-[var(--color-orange)] text-black font-semibold py-2 px-4 rounded-3xl mb-6 uppercase"
+            >
+                Favoris
             </a>
         </div>
 
