@@ -1,0 +1,70 @@
+---
+import { Image } from "astro:assets";
+import Button from "../components/Button.astro";
+
+// Simplificar los props - el componente ahora solo muestra productos
+const {
+  products,
+  showFavoriteIndicator = true
+} = Astro.props;
+---
+
+<section>
+  <div class="px-4 md:px-[80px]">
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-[20px]">
+      {
+        products.length === 0 ? (
+          <p class="col-span-2 md:col-span-3 text-center text-gray-500">
+            Aucun produit trouvé.
+          </p>
+        ) : (
+          products.map((p) => (
+            <article
+              class="
+              bg-white
+              rounded-lg
+              shadow
+              border
+              border-gray-200
+              overflow-hidden
+              relative
+              flex
+              flex-col
+              transition-transform duration-300 hover:shadow-lg hover:-translate-y-1
+            "
+            >
+              <Image
+                src={
+                  p.img_produit
+                    ? `https://nummy.arthurwicky.fr/api/files/Produit/${p.id}/${p.img_produit}`
+                    : "https://via.placeholder.com/400x300?text=Nummy"
+                }
+                alt={p.nom_produit}
+                width={400}
+                height={300}
+                class="w-full h-40 object-cover"
+              />
+
+              <div class="p-4 flex-1 flex flex-col">
+                <h3 class="text-lg font-semibold mb-1">{p.nom_produit}</h3>
+                <p class="text-sm text-gray-500 mb-4">{p.pays_produit}</p>
+
+                <div class="mt-auto">
+                  <Button href={`/continents/${p.id}`} class="w-full">
+                    En savoir plus
+                  </Button>
+                </div>
+
+                {showFavoriteIndicator && p.favori_produit && (
+                  <span class="absolute top-2 right-2 text-yellow-400 text-xl">
+                    ★
+                  </span>
+                )}
+              </div>
+            </article>
+          ))
+        )
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,296 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getAllRecettes, getRecetteById } from "../../js/backend.js";
+
+// Interface pour TypeScript
+interface Recette {
+  id: string;
+  nom_recette: string;
+  hero_recette?: string;
+  pays_recette: string;
+  continent_recette: string;
+  personnes_recette: number;
+  temps_recette: number;
+  ingredients_recette: string;
+  produits_recette?: any[];
+  images_recette?: string[];
+  preparation_recette: string;
+  favori: boolean;
+  utilisateur_recette?: any;
+  created: string;
+}
+
+export async function getStaticPaths() {
+  try {
+    const allRecettes = await getAllRecettes();
+    return allRecettes.map((recette) => ({
+      params: { id: recette.id },
+      props: { recette },
+    }));
+  } catch (error) {
+    console.error("Error en getStaticPaths:", error);
+    return [{ params: { id: "fallback" } }];
+  }
+}
+
+const { id } = Astro.params;
+const { recette } = Astro.props;
+let recetteData = recette;
+
+if (!recetteData) {
+  try {
+    const result = await getRecetteById(id);
+    if (result.success) {
+      recetteData = result.item;
+    } else {
+      return Astro.redirect("/recettes");
+    }
+  } catch (error) {
+    console.error("Error al obtener la recette:", error);
+    return Astro.redirect("/recettes");
+  }
+}
+
+if (id === "fallback") {
+  return Astro.redirect("/recettes");
+}
+
+// URLs des images
+const heroUrl = recetteData.hero_recette
+  ? `https://nummy.arthurwicky.fr/api/files/Recette/${recetteData.id}/${recetteData.hero_recette}`
+  : "https://via.placeholder.com/800x400?text=Recette";
+
+// Obtenir recettes similaires
+let recettesSimilaires: Recette[] = [];
+try {
+  const allRecettes = await getAllRecettes();
+  recettesSimilaires = allRecettes
+    .filter(r => r.id !== recetteData.id && r.continent_recette === recetteData.continent_recette)
+    .slice(0, 3);
+} catch (error) {
+  console.error("Error al obtener recettes similaires:", error);
+}
+
+// Fonction pour nettoyer le HTML
+function stripHtml(html) {
+  if (!html) return '';
+  return html
+    .replace(/<[^>]*>/g, '')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&nbsp;/g, ' ')
+    .trim();
+}
+---
+
+<Layout classBody="colorPage colorNav" title={`${recetteData.nom_recette} | Nummy`}>
+
+  <!-- Section principale -->
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-24">
+    <div class="bg-[var(--color-blanc)] rounded-xl shadow-lg overflow-hidden">
+      <div class="md:flex">
+        <!-- Image hero -->
+        <div class="md:flex-shrink-0 md:w-1/2">
+          <img
+            src={heroUrl}
+            loading="lazy"
+            alt={recetteData.nom_recette}
+            class="h-full w-full object-cover md:h-full md:w-full max-h-[500px]"
+            onerror="this.onerror=null; this.src='https://via.placeholder.com/800x400?text=Recette';"
+          />
+        </div>
+
+        <!-- Info principales -->
+        <div class="p-8 md:w-1/2">
+          <div class="flex items-center flex-wrap gap-2">
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-[var(--color-green)] bg-opacity-20 text-white mr-2">
+              {recetteData.continent_recette}
+            </span>
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-[var(--color-bleu)] bg-opacity-20 text-white">
+              {recetteData.pays_recette}
+            </span>
+            {recetteData.favori && (
+              <span class="ml-auto text-[var(--color-orange)] text-2xl">★ Favori</span>
+            )}
+          </div>
+
+          <h1 class="mt-4 text-3xl font-bold text-[var(--color-noir)] tracking-tight h1-header">
+            {recetteData.nom_recette}
+          </h1>
+
+          <!-- Informations pratiques -->
+          <div class="mt-6 grid grid-cols-2 gap-4">
+            <div class="bg-[var(--color-lin)] p-4 rounded-lg text-center">
+              <div class="text-2xl mb-2">👥</div>
+              <div class="p-body2 font-bold text-[var(--color-noir)]">{recetteData.personnes_recette}</div>
+              <div class="p-body3 text-[var(--color-green)]">Personnes</div>
+            </div>
+            <div class="bg-[var(--color-lin)] p-4 rounded-lg text-center">
+              <div class="text-2xl mb-2">⏱️</div>
+              <div class="p-body2 font-bold text-[var(--color-noir)]">{recetteData.temps_recette} min</div>
+              <div class="p-body3 text-[var(--color-green)]">Préparation</div>
+            </div>
+          </div>
+
+          <!-- Produits utilisés -->
+          {recetteData.produits_recette && recetteData.produits_recette.length > 0 && (
+            <div class="mt-6">
+              <h3 class="p-body1 font-bold mb-3 text-[var(--color-noir)]">Produits utilisés:</h3>
+              <div class="flex flex-wrap gap-2">
+                {recetteData.produits_recette.map((produit) => (
+                  <a 
+                    href={`/continents/${produit.id}`}
+                    class="bg-[var(--color-orange)] bg-opacity-20 text-[var(--color-orange)] px-3 py-1 rounded-full p-body3 hover:bg-opacity-30 transition-colors"
+                  >
+                    {produit.nom_produit}
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <!-- Boutons d'action -->
+          <div class="mt-8 flex flex-wrap gap-4">
+            <button 
+              class="bg-[var(--color-green)] text-[var(--color-blanc)] px-6 py-3 rounded-full hover:opacity-90 transition-all button flex items-center"
+              onclick="window.print()"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+              </svg>
+              Imprimer la recette
+            </button>
+            
+            <button 
+              class="bg-[var(--color-blanc)] border border-[var(--color-green)] text-[var(--color-green)] px-6 py-3 rounded-full hover:bg-[var(--color-green)] hover:text-[var(--color-blanc)] transition-all button flex items-center"
+              onclick="navigator.share ? navigator.share({title: '{recetteData.nom_recette}', url: window.location.href}) : navigator.clipboard.writeText(window.location.href)"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+              </svg>
+              Partager
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section ingrédients et préparation -->
+    <div class="mt-12 grid md:grid-cols-2 gap-8">
+      <!-- Ingrédients -->
+      <div class="bg-[var(--color-blanc)] rounded-xl shadow-lg p-8">
+        <h2 class="h2-header mb-6 text-[var(--color-noir)] flex items-center">
+          <span class="text-2xl mr-3">🥕</span>
+          Ingrédients
+        </h2>
+        <div class="prose prose-sm max-w-none">
+          <div set:html={recetteData.ingredients_recette}></div>
+        </div>
+      </div>
+
+      <!-- Préparation -->
+      <div class="bg-[var(--color-blanc)] rounded-xl shadow-lg p-8">
+        <h2 class="h2-header mb-6 text-[var(--color-noir)] flex items-center">
+          <span class="text-2xl mr-3">👨‍🍳</span>
+          Préparation
+        </h2>
+        <div class="prose prose-sm max-w-none">
+          <div set:html={recetteData.preparation_recette}></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Images supplémentaires -->
+    {recetteData.images_recette && recetteData.images_recette.length > 0 && (
+      <div class="mt-12">
+        <h2 class="h2-header mb-6 text-[var(--color-noir)] text-center">Photos de la recette</h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+          {recetteData.images_recette.map((image, index) => (
+            <img
+              src={`https://nummy.arthurwicky.fr/api/files/Recette/${recetteData.id}/${image}`}
+              alt={`${recetteData.nom_recette} - Image ${index + 1}`}
+              class="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer"
+              onclick={`window.open(this.src, '_blank')`}
+              onerror="this.style.display='none'"
+            />
+          ))}
+        </div>
+      </div>
+    )}
+
+    <!-- Informations sur l'auteur -->
+    {recetteData.utilisateur_recette && (
+      <div class="mt-12 bg-[var(--color-lin)] rounded-xl p-8">
+        <h3 class="h3-header mb-4 text-[var(--color-noir)]">À propos de l'auteur</h3>
+        <div class="flex items-center">
+          <div class="w-16 h-16 bg-[var(--color-green)] rounded-full flex items-center justify-center text-[var(--color-blanc)] text-xl font-bold mr-4">
+            {recetteData.utilisateur_recette.name ? recetteData.utilisateur_recette.name.charAt(0).toUpperCase() : 'U'}
+          </div>
+          <div>
+            <p class="p-body1 font-bold text-[var(--color-noir)]">{recetteData.utilisateur_recette.name || 'Utilisateur'}</p>
+            <p class="p-body3 text-[var(--color-green)]">Membre de la communauté Nummy</p>
+          </div>
+        </div>
+      </div>
+    )}
+  </div>
+
+  <!-- Recettes similaires -->
+  {recettesSimilaires.length > 0 && (
+    <section class="bg-[var(--color-lin)] py-12">
+      <div class="px-4 md:px-20">
+        <h2 class="h2-header text-center mb-8 text-[var(--color-noir)]">Autres recettes de {recetteData.continent_recette}</h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+          {recettesSimilaires.map((recette) => (
+            <article class="bg-[var(--color-blanc)] rounded-lg shadow border border-[var(--color-lin)] overflow-hidden hover:shadow-lg transition-shadow">
+              <img
+                src={recette.hero_recette ? `https://nummy.arthurwicky.fr/api/files/Recette/${recette.id}/${recette.hero_recette}` : "https://via.placeholder.com/400x300?text=Recette"}
+                alt={recette.nom_recette}
+                class="w-full h-40 object-cover"
+              />
+              <div class="p-4">
+                <h3 class="p-body1 font-bold mb-2 text-[var(--color-noir)]">{recette.nom_recette}</h3>
+                <p class="p-body3 text-[var(--color-green)] mb-3">{recette.pays_recette}</p>
+                <div class="flex justify-between items-center text-[var(--color-green)] p-body3 mb-4">
+                  <span>👥 {recette.personnes_recette}</span>
+                  <span>⏱️ {recette.temps_recette}min</span>
+                </div>
+                <a 
+                  href={`/recettes/${recette.id}`}
+                  class="inline-block w-full text-center bg-[var(--color-green)] text-[var(--color-blanc)] px-4 py-2 rounded-full hover:opacity-90 transition-all button"
+                >
+                  Voir la recette
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Banner --> 
+  <section class="bg-gradient-to-r from-[var(--color-green)] to-[var(--color-bleu)] text-[var(--color-blanc)] py-12">
+    <div class="px-4 md:px-20 text-center">
+      <h2 class="h2-header mb-4">Vous avez aimé cette recette ?</h2>
+      <p class="p-body1 mb-6">Partagez vos propres créations culinaires avec notre communauté</p>
+      <div class="space-x-4">
+        <a 
+          href="/recettes/ajouter" 
+          class="inline-block bg-[var(--color-blanc)] text-[var(--color-green)] px-6 py-3 rounded-full hover:opacity-90 transition-all button"
+        >
+          Ajouter ma recette
+        </a>
+        <a 
+          href="/recettes" 
+          class="inline-block border-2 border-[var(--color-blanc)] text-[var(--color-blanc)] px-6 py-3 rounded-full hover:bg-[var(--color-blanc)] hover:text-[var(--color-green)] transition-all button"
+        >
+          Explorer d'autres recettes
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

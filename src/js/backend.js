@@ -1,22 +1,73 @@
 import PocketBase from 'pocketbase';
 
-export const pb = new PocketBase('https://nummy.arthurwicky.fr')
+export const pb = new PocketBase('https://nummy.arthurwicky.fr');
 
-import { isLoggedIn } from './login.js';
+// Función para verificar si el usuario está logueado
+export function isLoggedIn() {
+    try {
+        if (typeof window === 'undefined') {
+            return false;
+        }
+        
+        const storedAuthData = localStorage.getItem('pocketbase_auth');
+        if (!storedAuthData) {
+            return false;
+        }
+        
+        const parsedData = JSON.parse(storedAuthData);
+        if (!parsedData.token || !parsedData.model) {
+            localStorage.removeItem('pocketbase_auth');
+            pb.authStore.clear();
+            return false;
+        }
+        
+        if (!pb.authStore.isValid || pb.authStore.token !== parsedData.token) {
+            pb.authStore.save(parsedData.token, parsedData.model);
+        }
+        
+        if (pb.authStore.isValid) {
+            return true;
+        } else {
+            localStorage.removeItem('pocketbase_auth');
+            pb.authStore.clear();
+            return false;
+        }
+    } catch (error) {
+        console.error("Error en isLoggedIn:", error);
+        return false;
+    }
+}
 
-// Fonction pour récupérer tous les établissements
+// Función para obtener usuario actual
+export function getCurrentUser() {
+    try {
+        if (typeof window === 'undefined') {
+            return null;
+        }
+        
+        if (!isLoggedIn()) {
+            return null;
+        }
+        
+        return pb.authStore.model;
+    } catch (error) {
+        console.error("Error getting current user:", error);
+        return null;
+    }
+}
+
+// Función para récupérer tous les établissements
 export async function getEtablissements(){
-try {
-    const records = await pb.collection('Etablissement').getList(1, 100, {
-        sort: 'created',
-        expand: 'continent_etablissement,categorie_etablissement'
-    });
+    try {
+        const records = await pb.collection('Etablissement').getFullList({
+            sort: 'created'
+        });
 
         return {
             success: true,
-            items: records.items
+            items: records
         };
-} catch (error) {
+    } catch (error) {
         console.error("Erreur lors de la récupération des établissements:", error);
         return {
             success: false,
@@ -25,12 +76,10 @@ try {
     }
 }
 
-// Fonction pour récupérer un établissement par son ID
+// Función para récupérer un établissement par son ID
 export async function getEtablissementById(id) {
     try {
-        const record = await pb.collection('Etablissement').getOne(id, {
-            expand: 'continent_etablissement,categorie_etablissement'
-        });
+        const record = await pb.collection('Etablissement').getOne(id);
         return {
             success: true,
             item: record
@@ -44,8 +93,7 @@ export async function getEtablissementById(id) {
     }
 }
 
-// Fonction pour obtenir la localisation de l'utilisateur via une API
-
+// Función para obtener la localización de l'utilisateur via une API
 export async function getUserLocation(){
     try{
         const response = await fetch('https://ipapi.co/json/');
@@ -80,9 +128,8 @@ export async function getUserLocation(){
     } catch (error) {
         console.error("Error al obtener la localización:", error);
         return {
-            success: true, // Cambiado a true para evitar errores en cascada
+            success: true,
             error: error.message,
-            // Coordenadas de París por defecto
             latitude: 48.8566,
             longitude: 2.3522,
             city: "Paris",
@@ -117,7 +164,6 @@ export async function toggleFavorite(id, isFavorite) {
     }
 }
 
-
 export function calculateDistance(lat1, lon1, lat2, lon2) {
     const R = 6371; // Rayon de la Terre en km
     const dLat = (lat2 - lat1) * Math.PI / 180;
@@ -134,12 +180,11 @@ export function calculateDistance(lat1, lon1, lat2, lon2) {
     return distance;
 }
 
-// Fonction pour convertir une adresse en coordonnées
+// Función para convertir une adresse en coordonnées
 export async function geocodeAdresse(adresse) {
     try {
         console.log(`Tentative de géocodage pour: ${adresse}`);
         
-        // Ajout d'un délai pour éviter de surcharger l'API
         await new Promise(resolve => setTimeout(resolve, 300));
         
         const query = encodeURIComponent(`${adresse}`);
@@ -182,3 +227,280 @@ export async function geocodeAdresse(adresse) {
     }
 }
 
+// Produits
+export async function getAllProduits() {
+    try {
+        const records = await pb.collection("Produit").getFullList({
+            expand: "magasin_produit,recettes_produit",
+        });
+    
+        return records.map((r) => ({
+            id: r.id,
+            img_produit: r.img_produit,
+            nom_produit: r.nom_produit,
+            type_produit: r.type_produit,
+            description_produit: r.description_produit,
+            magasin_produit: r.expand?.magasin_produit || null,
+            continent_produit: r.continent_produit,
+            pays_produit: r.pays_produit,
+            favori_produit: !!r.favori_produit,
+            recettes_produit: r.expand?.recettes_produit || [],
+            site_produit: r.site_produit || '',
+        }));
+    } catch (error) {
+        console.error("Error getting products:", error);
+        return [];
+    }
+}
+
+export async function getProduitById(id) {
+    try {
+        const record = await pb.collection('Produit').getOne(id, {
+            expand: 'magasin_produit,recettes_produit'
+        });
+        
+        return {
+            success: true,
+            item: {
+                id: record.id,
+                img_produit: record.img_produit,
+                nom_produit: record.nom_produit,
+                type_produit: record.type_produit,
+                description_produit: record.description_produit,
+                site_produit: record.site_produit || '',
+                magasin_produit: record.expand?.magasin_produit || null,
+                continent_produit: record.continent_produit,
+                pays_produit: record.pays_produit,
+                favori_produit: !!record.favori_produit,
+                recettes_produit: record.expand?.recettes_produit || record.recettes_produit || '',
+            }
+        };
+    } catch (error) {
+        console.error(`Error al obtener el producto ${id}:`, error);
+        return {
+            success: false,
+            error: error.message
+        };
+    }
+}
+
+// Recettes
+export async function getAllRecettes() {
+    try {
+        const records = await pb.collection("Recette").getFullList({
+            expand: "produits_recette,utilisateur_recette",
+            sort: '-created'
+        });
+    
+        return records.map((r) => ({
+            id: r.id,
+            nom_recette: r.nom_recette,
+            hero_recette: r.hero_recette,
+            pays_recette: r.pays_recette,
+            continent_recette: r.continent_recette,
+            personnes_recette: r.personnes_recette,
+            temps_recette: r.temps_recette,
+            ingredients_recette: r.ingredients_recette,
+            produits_recette: r.expand?.produits_recette || [],
+            images_recette: r.images_recette || [],
+            preparation_recette: r.preparation_recette,
+            favori: !!r.favori,
+            utilisateur_recette: r.expand?.utilisateur_recette || null,
+            created: r.created
+        }));
+    } catch (error) {
+        console.error("Erreur lors de la récupération des recettes:", error);
+        return [];
+    }
+}
+
+export async function getRecetteById(id) {
+    try {
+        const record = await pb.collection('Recette').getOne(id, {
+            expand: 'produits_recette,utilisateur_recette'
+        });
+        
+        return {
+            success: true,
+            item: {
+                id: record.id,
+                nom_recette: record.nom_recette,
+                hero_recette: record.hero_recette,
+                pays_recette: record.pays_recette,
+                continent_recette: record.continent_recette,
+                personnes_recette: record.personnes_recette,
+                temps_recette: record.temps_recette,
+                ingredients_recette: record.ingredients_recette,
+                produits_recette: record.expand?.produits_recette || [],
+                images_recette: record.images_recette || [],
+                preparation_recette: record.preparation_recette,
+                favori: !!record.favori,
+                utilisateur_recette: record.expand?.utilisateur_recette || null,
+                created: record.created
+            }
+        };
+    } catch (error) {
+        console.error(`Erreur lors de la récupération de la recette ${id}:`, error);
+        return {
+            success: false,
+            error: error.message
+        };
+    }
+}
+
+export async function createRecette(formData) {
+    try {
+        if (!isLoggedIn()) {
+            return {
+                success: false,
+                error: "Vous devez être connecté pour créer une recette"
+            };
+        }
+
+        const currentUser = getCurrentUser();
+        if (currentUser) {
+            formData.append("utilisateur_recette", currentUser.id);
+        }
+
+        const record = await pb.collection('Recette').create(formData);
+        
+        return {
+            success: true,
+            item: record
+        };
+    } catch (error) {
+        console.error('Erreur lors de la création de la recette:', error);
+        return {
+            success: false,
+            error: error.message || "Erreur lors de la création de la recette"
+        };
+    }
+}
+
+// Login functions
+export async function loginUser(email, password) {
+    try {
+        console.log("🔄 Intentando login con:", email);
+        
+        pb.authStore.clear();
+        if (typeof window !== 'undefined') {
+            localStorage.removeItem('pocketbase_auth');
+        }
+        
+        const authData = await pb.collection('users').authWithPassword(email, password);
+        
+        if (typeof window !== 'undefined') {
+            const authInfo = {
+                token: pb.authStore.token,
+                model: pb.authStore.model
+            };
+            localStorage.setItem('pocketbase_auth', JSON.stringify(authInfo));
+            console.log("💾 Sesión guardada en localStorage");
+        }
+        
+        console.log("✅ Login exitoso:", authData.record.email);
+        return { success: true, user: authData.record };
+    } catch (error) {
+        console.error('❌ Error de login:', error);
+        pb.authStore.clear();
+        if (typeof window !== 'undefined') {
+            localStorage.removeItem('pocketbase_auth');
+        }
+        return { success: false, error: error.message };
+    }
+}
+
+export async function registerUser(userData) {
+    try {
+        console.log("🔄 Registrando usuario:", userData.email);
+
+        if (!userData.email || !userData.password || !userData.nom_user) {
+            return { success: false, error: "Todos los campos obligatorios deben estar completos" };
+        }
+
+        const data = {
+            email: userData.email,
+            password: userData.password,
+            passwordConfirm: userData.password,
+            nom_user: userData.nom_user,
+            emailVisibility: true
+        };
+
+        if (userData.prenom_user) {
+            data.prenom_user = userData.prenom_user;
+        }
+
+        const record = await pb.collection('users').create(data);
+        console.log("✅ Usuario registrado:", record.email);
+        
+        return await loginUser(userData.email, userData.password);
+    } catch (error) {
+        console.error('❌ Error de registro:', error);
+        
+        let errorMessage = error.message;
+        if (error.data?.data) {
+            const messages = [];
+            Object.entries(error.data.data).forEach(([field, fieldError]) => {
+                if (fieldError?.message) {
+                    messages.push(`${field}: ${fieldError.message}`);
+                } else {
+                    messages.push(`${field}: ${String(fieldError)}`);
+                }
+            });
+            if (messages.length > 0) {
+                errorMessage = messages.join('\n');
+            }
+        }
+        
+        return { success: false, error: errorMessage };
+    }
+}
+
+export function logoutUser() {
+    pb.authStore.clear();
+    if (typeof window !== 'undefined') {
+        localStorage.removeItem('pocketbase_auth');
+    }
+    console.log("🚪 Logout exitoso");
+}
+
+export async function updateUserProfile(id, data) {
+    try {
+        const record = await pb.collection('users').update(id, data);
+        
+        if (typeof window !== 'undefined') {
+            const authInfo = {
+                token: pb.authStore.token,
+                model: record
+            };
+            localStorage.setItem('pocketbase_auth', JSON.stringify(authInfo));
+        }
+        
+        return { success: true, user: record };
+    } catch (error) {
+        console.error('Error updating profile:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+export async function uploadAvatar(id, file) {
+    try {
+        const formData = new FormData();
+        formData.append('avatar', file);
+
+        const record = await pb.collection('users').update(id, formData);
+        
+        if (typeof window !== 'undefined') {
+            const authInfo = {
+                token: pb.authStore.token,
+                model: record
+            };
+            localStorage.setItem('pocketbase_auth', JSON.stringify(authInfo));
+        }
+        
+        return { success: true, user: record };
+    } catch (error) {
+        console.error('Error uploading avatar:', error);
+        return { success: false, error: error.message };
+    }
+}

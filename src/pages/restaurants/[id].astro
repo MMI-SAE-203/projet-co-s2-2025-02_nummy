@@ -2,7 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import { getEtablissementById, pb } from "../../js/backend.js";
 import { isLoggedIn, initAuthentication } from "../../js/login.js";
-
+import { Picture } from "astro:assets";
 const { id } = Astro.params;
 
 const response = await getEtablissementById(id);
@@ -243,7 +243,7 @@ const imageUrl = establishment.image_etablissement
       <!-- Desktop Content Layout -->
       <div class="hidden md:block">
         <div class="grid grid-cols-11 gap-6">
-          <div class=" col-span-6">
+          <div class="col-span-6">
             <h2
               class="h3-header text-gray-900 mb-4 border-b-6 border-[var(--color-orange)] pb-2 inline-block"
             >
@@ -288,7 +288,9 @@ const imageUrl = establishment.image_etablissement
               >
                 Horaires
               </h2>
-              <div class="bg-[var(--color-orange)] text-black p-4 lg:py-10 rounded-lg justify-center items-center text-center">
+              <div
+                class="bg-[var(--color-orange)] text-black p-4 lg:py-10 rounded-lg justify-center items-center text-center"
+              >
                 <div class="space-y-2 text-sm *:py-3">
                   <div class="flex justify-between">
                     <span class="font-medium">Lundi à Vendredi</span>
@@ -328,7 +330,9 @@ const imageUrl = establishment.image_etablissement
           >
             Horaires
           </h2>
-          <div class="bg-[var(--color-orange)] text-black font-medium p-body2 px-4 py-6 rounded-lg">
+          <div
+            class="bg-[var(--color-orange)] text-black font-medium p-body2 px-4 py-6 rounded-lg"
+          >
             <div class="space-y-2 text-sm">
               <div class="flex justify-between">
                 <span class="font-medium">Lundi à Vendredi</span>

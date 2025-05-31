@@ -1,0 +1,416 @@
+---
+export const prerender = false;
+
+import Layout from "../../layouts/Layout.astro";
+import { Picture } from "astro:assets";
+import { getAllProduits, getEtablissements } from "../../js/backend.js";
+
+import AfriqueIcon from "../../assets/icones/AfriqueF.png";
+import AsieIcon from "../../assets/icones/AsieF.png";
+import AmeriqueIcon from "../../assets/icones/AmeriqueF.png";
+import AmeriqueLFIcon from "../../assets/icones/AmeriqueLF.png";
+import EuropeIcon from "../../assets/icones/EuropeF.png";
+
+const { searchParams } = Astro.url;
+const page = searchParams.get("page") || "1";
+const continent = searchParams.get("continent") || "";
+const type = searchParams.get("type") || ""; 
+const currentPage = parseInt(page, 10);
+const itemsPerPage = 9;
+
+const allProducts = await getAllProduits();
+
+const allRestaurants = await getEtablissements();
+
+let filtered = [...allProducts];
+
+if (continent) {
+  const continentMap: Record<string, string> = {
+    "asie": "Asie",
+    "afrique": "Afrique", 
+    "amerique": "Amérique du Nord",
+    "amerique-lf": "Amérique Latine",
+    "europe": "Europe"
+  };
+  
+  const dbValue = continentMap[continent as keyof typeof continentMap];
+  if (dbValue) {
+    filtered = filtered.filter(p => p.continent_produit === dbValue);
+  }
+}
+
+if (type) {
+  filtered = filtered.filter(p => p.type_produit === type);
+}
+
+const totalItems = filtered.length;
+const totalPages = Math.ceil(totalItems / itemsPerPage);
+const validCurrentPage = Math.max(1, Math.min(currentPage, totalPages || 1));
+const startIndex = (validCurrentPage - 1) * itemsPerPage;
+const endIndex = startIndex + itemsPerPage;
+const currentProducts = filtered.slice(startIndex, endIndex);
+
+function getPageUrl(pageNum: number) {
+  const url = new URL(Astro.url);
+  url.searchParams.set("page", pageNum.toString());
+  return url.pathname + url.search;
+}
+
+function getFilterUrl(filterType: string, filterValue: string) {
+  const url = new URL(Astro.url);
+  url.searchParams.delete("page"); 
+  if (filterType === "continent") {
+    url.searchParams.set("continent", filterValue);
+    url.searchParams.delete("type");
+  } else if (filterType === "type") {
+    url.searchParams.set("type", filterValue);
+    url.searchParams.delete("continent");
+  }
+  return url.pathname + url.search;
+}
+
+const restaurantsArray = Array.isArray(allRestaurants) ? allRestaurants : [];
+const randomRestaurants = restaurantsArray
+  .sort(() => 0.5 - Math.random())
+  .slice(0, 6);
+
+const productStats = {
+  total: allProducts.length,
+  byContinent: {
+    asie: allProducts.filter((p) => p.continent_produit === "Asie").length,
+    afrique: allProducts.filter((p) => p.continent_produit === "Afrique").length,
+    amerique: allProducts.filter((p) => p.continent_produit === "Amérique du Nord").length,
+    ameriqueLf: allProducts.filter((p) => p.continent_produit === "Amérique Latine").length,
+    europe: allProducts.filter((p) => p.continent_produit === "Europe").length,
+  },
+  byType: [...new Set(allProducts.map((p) => p.type_produit))].filter((t) => t),
+};
+
+const featuredProducts = allProducts
+  .filter((p) => p.favori_produit === true)
+  .slice(0, 3);
+---
+
+<Layout classBody="colorPage colorNav" title="Produits par continent | Nummy">
+
+<!-- header -->
+  <div class="bg-gradient-to-t from-[var(--color-orange)] to-orange-300 text-[var(--color-blanc)] p-6 mt-22">
+    <h1 class="text-5xl font-light pt-6 -tracking-tighter">
+      Produits<br />par continent
+    </h1>
+    <h2 class="p-body1 pt-6 w-90">
+      Explorez les 5 continents à la recherche de vos saveurs préférées et
+      renouez avec les produits de votre enfance !
+    </h2>
+
+    <div class="mt-2">
+      <div class="flex overflow-x-auto gap-6 py-2 hide-scrollbar">
+        <a
+          href="/continents"
+          class={`flex-shrink-0 w-32 ${!continent && !type ? "bg-[var(--color-blanc)] bg-opacity-90" : "bg-[var(--color-lin)]"} rounded-xl px-6 py-2 flex flex-col items-center text-[var(--color-noir)] hover:shadow-md transition-shadow`}
+        >
+          <div class="rounded-full w-20 h-20 flex items-center justify-center mb-1">
+            <span class="text-4xl">🌍</span>
+          </div>
+          <span class="p-body2 text-center uppercase font-bold">Tous</span>
+        </a>
+        
+        {[
+          { name: "Asie", urlValue: "asie", icon: AsieIcon },
+          { name: "Afrique", urlValue: "afrique", icon: AfriqueIcon },
+          { name: "Amérique", urlValue: "amerique", icon: AmeriqueIcon },
+          { name: "Amérique Latine", urlValue: "amerique-lf", icon: AmeriqueLFIcon },
+          { name: "Europe", urlValue: "europe", icon: EuropeIcon }
+        ].map((item) => (
+          <a
+            href={getFilterUrl("continent", item.urlValue)}
+            class={`flex-shrink-0 w-32 ${continent === item.urlValue ? "bg-[var(--color-blanc)] bg-opacity-90" : "bg-[var(--color-lin)]"} rounded-xl px-6 py-2 flex flex-col items-center text-[var(--color-noir)] hover:shadow-md transition-shadow`}
+          >
+            <div class="rounded-full w-20 h-20 flex items-center justify-center mb-1">
+              <Picture
+                src={item.icon}
+                alt={item.name}
+                width={60}
+                height={60}
+                class="w-15 h-15 object-cover"
+              />
+            </div>
+            <span class="p-body2 text-center uppercase font-bold">{item.name}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="px-4 md:px-20 py-4">
+    <h2 class="lg:text-4xl h2-header pt-12 pb-2">Nos produits</h2>
+    <hr class="w-1/2 h-[8px] bg-[var(--color-orange)] border-none mb-6">
+    <p class="p-body2 text-[var(--color-green)]">
+      {totalItems} produit{totalItems !== 1 ? "s" : ""} trouvé{totalItems !== 1 ? "s" : ""}
+      {continent && ` pour ${[
+          { urlValue: "asie", name: "l'Asie" },
+          { urlValue: "afrique", name: "l'Afrique" },
+          { urlValue: "amerique", name: "l'Amérique du Nord" },
+          { urlValue: "amerique-lf", name: "l'Amérique Latine" },
+          { urlValue: "europe", name: "l'Europe" }
+        ].find(c => c.urlValue === continent)?.name || continent}`}
+      {type && ` de type "${type}"`}
+    </p>
+    <p class="p-body3 text-[var(--color-green)] opacity-75">
+      Page {validCurrentPage} sur {totalPages} - Affichage de {currentProducts.length} produits
+    </p>
+  </div>
+
+  <div class="px-4 md:px-20">
+    {currentProducts.length === 0 ? (
+      <div class="text-center py-10">
+        <p class="p-body2 text-[var(--color-green)] opacity-75">Aucun produit trouvé pour cette sélection.</p>
+      </div>
+    ) : (
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+        {currentProducts.map((product) => (
+          <article class="bg-[var(--color-blanc)] rounded-lg shadow border border-[var(--color-lin)] overflow-hidden hover:shadow-lg transition-shadow">
+            <img
+              src={product.img_produit ? `https://nummy.arthurwicky.fr/api/files/Produit/${product.id}/${product.img_produit}` : "https://via.placeholder.com/400x300?text=Nummy"}
+              alt={product.nom_produit}
+              class="w-full h-40 object-cover"
+              onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Nummy';"
+            />
+            <div class="p-4">
+              <h3 class="p-body1 font-bold mb-2 text-[var(--color-noir)]">{product.nom_produit}</h3>
+              <p class="p-body3 text-[var(--color-green)] mb-3">{product.pays_produit}</p>
+              <a 
+                href={`/continents/${product.id}`}
+                class="inline-block w-full uppercase text-center bg-[var(--color-green)] text-[var(--color-blanc)] px-4 py-2 rounded-full hover:opacity-90 transition-all button"
+              >
+                En savoir plus
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    )}
+  </div>
+
+  {totalPages > 1 && (
+    <div class="flex justify-center items-center space-x-2 mt-8 mb-8">
+      {validCurrentPage > 1 && (
+        <a
+          href={getPageUrl(validCurrentPage - 1)}
+          class="bg-[var(--color-argent)] rounded-full w-10 h-10 flex justify-center items-center hover:bg-[var(--color-lin)] button transition-colors"
+          title="Page précédente"
+        >
+          &laquo;
+        </a>
+      )}
+
+      {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => i + 1).map((num) => (
+        <a
+          href={getPageUrl(num)}
+          class={`rounded-full w-10 h-10 flex justify-center items-center button transition-colors ${
+            num === validCurrentPage
+              ? "bg-[var(--color-orange)] text-[var(--color-blanc)]"
+              : "bg-[var(--color-argent)] hover:bg-[var(--color-lin)] text-[var(--color-noir)]"
+          }`}
+          title={`Page ${num}`}
+        >
+          {num}
+        </a>
+      ))}
+
+      {validCurrentPage < totalPages && (
+        <a
+          href={getPageUrl(validCurrentPage + 1)}
+          class="bg-[var(--color-argent)] rounded-full w-10 h-10 flex justify-center items-center hover:bg-[var(--color-lin)] button transition-colors"
+          title="Page suivante"
+        >
+          &raquo;
+        </a>
+      )}
+    </div>
+  )}
+
+  <!-- Section de produits en vedette -->
+  {featuredProducts.length > 0 && (
+    <section class="py-12 bg-[var(--color-lin)]">
+      <div class="px-4 md:px-20">
+        <h2 class="h3-header text-center mb-2 text-[var(--color-noir)]">Nos Coups de cœur</h2>
+        <p class="p-body2 text-[var(--color-green)] text-center mb-8">Nos produits favoris sélectionnés pour vous</p>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+          {featuredProducts.map((product) => (
+            <article class="bg-[var(--color-blanc)] rounded-lg shadow-lg border border-[var(--color-lin)] overflow-hidden hover:shadow-xl transition-shadow relative">
+              <div class="absolute top-2 right-2 bg-[var(--color-orange)] text-[var(--color-blanc)] px-2 py-1 rounded-full p-body3 font-bold">
+                ⭐ Coup de cœur
+              </div>
+              <img
+                src={product.img_produit ? `https://nummy.arthurwicky.fr/api/files/Produit/${product.id}/${product.img_produit}` : "https://via.placeholder.com/400x300?text=Nummy"}
+                alt={product.nom_produit}
+                class="w-full h-48 object-cover"
+              />
+              <div class="p-4">
+                <h3 class="p-body1 font-bold mb-2 text-[var(--color-noir)]">{product.nom_produit}</h3>
+                <p class="p-body3 text-[var(--color-green)] mb-3">{product.pays_produit}</p>
+                <a 
+                  href={`/continents/${product.id}`}
+                  class="inline-block uppercase w-full text-center bg-[var(--color-orange)] text-[var(--color-blanc)] px-4 py-2 rounded-full hover:opacity-90 transition-all button"
+                >
+                  Découvrir maintenant
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+<!-- Section quantité de produits de Ñummy :D -->
+
+  <section class="py-12 mt-12">
+    <div class="px-4 md:px-20">
+      <h2 class="h2-header text-center mb-3 text-[var(--color-noir)] uppercase">Total de produits</h2>
+      <div class="flex justify-center mb-8 lg:mb-12">
+        <hr class="w-1/2 h-[6px] border-0 bg-[var(--color-orange)]">
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
+        <div class="text-center">
+          <div class="bg-[var(--color-orange)] text-[var(--color-blanc)] rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-2">
+            <span class="h2-header text-xl">{productStats.total}</span>
+          </div>
+          <p class="p-body3 text-[var(--color-green)]">Produits au total</p>
+        </div>
+        <div class="text-center">
+          <div class="bg-[var(--color-bleu)] text-[var(--color-blanc)] rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-2">
+            <span class="h2-header text-xl">{productStats.byContinent.asie}</span>
+          </div>
+          <p class="p-body3 text-[var(--color-green)]">Produits d'Asie</p>
+        </div>
+        <div class="text-center">
+          <div class="bg-[var(--color-vert)] text-[var(--color-blanc)] rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-2">
+            <span class="h2-header text-xl">{productStats.byContinent.afrique}</span>
+          </div>
+          <p class="p-body3 text-[var(--color-green)]">Produits d'Afrique</p>
+        </div>
+        <div class="text-center">
+          <div class="bg-[var(--color-rouge)] text-[var(--color-blanc)] rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-2">
+            <span class="h2-header text-xl">{productStats.byContinent.amerique + productStats.byContinent.ameriqueLf}</span>
+          </div>
+          <p class="p-body3 text-[var(--color-green)]">Produits d'Amérique</p>
+        </div>
+        <div class="text-center">
+          <div class="bg-[var(--color-marron)] text-[var(--color-blanc)] rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-2">
+            <span class="h2-header text-xl">{productStats.byContinent.europe}</span>
+          </div>
+          <p class="p-body3 text-[var(--color-green)]">Produits d'Europe</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Section de restaurants -->
+  {randomRestaurants.length > 0 && (
+    <section class="bg-[var(--color-lin)] py-12">
+      <div class="px-4 md:px-20">
+        <h2 class="text-center mb-2 text-[var(--color-noir)]">Trouvez ces produits près de chez vous</h2>
+        <p class="p-body2 text-[var(--color-green)] text-center mb-8">Découvrez nos restaurants partenaires qui proposent ces délicieux produits</p>
+        
+        <!-- Carrousel de restaurants -->
+        <div class="overflow-x-auto pb-4">
+          <div class="flex space-x-4 min-w-max">
+            {randomRestaurants.map((restaurant) => (
+              <article class="flex-shrink-0 w-80 bg-[var(--color-blanc)] rounded-lg shadow border border-[var(--color-argent)] overflow-hidden hover:shadow-lg transition-shadow">
+                <img
+                  src={restaurant.img_etablissement ? `https://nummy.arthurwicky.fr/api/files/Etablissement/${restaurant.id}/${restaurant.img_etablissement}` : "https://via.placeholder.com/400x200?text=Restaurant"}
+                  alt={restaurant.nom_etablissement}
+                  class="w-full h-40 object-cover"
+                />
+                <div class="p-4">
+                  <h3 class="p-body1 font-bold mb-2 text-[var(--color-noir)]">{restaurant.nom_etablissement}</h3>
+                  <p class="p-body3 text-[var(--color-green)] mb-2">{restaurant.adresse_etablissement}</p>
+                  <p class="p-body3 text-[var(--color-green)] mb-3">{restaurant.ville_etablissement}</p>
+                  <a 
+                    href={`/restaurants/${restaurant.id}`}
+                    class="inline-block w-full text-center bg-[var(--color-orange)] text-[var(--color-blanc)] px-4 py-2 rounded hover:opacity-90 transition-all button"
+                  >
+                    Voir le restaurant
+                  </a>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+        
+        <div class="text-center mt-6">
+          <a 
+            href="/restaurants" 
+            class="inline-block bg-[var(--color-orange)] text-[var(--color-blanc)] px-6 py-3 rounded-lg hover:opacity-90 transition-all button"
+          >
+            Voir tous nos restaurants
+          </a>
+        </div>
+      </div>
+    </section>
+  )}
+
+
+  <!-- Section de types de produit -->
+  <section class="py-12 pt-25">
+    <div class="px-4 md:px-20">
+      <h2 class="h2-header text-center mb-8 text-[var(--color-noir)]">Explorez par catégorie</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {productStats.byType.slice(0, 8).map((type) => (
+          <a 
+            href={getFilterUrl("type", type)}
+            class={`bg-[var(--color-blanc)] border border-[var(--color-lin)] rounded-lg p-4 text-center hover:shadow-md transition-shadow hover:bg-[var(--color-lin)] ${type === type ? "ring-2 ring-[var(--color-orange)]" : ""}`}
+          >
+            <div class="text-3xl mb-2">
+              {type === "Boisson" ? "🥤" : 
+               type === "Snack" ? "🍿" : 
+               type === "Confiserie" ? "🍬" : 
+               type === "Épice" ? "🌶️" : 
+               type === "Conserve" ? "🥫" : "🍽️"}
+            </div>
+            <h3 class="p-body1 font-bold text-[var(--color-noir)]">{type}</h3>
+            <p class="p-body3 text-[var(--color-green)]">
+              {allProducts.filter(p => p.type_produit === type).length} produits
+            </p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to action finale -->
+  <section class="bg-gradient-to-r from-[var(--color-orange)] to-orange-300 text-[var(--color-blanc)] py-12">
+    <div class="px-4 md:px-20 text-center">
+      <h2 class="h3-header text-4xl mb-4">Prêt pour un voyage culinaire ?</h2>
+      <p class="p-body2 mb-6">Découvrez des saveurs authentiques du monde entier</p>
+      <div class="space-x-4">
+        <a 
+          href="/restaurants" 
+          class="p-button inline-block bg-[var(--color-blanc)] text-[var(--color-orange)] px-6 py-3 rounded-lg hover:opacity-90 transition-all button"
+        >
+          Trouver un restaurant
+        </a>
+        <a 
+          href="/continents" 
+          class="p-button inline-block border-2 border-[var(--color-blanc)] text-[var(--color-blanc)] px-6 py-3 rounded-lg hover:bg-[var(--color-blanc)] hover:text-[var(--color-orange)] transition-all button"
+        >
+          Explorer les produits
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+</style>

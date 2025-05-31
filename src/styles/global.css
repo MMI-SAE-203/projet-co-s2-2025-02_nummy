@@ -103,4 +103,11 @@
     .colorNav #menu a {
             @apply lg:!text-black;
     }
+    .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    
+    .hide-scrollbar::-webkit-scrollbar {
+        display: none;     }
 }
