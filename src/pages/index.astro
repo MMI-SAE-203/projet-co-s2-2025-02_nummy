@@ -93,159 +93,166 @@ import CardLP from "../components/CardLP.astro";
 
   <div class="relative w-full">
     <div
-      class="bg-[var(--color-green)] relative w-full pb-20 top-[-40px] -z-10"
+      class="bg-[var(--color-green)] relative w-full top-[-40px] -z-10 overflow-hidden"
     >
-      <!-- CONTENU -->
-      <div class="z-10 pt-20 px-6">
-        <div class="w-20px h-20px">
-          <IconPlanet />
-        </div>
-
-        <!-- TEXT -->
-        <div class="pt-4">
-          <h2 class="h2-header text-white">
-            Tout les pays dans un seul lieu !
-          </h2>
-          <div>
-            <span class="flex h-[4px] w-50 bg-[var(--color-orange)] my-5"
-            ></span>
+      <div class="max-w-screen-xl mx-auto px-6 md:px-20 pt-20 pb-40">
+        <!-- CONTENU -->
+        <div class="relative z-10">
+          <div class="w-20px h-20px mb-4">
+            <IconPlanet />
           </div>
-          <p class="text-white">
-            Découvrez la culture culinaire du monde entier à travers de les
-            nombreuses fonctionnalités que notre site propose !
-          </p>
 
-          <!-- icones -->
-          <div class="grid grid-cols-2 pt-13 -ml-2 gap-15">
-            <div class="flex flex-col justify-center items-center">
-              <IconBulle />
-              <p class="uppercase text-center text-white pt-3">
-                Partager vos opinions
-              </p>
-            </div>
+          <!-- TEXT -->
+          <div class="pt-4">
+            <h2 class="h2-header text-white">
+              Tout les pays dans un seul lieu !
+            </h2>
             <div>
-              <div class="flex flex-col justify-center items-center">
+              <span class="flex h-[4px] w-50 bg-[var(--color-orange)] my-5"
+              ></span>
+            </div>
+            <p class="text-white">
+              Découvrez la culture culinaire du monde entier à travers de les
+              nombreuses fonctionnalités que notre site propose !
+            </p>
+
+            <!-- icones -->
+            <div class="grid grid-cols-2 lg:grid-cols-11 pt-13 gap-4">
+              <!-- Icono 1: Partager vos opinions -->
+              <div class="col-span-1 lg:col-span-3 flex flex-col justify-center items-start">
+                <IconBulle />
+                <p class="uppercase text-left text-white pt-3">
+                  Partager vos opinions
+                </p>
+              </div>
+            
+              <!-- Icono 2: Trouver vos boutiques favoris -->
+              <div class="col-span-1 lg:col-span-3 flex flex-col justify-center items-start">
                 <IconMap />
-                <p class="uppercase text-center text-white pt-3">
+                <p class="uppercase text-left text-white pt-3">
                   Trouver vos boutiques favoris
                 </p>
               </div>
-            </div>
-
-            <div>
-              <div class="flex flex-col justify-center items-center">
+            
+              <!-- Espacio vacío SOLO para desktop -->
+              <div class="hidden lg:block lg:col-span-5"></div>
+            
+              <!-- Icono 3: Delicieuses recettes -->
+              <div class="col-span-1 lg:col-span-3 flex flex-col justify-center items-start">
                 <Iconfood1 />
-                <p class="uppercase text-center text-white pt-3">
+                <p class="uppercase text-left text-white pt-3">
                   Delicieuses recettes !
                 </p>
               </div>
-            </div>
-
-            <div>
-              <div class="flex flex-col justify-center items-center">
+            
+              <!-- Icono 4: Devenir partenaire -->
+              <div class="col-span-1 lg:col-span-3 flex flex-col justify-center items-start">
                 <IconUser />
-                <p class="uppercase text-center text-white pt-3">
+                <p class="uppercase text-left text-white pt-3">
                   Devenir<br />partenaire
                 </p>
               </div>
             </div>
-          </div>
-
-          <!-- button -->
-          <div class="text-sm flex justify-center pt-10">
-            <Button class="pt-10" variant="lin" href="/" classes="px-10 py-3">
-              DÉCOUVREZ VOS PRODUITS !
-            </Button>
+            <!-- button -->
+            <div class="text-sm flex lg:flex-nowrap justify-center pt-10">
+              <Button class="pt-10" variant="lin" href="/" classes="px-10 py-3">
+                DÉCOUVREZ VOS PRODUITS !
+              </Button>
+            </div>
           </div>
         </div>
+        <img
+          src="/src/assets/img/foodBK.webp"
+          alt="Vegetales de fondo"
+          class="md:block absolute bottom-0 right-0 lg:w-1/2 lg:h-auto object-cover"
+          loading="lazy"
+        />
       </div>
     </div>
   </div>
 
   <!-- Card section  -->
-  <div>
-    <div class="flex flex-col justify-center items-center text-center pt-3">
+  <div class="max-w-screen-xl mx-auto px-6 md:px-20 py-20">
+    <div class="flex flex-col justify-center items-center text-center mb-12">
       <h2 class="h2-header uppercase">et encore plus !</h2>
       <span class="flex h-[8px] w-50 bg-[var(--color-orange)] my-5"></span>
     </div>
-
-    <div class="flex flex-col *:my-6">
-      <article class="flex place-content-end">
-        <CardLP bgColor="var(--color-orange)" href="/">
+  
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <article>
+        <CardLP bgColor="var(--color-orange)" href="/newsletter">
           <Picture
             slot="image"
             src={ImageLettre}
-            alt="Image de la carte"
-            class="relative mr-250"
+            alt="Newsletter"
+            class="lg:w-100 lg:h-70 -z-20 w-100 h-80"
           />
           <span slot="title">NEWSLETTER</span>
-          <span slot="description"
-            >Abonnez-vous à notre newsletter pour découvrir nos nouveautés,
-            offres exclusives et inspirations directement dans votre boÎte mail.</span
-          >
+          <span slot="description">
+            Abonnez-vous à notre newsletter pour découvrir nos nouveautés, 
+            offres exclusives et inspirations directement dans votre boîte mail.
+          </span>
           <div slot="button">
-            <Button variant="lin" href="/">CLIQUEZ ICI</Button>
+            <Button variant="lin" href="/newsletter">CLIQUEZ ICI</Button>
           </div>
         </CardLP>
       </article>
-
+  
       <article>
-        <CardLP bgColor="var(--color-orange)" href="/">
+        <CardLP bgColor="var(--color-orange)" href="/partenaire">
           <Picture
             slot="image"
             src={ImageMains}
-            alt="Image de la carte"
-            class="relative h-full"
+            alt="Devenir partenaire"
+            class="lg:w-100 lg:h-80 pr-4 object-cover"
           />
           <span slot="title">Devenir partenaire</span>
-          <span slot="description"
-            >Découvrez comment collaborer avec nous pour donner plus d'ampleur à
-            nos projets !</span
-          >
+          <span slot="description">
+            Découvrez comment collaborer avec nous pour donner plus d'ampleur à nos projets !
+          </span>
           <div slot="button">
-            <Button variant="lin" href="/">CLIQUEZ ICI</Button>
+            <Button variant="lin" href="/partenaire">CLIQUEZ ICI</Button>
           </div>
         </CardLP>
       </article>
-
-      <CardLP bgColor="var(--color-orange)" href="/">
-        <div slot="image" class="absolute inset-0 overflow-hidden">
+  
+      <article>
+        <CardLP bgColor="var(--color-orange)" href="/soutenir">
           <Picture
+            slot="image"
             src={ImageSoutien}
-            alt="Image de la carte"
-            class="object-cover opacity-100"
-            width={200}
-            height={200}
-            loading="lazy"
+            alt="Nous soutenir"
+            class="lg:w-100 lg:h-70 -z-10 object-cover"
           />
-        </div>
-
-        <span slot="title">Nous soutenir !</span>
-        <span class="pr-15" slot="description"
-          >Soutenez notre projet et participez à son développement ! Chaque
-          contribution compte pour nous aider à grandir !</span
-        >
-        <div slot="button">
-          <Button variant="lin" href="/">CLIQUEZ ICI</Button>
-        </div>
-      </CardLP>
-
-      <CardLP bgColor="var(--color-green)" href="/">
-        <Picture
-          slot="image"
-          src={ImageRecette}
-          alt="Image de la carte"
-          class=""
-        />
-        <span slot="title">Recettes Ñummy!</span>
-        <span slot="description"
-          >Soutenez notre projet et participez à son développement ! Chaque
-          contribution compte pour nous aider à grandir !</span
-        >
-        <div slot="button">
-          <Button variant="lin" href="/">CLIQUEZ ICI</Button>
-        </div>
-      </CardLP>
+          <span slot="title">Nous soutenir !</span>
+          <span slot="description">
+            Soutenez notre projet et participez à son développement ! 
+            Chaque contribution compte pour nous aider à grandir !
+          </span>
+          <div slot="button">
+            <Button variant="lin" href="/soutenir">CLIQUEZ ICI</Button>
+          </div>
+        </CardLP>
+      </article>
+  
+      <article>
+        <CardLP bgColor="var(--color-green)" href="/recettes">
+          <Picture
+            slot="image"
+            src={ImageRecette}
+            alt="Recettes Ñummy"
+            class="lg:w-100 lg:h-68 object-cover"
+          />
+          <span slot="title">Recettes Ñummy!</span>
+          <span slot="description">
+            Découvrez nos délicieuses recettes du monde entier ! 
+            Des plats authentiques pour voyager depuis votre cuisine.
+          </span>
+          <div slot="button">
+            <Button variant="lin" href="/recettes">CLIQUEZ ICI</Button>
+          </div>
+        </CardLP>
+      </article>
     </div>
   </div>
 </Layout>

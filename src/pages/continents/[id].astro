@@ -1,6 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { pb, getAllProduits } from "../../js/backend.js";
+import { pb, getAllProduits, getRecettesByProduit } from "../../js/backend.js";
 
 interface Produit {
   id: string;
@@ -11,7 +11,7 @@ interface Produit {
   continent_produit: string;
   type_produit?: string;
   site_produit?: string;
-  recettes_produit?: string;
+  recettes_produit?: any[];
   favori_produit: boolean;
   magasin_produit?: any;
 }
@@ -35,7 +35,9 @@ let produit = product;
 
 if (!produit) {
   try {
-    produit = await pb.collection("Produit").getOne(id);
+    produit = await pb.collection("Produit").getOne(id, {
+      expand: "recettes_produit",
+    });
   } catch (error) {
     console.error("Error al obtener el producto:", error);
     return Astro.redirect("/continents");
@@ -44,6 +46,27 @@ if (!produit) {
 
 if (id === "fallback") {
   return Astro.redirect("/continents");
+}
+
+// recettes
+
+interface Recette {
+  id: string;
+  nom_recette: string;
+  hero_recette?: string;
+  temps_recette: number;
+  personnes_recette: number;
+  pays_recette: string;
+  favori?: boolean;
+}
+
+let recettesAssociees: Recette[] = [];
+try {
+  console.log(`🔍 En cherchant des recettes ${produit.id}...`);
+  recettesAssociees = await getRecettesByProduit(produit.id);
+  console.log(`✅ Trouvés ${recettesAssociees.length} recettes associés`);
+} catch (error) {
+  console.error("Error recettes:", error);
 }
 
 let produitsSimilaires: Produit[] = [];
@@ -82,10 +105,10 @@ const imageUrl = produit.img_produit
           />
         </div>
 
-        <div class="p-8 md:w-1/2">
+        <div class="p-8 py-25 md:w-1/2">
           <div class="flex items-center">
             <span
-              class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-orange-100 text-orange-800 mr-2"
+              class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-orange-100 text-orange-400 mr-2"
             >
               {produit.continent_produit}
             </span>
@@ -101,12 +124,12 @@ const imageUrl = produit.img_produit
             }
           </div>
 
-          <h1 class="mt-4 text-3xl font-bold text-gray-900 tracking-tight">
+          <h1 class="mt-4 text-3xl text-gray-900 tracking-tight">
             {produit.nom_produit}
           </h1>
 
           <p
-            class="mt-4 text-gray-500 text-lg leading-relaxed"
+            class="mt-4 text-black text-lg leading-relaxed"
             set:html={produit.description_produit}
           />
 
@@ -157,20 +180,114 @@ const imageUrl = produit.img_produit
 
     <!-- Hmmm délicieux :D / recettes -->
     <div class="mt-16">
-      <h2 class="text-2xl font-bold text-gray-900 mb-6">Recettes associées</h2>
-      <div class="bg-gray-50 rounded-xl p-6">
-        {
-          produit.recettes_produit ? (
-            <div class="prose prose-orange max-w-none">
-              <p>{produit.recettes_produit}</p>
+      <h2 class="text-2xl font-bold text-gray-900 mb-6">
+        Recettes avec {produit.nom_produit}
+      </h2>
+
+      {
+        recettesAssociees.length > 0 ? (
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {recettesAssociees.map((recette) => {
+              const recetteImageUrl = recette.hero_recette
+                ? `https://nummy.arthurwicky.fr/api/files/Recette/${recette.id}/${recette.hero_recette}`
+                : "https://via.placeholder.com/400x300?text=Recette";
+
+              return (
+                <a href={`/recettes/${recette.id}`} class="block group">
+                  <div class="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 group-hover:-translate-y-1">
+                    <img
+                      src={recetteImageUrl}
+                      alt={recette.nom_recette}
+                      loading="lazy"
+                      class="w-full h-48 object-cover"
+                      onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Recette';"
+                    />
+                    <div class="p-6">
+                      <h3 class="text-lg font-semibold text-gray-900 mb-2 group-hover:text-orange-600 transition-colors">
+                        {recette.nom_recette}
+                      </h3>
+                      <div class="flex items-center text-sm text-gray-600 mb-4">
+                        <span class="flex items-center mr-4">
+                          <svg
+                            class="w-4 h-4 mr-1"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                            />
+                          </svg>
+                          {recette.temps_recette} min
+                        </span>
+                        <span class="flex items-center">
+                          <svg
+                            class="w-4 h-4 mr-1"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                            />
+                          </svg>
+                          {recette.personnes_recette} pers.
+                        </span>
+                      </div>
+
+                      <div class="flex items-center justify-between">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+                          {recette.pays_recette}
+                        </span>
+                        {recette.favori && (
+                          <span class="text-yellow-400 text-lg">★</span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              );
+            })}
+          </div>
+        ) : (
+          <div class="bg-gray-50 rounded-xl p-8 text-center">
+            <div class="text-gray-400 mb-4">
+              <svg
+                class="mx-auto h-12 w-12"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
+                />
+              </svg>
             </div>
-          ) : (
-            <p class="text-gray-500 italic">
-              Aucune recette disponible pour ce produit.
+            <h3 class="text-lg font-medium text-gray-900 mb-2">
+              Aucune recette disponible
+            </h3>
+            <p class="text-gray-500 mb-4">
+              Nous n'avons pas encore de recettes utilisant{" "}
+              {produit.nom_produit}.
             </p>
-          )
-        }
-      </div>
+            <a
+              href="/recettes/ajouter"
+              class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-orange-600 hover:bg-orange-700 transition-colors"
+            >
+              Ajouter une recette
+            </a>
+          </div>
+        )
+      }
     </div>
 
     <!-- Productos que se parecenn -->

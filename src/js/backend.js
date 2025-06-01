@@ -57,21 +57,49 @@ export function getCurrentUser() {
 }
 
 // Función para récupérer tous les établissements
-export async function getEtablissements(){
+// Reemplaza la función getEtablissements en backend.js
+export async function getEtablissements() {
     try {
+        console.log("🔄 Obteniendo establecimientos...");
+        
         const records = await pb.collection('Etablissement').getFullList({
-            sort: 'created'
+            sort: 'created',
+            // Agregar timeout
+            requestKey: null
         });
+
+        console.log("✅ Establecimientos obtenidos:", records.length);
+        
+        // Verificar que los records tienen las propiedades necesarias
+        const validRecords = records.map(record => ({
+            id: record.id,
+            nom_etablissement: record.nom_etablissement || '',
+            adresse_etablissement: record.adresse_etablissement || '',
+            ville_etablissement: record.ville_etablissement || '',
+            categorie_etablissement: record.categorie_etablissement || '',
+            continent_etablissement: record.continent_etablissement || '',
+            image_etablissement: record.image_etablissement || null,
+            partenariat_etablissement: !!record.partenariat_etablissement,
+            latitude: record.latitude || null,
+            longitude: record.longitude || null,
+            created: record.created || '',
+            updated: record.updated || ''
+        }));
+
+        console.log("✅ Records procesados:", validRecords.length);
 
         return {
             success: true,
-            items: records
+            items: validRecords
         };
     } catch (error) {
-        console.error("Erreur lors de la récupération des établissements:", error);
+        console.error("❌ Error obteniendo establecimientos:", error);
+        console.error("❌ Error details:", error.response?.data || error.message);
+        
         return {
             success: false,
-            error: error.message
+            error: error.message || "Error desconocido",
+            items: []
         };
     }
 }
@@ -253,6 +281,36 @@ export async function getAllProduits() {
     }
 }
 
+export async function getRecettesByProduit(productId) {
+    try {
+        const records = await pb.collection('Recette').getList(1, 50, {
+            filter: `produits_recette ~ "${productId}"`,
+            expand: 'produits_recette,utilisateur_recette',
+            sort: '-created'
+        });
+
+        return records.items.map((r) => ({
+            id: r.id,
+            nom_recette: r.nom_recette,
+            hero_recette: r.hero_recette,
+            pays_recette: r.pays_recette,
+            continent_recette: r.continent_recette,
+            personnes_recette: r.personnes_recette,
+            temps_recette: r.temps_recette,
+            ingredients_recette: r.ingredients_recette,
+            recettes_produit: r.expand?.recettes_produit || [],
+            images_recette: r.images_recette || [],
+            preparation_recette: r.preparation_recette,
+            favori: !!r.favori,
+            utilisateur_recette: r.expand?.utilisateur_recette || null,
+            created: r.created
+        }));
+    } catch (error) {
+        console.error("Error getting recipes by product:", error);
+        return [];
+    }
+}
+
 export async function getProduitById(id) {
     try {
         const record = await pb.collection('Produit').getOne(id, {
@@ -314,6 +372,133 @@ export async function getAllRecettes() {
     }
 }
 
+
+
+export async function createRecette(formData) {
+    try {
+        if (!isLoggedIn()) {
+            return {
+                success: false,
+                error: "Vous devez être connecté pour créer une recette"
+            };
+        }
+
+        const currentUser = getCurrentUser();
+        if (currentUser) {
+            formData.append("utilisateur_recette", currentUser.id);
+        }
+
+        const record = await pb.collection('Recette').create(formData);
+        
+        return {
+            success: true,
+            item: record
+        };
+    } catch (error) {
+        console.error('Erreur lors de la création de la recette:', error);
+        return {
+            success: false,
+            error: error.message || "Erreur lors de la création de la recette"
+        };
+    }
+}
+
+// Avis
+export async function getAvisByRecette(recetteId) {
+    try {
+        const records = await pb.collection('Avis').getList(1, 50, {
+            filter: `recette_id = "${recetteId}"`,
+            sort: '-created'
+        });
+
+        return {
+            success: true,
+            items: records.items.map(r => ({
+                id: r.id,
+                nom_auteur: r.nom_auteur,
+                email_auteur: r.email_auteur,
+                note: r.note,
+                commentaire: r.commentaire,
+                recette_id: r.recette_id,
+                created: r.created
+            }))
+        };
+    } catch (error) {
+        console.error("Error getting avis:", error);
+        return {
+            success: false,
+            error: error.message,
+            items: []
+        };
+    }
+}
+
+export async function createAvis(avisData) {
+    try {
+        console.log("📝 Créant nouvel avis:", avisData);
+        
+        const record = await pb.collection('Avis').create({
+            nom_auteur: avisData.nom_auteur,
+            email_auteur: avisData.email_auteur,
+            note: parseInt(avisData.note),
+            commentaire: avisData.commentaire,
+            recette_id: avisData.recette_id
+        });
+
+        console.log("✅ Avis créé:", record);
+        return {
+            success: true,
+            item: record
+        };
+    } catch (error) {
+        console.error("❌ Error creating avis:", error);
+        return {
+            success: false,
+            error: error.message
+        };
+    }
+}
+
+export async function getAvisStats(recetteId) {
+    try {
+        const response = await getAvisByRecette(recetteId);
+        
+        if (!response.success || response.items.length === 0) {
+            return {
+                success: true,
+                total: 0,
+                moyenne: 0,
+                repartition: { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 }
+            };
+        }
+
+        const avis = response.items;
+        const total = avis.length;
+        const somme = avis.reduce((acc, a) => acc + a.note, 0);
+        const moyenne = (somme / total).toFixed(1);
+
+        const repartition = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+        avis.forEach(a => {
+            repartition[a.note] = (repartition[a.note] || 0) + 1;
+        });
+
+        return {
+            success: true,
+            total,
+            moyenne: parseFloat(moyenne),
+            repartition
+        };
+    } catch (error) {
+        console.error("Error getting avis stats:", error);
+        return {
+            success: false,
+            total: 0,
+            moyenne: 0,
+            repartition: { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 }
+        };
+    }
+}
+
 export async function getRecetteById(id) {
     try {
         const record = await pb.collection('Recette').getOne(id, {
@@ -348,34 +533,6 @@ export async function getRecetteById(id) {
     }
 }
 
-export async function createRecette(formData) {
-    try {
-        if (!isLoggedIn()) {
-            return {
-                success: false,
-                error: "Vous devez être connecté pour créer une recette"
-            };
-        }
-
-        const currentUser = getCurrentUser();
-        if (currentUser) {
-            formData.append("utilisateur_recette", currentUser.id);
-        }
-
-        const record = await pb.collection('Recette').create(formData);
-        
-        return {
-            success: true,
-            item: record
-        };
-    } catch (error) {
-        console.error('Erreur lors de la création de la recette:', error);
-        return {
-            success: false,
-            error: error.message || "Erreur lors de la création de la recette"
-        };
-    }
-}
 
 // Login functions
 export async function loginUser(email, password) {
