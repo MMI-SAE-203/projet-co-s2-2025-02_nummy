@@ -329,12 +329,12 @@ try {
   <!-- Recettes similaires -->
   {
     recettesSimilaires.length > 0 && (
-      <section class="bg-[var(--color-lin)] py-12">
+      <section class="bg-[var(--color-argent)] py-12">
         <div class="px-4 md:px-20">
-          <h2 class="h2-header text-center mb-8 text-[var(--color-noir)]">
+          <h2 class="h2-header text-center mb-8 text-[var(--color-green)]">
             Autres recettes de {recetteData.continent_recette}
           </h2>
-          <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             {recettesSimilaires.map((recette) => (
               <article class="bg-[var(--color-blanc)] rounded-lg shadow border border-[var(--color-lin)] overflow-hidden hover:shadow-lg transition-shadow">
                 <img
@@ -346,7 +346,7 @@ try {
                   alt={recette.nom_recette}
                   class="w-full h-40 object-cover"
                 />
-                <div class="p-4">
+                <div class="p-4 bg-[var(--color-lin)]">
                   <h3 class="p-body1 font-bold mb-2 text-[var(--color-noir)]">
                     {recette.nom_recette}
                   </h3>
@@ -373,11 +373,11 @@ try {
   }
 
   <!-- Avis et notes -->
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 mt-10">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 mt-20">
     <div class="bg-[var(--color-blanc)] rounded-xl shadow-lg overflow-hidden">
-      <div class="p-8">
+      <div class="p-2">
         <h2 class="h2-header mb-6 text-[var(--color-noir)] flex items-center">
-          <span class="text-2xl mr-3"></span>
+          <span class="lg:pt-18 lg:pl-4 text-2xl mr-3"></span>
           Avis et commentaires
         </h2>
 
@@ -533,7 +533,7 @@ try {
             <button
               type="submit"
               id="avis-submit"
-              class="mt-3 lg:flex justify-center items-center lg:mx-60 w-full lg:w-1/2 bg-[var(--color-orange)] text-[var(--color-blanc)] px-6 py-3 rounded-full hover:opacity-90 transition-all button disabled:opacity-50"
+              class="mt-3 p-button lg:flex justify-center items-center lg:mx-60 w-full lg:w-1/2 bg-[var(--color-orange)] uppercase text-[var(--color-blanc)] px-6 py-3 rounded-full hover:opacity-90 transition-all button disabled:opacity-50"
             >
               <span id="avis-submit-text">Publier mon avis</span>
               <span id="avis-submit-loading" class="hidden"
@@ -553,7 +553,7 @@ try {
               <div class="space-y-6">
                 {avisList.map((avis) => (
                   <div class="border-b border-[var(--color-lin)] pb-6 last:border-b-0">
-                    <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                    <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-0">
                       <div class="flex items-center space-x-3">
                         <div class="w-12 h-12 bg-[var(--color-orange)] rounded-full flex items-center justify-center text-[var(--color-blanc)] font-bold">
                           {avis.nom_auteur.charAt(0).toUpperCase()}
@@ -577,7 +577,7 @@ try {
                         {new Date(avis.created).toLocaleDateString("fr-FR")}
                       </span>
                     </div>
-                    <p class="mt-3 p-body2 text-[var(--color-noir)]">
+                    <p class="px-3 p-body2 text-[var(--color-noir)]">
                       {avis.commentaire}
                     </p>
                   </div>
@@ -610,7 +610,7 @@ try {
       <div class="space-x-4">
         <a
           href="/recettes/ajouter"
-          class="inline-block bg-[var(--color-blanc)] text-[var(--color-green)] px-6 py-3 rounded-full hover:opacity-90 transition-all button"
+          class="inline-block bg-[var(--color-blanc)] text-[var(--color-green)] ml-3 px-12 py-3 mb-3 rounded-full hover:opacity-90 transition-all button"
         >
           Ajouter ma recette
         </a>

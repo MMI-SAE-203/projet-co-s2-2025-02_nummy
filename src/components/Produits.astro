@@ -2,7 +2,6 @@
 import { Image } from "astro:assets";
 import Button from "../components/Button.astro";
 
-// Simplificar los props - el componente ahora solo muestra productos
 const {
   products,
   showFavoriteIndicator = true
@@ -49,8 +48,8 @@ const {
                 <h3 class="text-lg font-semibold mb-1">{p.nom_produit}</h3>
                 <p class="text-sm text-gray-500 mb-4">{p.pays_produit}</p>
 
-                <div class="mt-auto">
-                  <Button href={`/continents/${p.id}`} class="w-full">
+                <div class="mt-auto text-sm">
+                  <Button href={`/continents/${p.id}`} class="w-full text-sm">
                     En savoir plus
                   </Button>
                 </div>

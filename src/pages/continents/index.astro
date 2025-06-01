@@ -98,7 +98,7 @@ const featuredProducts = allProducts
     <h1 class="text-5xl font-light pt-6 -tracking-tighter">
       Produits<br />par continent
     </h1>
-    <h2 class="p-body1 pt-6 w-90">
+    <h2 class="p-body2 pt-6 lg:w-90 lg:p-body-1">
       Explorez les 5 continents à la recherche de vos saveurs préférées et
       renouez avec les produits de votre enfance !
     </h2>
@@ -182,7 +182,7 @@ const featuredProducts = allProducts
               <p class="p-body3 text-[var(--color-green)] mb-3">{product.pays_produit}</p>
               <a 
                 href={`/continents/${product.id}`}
-                class="inline-block w-full uppercase text-center bg-[var(--color-green)] text-[var(--color-blanc)] px-4 py-2 rounded-full hover:opacity-90 transition-all button"
+                class="inline-block w-full uppercase text-center bg-[var(--color-green)] text-[var(--color-blanc)] px-4 py-2 rounded-full hover:opacity-90 transition-all button text-[12px]"
               >
                 En savoir plus
               </a>
@@ -253,7 +253,7 @@ const featuredProducts = allProducts
                 <p class="p-body3 text-[var(--color-green)] mb-3">{product.pays_produit}</p>
                 <a 
                   href={`/continents/${product.id}`}
-                  class="inline-block uppercase w-full text-center bg-[var(--color-orange)] text-[var(--color-blanc)] px-4 py-2 rounded-full hover:opacity-90 transition-all button"
+                  class="inline-block uppercase w-full text-center bg-[var(--color-orange)] text-[var(--color-blanc)] px-4 py-2 rounded-full hover:opacity-90 transition-all text-[12px] font-bold"
                 >
                   Découvrir maintenant
                 </a>
@@ -384,10 +384,10 @@ const featuredProducts = allProducts
 
   <!-- Call to action finale -->
   <section class="bg-gradient-to-r from-[var(--color-orange)] to-orange-300 text-[var(--color-blanc)] py-12">
-    <div class="px-4 md:px-20 text-center">
+    <div class="px-4 md:px-20 text-center justify-center">
       <h2 class="h3-header text-4xl mb-4">Prêt pour un voyage culinaire ?</h2>
       <p class="p-body2 mb-6">Découvrez des saveurs authentiques du monde entier</p>
-      <div class="space-x-4">
+      <div class="space-x-4 justify-center items-center">
         <a 
           href="/restaurants" 
           class="p-button inline-block bg-[var(--color-blanc)] text-[var(--color-orange)] px-6 py-3 rounded-lg hover:opacity-90 transition-all button"
@@ -396,7 +396,7 @@ const featuredProducts = allProducts
         </a>
         <a 
           href="/continents" 
-          class="p-button inline-block border-2 border-[var(--color-blanc)] text-[var(--color-blanc)] px-6 py-3 rounded-lg hover:bg-[var(--color-blanc)] hover:text-[var(--color-orange)] transition-all button"
+          class="p-button inline-block border-2 border-[var(--color-blanc)] text-[var(--color-blanc)] px-6 py-3 rounded-lg hover:bg-[var(--color-blanc)] hover:text-[var(--color-orange)] transition-all button mt-3 -ml-4 "
         >
           Explorer les produits
         </a>

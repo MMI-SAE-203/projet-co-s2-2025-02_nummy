@@ -57,11 +57,11 @@ const featuredRecettes = allRecettes
 <Layout classBody="colorPage colorNav" title="Recettes du monde | Nummy">
 
   <!-- header -->
-  <div class="bg-gradient-to-t from-[var(--color-green)] to-green-300 text-[var(--color-blanc)] p-6 mt-22">
+  <div class="bg-[var(--color-green)] text-[var(--color-blanc)] p-6 mt-22">
     <h1 class="text-5xl font-light pt-6 -tracking-tighter">
       Recettes<br />du monde
     </h1>
-    <h2 class="p-body1 pt-6 w-90">
+    <h2 class="p-body2 pt-6 lg:w-90">
       Découvrez des recettes authentiques du monde entier et partagez vos
       propres créations culinaires !
     </h2>
@@ -109,10 +109,10 @@ const featuredRecettes = allRecettes
 
   <!-- Section principale -->
   <div class="px-4 md:px-20 py-4">
-    <div class="flex justify-between items-center">
+    <div class="flex flex-col justify-between">
       <div>
         <h2 class="lg:text-4xl h2-header pt-12 pb-2">Nos recettes</h2>
-        <hr class="w-1/2 h-[8px] bg-[var(--color-green)] border-none mb-6" />
+        <hr class="w-1/2 h-[8px] bg-[var(--color-green)] border-none mb-8" />
         <p class="p-body2 text-[var(--color-green)]">
           {totalItems} recette{totalItems !== 1 ? "s" : ""} trouvée{totalItems !== 1 ? "s" : ""}
           {continent && ` pour ${[
@@ -128,7 +128,7 @@ const featuredRecettes = allRecettes
       <!-- Bouton ajouter recette -->
       <a
         href="/recettes/ajouter"
-        class="bg-[var(--color-green)] text-[var(--color-blanc)] px-6 py-3 rounded-full hover:opacity-90 transition-all button flex items-center"
+        class="bg-[var(--color-green)] text-[var(--color-blanc)] px-6 py-3 lg:mt-5 mt-2 rounded-full hover:opacity-90 transition-all button flex items-center w-60"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -164,7 +164,7 @@ const featuredRecettes = allRecettes
         </a>
       </div>
     ) : (
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         {currentRecettes.map((recette) => (
           <Recettes recette={recette} />
         ))}
@@ -212,7 +212,7 @@ const featuredRecettes = allRecettes
 
   <!-- Recettes melas :D -->
   {featuredRecettes.length > 0 && (
-    <section class="bg-[var(--color-lin)] py-12">
+    <section class="bg-[var(--color-lin)] py-12 mt-25">
       <div class="px-4 md:px-20">
         <h2 class="h3-header text-center mb-2 text-[var(--color-noir)]">
           Recettes favorites
@@ -220,7 +220,7 @@ const featuredRecettes = allRecettes
         <p class="p-body2 text-[var(--color-green)] text-center mb-8">
           Les recettes les plus appréciées par notre communauté
         </p>
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           {featuredRecettes.map((recette) => (
             <Recettes recette={recette} />
           ))}
@@ -237,7 +237,7 @@ const featuredRecettes = allRecettes
       <div class="space-x-4">
         <a 
           href="/recettes/ajouter" 
-          class="inline-block bg-[var(--color-blanc)] text-[var(--color-green)] px-6 py-3 rounded-full hover:opacity-90 transition-all button"
+          class="inline-block bg-[var(--color-blanc)] text-[var(--color-green)] px-14 py-3 rounded-full hover:opacity-90 transition-all button ml-4 mb-4"
         >
           Ajouter ma recette
         </a>

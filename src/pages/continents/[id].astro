@@ -133,7 +133,7 @@ const imageUrl = produit.img_produit
             set:html={produit.description_produit}
           />
 
-          <div class="mt-8 flex flex-wrap gap-4">
+          <div class="mt-8 flex gap-4">
             <!-- debuguer :,3 j'en peux plus  -->
 
             <!-- <div class="w-full mb-4 bg-yellow-100 p-2 rounded">
@@ -180,9 +180,10 @@ const imageUrl = produit.img_produit
 
     <!-- Hmmm délicieux :D / recettes -->
     <div class="mt-16">
-      <h2 class="text-2xl font-bold text-gray-900 mb-6">
+      <h2 class="text-3xl h3-header text-gray-900 mb-4">
         Recettes avec {produit.nom_produit}
       </h2>
+      <hr class="bg-[var(--color-orange)] h-2 w-1/2 mb-8 border-none" />
 
       {
         recettesAssociees.length > 0 ? (
@@ -281,7 +282,7 @@ const imageUrl = produit.img_produit
             </p>
             <a
               href="/recettes/ajouter"
-              class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-orange-600 hover:bg-orange-700 transition-colors"
+              class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-[var(--color-orange)] hover:bg-orange-300 transition-colors"
             >
               Ajouter une recette
             </a>
@@ -290,9 +291,20 @@ const imageUrl = produit.img_produit
       }
     </div>
 
+    <!-- button retour recettes-->
+    <div class="mt-8 text-center">
+      <a
+        href="/recettes"
+        class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-[var(--color-orange)] hover:bg-green-600 transition-colors"
+      >
+        Voir toutes les recettes
+      </a>
+    </div>
+
     <!-- Productos que se parecenn -->
     <div class="mt-16">
-      <h2 class="text-2xl font-bold text-gray-900 mb-6">Produits similaires</h2>
+      <h2 class="text-3xl h3-header mt-8 text-gray-900 mb-3">Produits similaires</h2>
+      <hr class="bg-[var(--color-orange)] h-2 w-1/2 mb-8 border-none" />
 
       {
         produitsSimilaires.length > 0 ? (
