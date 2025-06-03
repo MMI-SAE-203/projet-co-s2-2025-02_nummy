@@ -8,12 +8,9 @@ const products = await getAllProduits();
 <Layout classBody="colorPage colorNav" title="Ajouter une recette | Nummy">
   <!-- Header -->
   <div class="bg-gradient-to-t from-[var(--color-orange)] to-orange-300 text-[var(--color-blanc)] p-6 mt-22">
-    <h1 class="text-5xl font-light pt-6 -tracking-tighter">
-      Ajouter<br />une recette
+    <h1 class="text-5xl font-light pt-6 -tracking-tighter items-center text-center">
+      PARTAGEZ-NOUS  VOS RECETTES !
     </h1>
-    <h2 class="p-body1 pt-6 w-90">
-      Partagez vos recettes du monde entier avec la communauté Nummy !
-    </h2>
   </div>
 
   <!-- Formulaire -->
@@ -235,7 +232,7 @@ etc."
         <button
           type="submit"
           id="submit-btn"
-          class="px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors disabled:opacity-50"
+          class="px-6 button uppercase py-3 bg-[var(--color-orange)] text-white rounded-lg hover:bg-orange-300 transition-colors disabled:opacity-50"
         >
           <span id="submit-text">Ajouter la recette</span>
           <span id="submit-loading" class="hidden">Ajout en cours...</span>

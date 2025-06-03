@@ -25,7 +25,6 @@ const {
   telephone,
 } = Astro.props;
 
-// URL por defecto para cuando las imágenes no cargan
 const defaultImageUrl = "https://via.placeholder.com/300x200?text=Nummy";
 ---
 
@@ -33,7 +32,6 @@ const defaultImageUrl = "https://via.placeholder.com/300x200?text=Nummy";
   class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
 >
   <div class={`flex ${partenariat ? "flex-row" : "flex-col"}`}>
-    <!-- Imagen (siempre visible) -->
     <div class={partenariat ? "w-1/3" : "w-full h-48"}>
       <img
         src={image}
@@ -43,11 +41,9 @@ const defaultImageUrl = "https://via.placeholder.com/300x200?text=Nummy";
       />
     </div>
 
-    <!-- Contenido (condicionado según si es partenariat) -->
     <div
       class={`${partenariat ? "w-2/3 p-4 relative bg-[var(--color-lin)]" : "p-4"}`}
     >
-      <!-- Etiqueta de partenaire (si aplica) -->
       {
         partenariat && (
           <div class="absolute top-3 right-3 bg-[var(--color-orange)] text-white px-2 py-1 rounded-md text-xs font-semibold">
@@ -56,9 +52,8 @@ const defaultImageUrl = "https://via.placeholder.com/300x200?text=Nummy";
         )
       }
 
-      <h3 class="text-xl font-semibold mb-1">{nom}</h3>
+      <h3 class="lg:text-xl text-xl font-semibold mb-1">{nom}</h3>
 
-      <!-- Información adicional (solo para partenaires) -->
       {
         partenariat ? (
           <>
