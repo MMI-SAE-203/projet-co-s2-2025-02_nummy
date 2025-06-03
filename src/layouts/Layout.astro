@@ -1,25 +1,63 @@
 ---
-import '../styles/global.css';
-import '@fontsource/ranchers/400.css';  
-import '@fontsource/roboto/400.css';    
-import Header from '../components/Header.astro';
-import Buttonsign from '../components/Buttonsign.astro';
-import Footer from '../components/Footer.astro';
+import "../styles/global.css";
+import "@fontsource/ranchers/400.css";
+import "@fontsource/roboto/400.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+const { classBody } = Astro.props;
 ---
+
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
 
-	</head>
-	<body>
-		<Header/>
-			<main class="bg-[var(--color-orange)]">
-<slot/>
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Nummy" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <!-- <meta-description></meta-description> -->
+  </head>
+  <body class={classBody}>
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
 
-			</main>
-	<Footer/>
+    <script>
+      const redirectionHandled = sessionStorage.getItem("redirectionHandled");
 
-	</body>
+      if (!redirectionHandled) {
+        sessionStorage.setItem("redirectionHandled", "true");
+
+        setTimeout(() => {
+          sessionStorage.removeItem("redirectionHandled");
+        }, 2000);
+
+        const currentPath = window.location.pathname;
+        const isLoginPage = currentPath === "/login";
+        const isRegisterPage = currentPath === "/register";
+        const isProfilePage = currentPath === "/profile";
+
+
+        setTimeout(() => {
+          import("../js/login.js").then((module) => {
+            const { isLoggedIn } = module;
+            const authenticated = isLoggedIn();
+
+            if (!authenticated && isProfilePage) {
+              window.location.href = "/login";
+            } else if (authenticated && (isLoginPage || isRegisterPage)) {
+              window.location.href = "/profile";
+            }
+          });
+        }, 300);
+      }
+    </script>
+  </body>
 </html>

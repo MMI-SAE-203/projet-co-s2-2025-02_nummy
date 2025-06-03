@@ -13,6 +13,7 @@
     "@fontsource/roboto": "^5.2.5",
     "@tailwindcss/vite": "^4.0.17",
     "astro": "^5.5.3",
+    "pocketbase": "^0.26.0",
     "tailwindcss": "^4.0.17"
   }
 }

@@ -1,0 +1,177 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { isLoggedIn, pb, initAuthentication, getCurrentUser } from "../js/login.js";
+
+initAuthentication();
+
+const isAuthenticated = isLoggedIn();
+const currentUser = isAuthenticated ? pb.authStore.model : null;
+
+if (!isAuthenticated) {
+  return Astro.redirect('/login');
+}
+---
+
+<Layout title="Mon profil | Nummy">
+  <main class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8">Mon profil</h1>
+    
+    <div id="profile-content">
+      <div class="flex items-center justify-center p-8">
+        <div class="animate-pulse w-12 h-12 rounded-full bg-gray-200"></div>
+        <div class="ml-4 w-48 h-8 bg-gray-200 rounded animate-pulse"></div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  import { 
+    updateUserProfile,
+    uploadAvatar,
+    logoutUser,
+    getCurrentUser,
+    pb,
+    isLoggedIn, 
+    initAuthentication
+  } from "../js/login.js";
+
+  function updateProfileUI() {
+    initAuthentication();
+    const currentUser = getCurrentUser();
+    const profileContent = document.getElementById('profile-content');
+    
+    if (!currentUser) {
+      window.location.href = "/login";
+      return;
+    }
+  
+    const defaultAvatar = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+    let avatarUrl = defaultAvatar;
+    
+    if (currentUser?.avatar) {
+      try {
+        avatarUrl = pb.getFileUrl(currentUser, currentUser.avatar);
+      } catch (e) {
+        console.error("Erreur lors de l'obtention de l'URL de l'avatar:", e);
+      }
+    }
+    
+    // Construire l'interface utilisateur
+    profileContent.innerHTML = `
+      <div class="bg-white shadow-md rounded-lg p-8">
+        <div class="flex items-center mb-6">
+          <img 
+            id="avatar-preview"
+            src="${avatarUrl}" 
+            alt="Avatar" 
+            class="w-20 h-20 rounded-full mr-6 object-cover"
+          />
+          <div>
+            <h2 id="profile-name" class="text-2xl font-semibold">${currentUser.nom_user || ""} ${currentUser.prenom_user || ""}</h2>
+            <p class="text-gray-600">${currentUser.email}</p>
+          </div>
+        </div>
+        
+        <form id="profile-form" class="space-y-4">
+          <div>
+            <label for="name" class="block text-sm font-medium text-gray-700">Votre prénom</label>
+            <input type="text" id="name" name="name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" 
+                   value="${currentUser.prenom_user || ""}">
+          </div>
+          
+          <div>
+            <label for="avatar-upload" class="block text-sm font-medium text-gray-700">Changer d'avatar</label>
+            <input type="file" id="avatar-upload" accept="image/*" class="mt-1 block w-full px-3 py-2">
+          </div>
+          
+          <div>
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md">Mettre à jour</button>
+          </div>
+          
+          <div id="update-message" class="mt-4 p-2 bg-green-100 text-green-800 rounded hidden">
+            Profil mis à jour avec succès!
+          </div>
+        </form>
+        
+        <hr class="my-6">
+        
+        <button id="logout-btn" class="text-red-600 hover:text-red-800">
+          Se déconnecter
+        </button>
+      </div>
+    `;
+    
+    // Ajouter les event listeners
+    setupProfileEventListeners();
+  }
+  
+  function setupProfileEventListeners() {
+    const form = document.getElementById("profile-form");
+    const avatarUpload = document.getElementById("avatar-upload");
+    const avatarPreview = document.getElementById("avatar-preview");
+    const updateMessage = document.getElementById("update-message");
+    const logoutBtn = document.getElementById("logout-btn");
+    
+    if (avatarUpload) {
+      avatarUpload.addEventListener("change", async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        
+        // Preview
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          avatarPreview.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+        
+        // Upload to PocketBase
+        const currentUser = getCurrentUser();
+        if (currentUser) {
+          await uploadAvatar(currentUser.id, file);
+        }
+      });
+    }
+    
+    if (form) {
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        if (updateMessage) updateMessage.classList.add("hidden");
+        
+        const currentUser = getCurrentUser();
+        if (!currentUser) return;
+        
+        const data = {
+          prenom_user: form.name.value,
+        };
+        
+        const result = await updateUserProfile(currentUser.id, data);
+        
+        if (result.success) {
+          if (updateMessage) {
+            updateMessage.classList.remove("hidden");
+            setTimeout(() => updateMessage.classList.add("hidden"), 3000);
+          }
+          
+          // Mettre à jour le nom affiché
+          const profileName = document.getElementById("profile-name");
+          if (profileName) {
+            profileName.textContent = `${currentUser.nom_user || ""} ${result.user.prenom_user || ""}`;
+          }
+        }
+      });
+    }
+    
+    if (logoutBtn) {
+      logoutBtn.addEventListener("click", () => {
+        logoutUser();
+        window.location.href = "/";
+      });
+    }
+  }
+  
+
+  document.addEventListener("DOMContentLoaded", updateProfileUI);
+
+  document.addEventListener("astro:after-swap", updateProfileUI);
+</script>
