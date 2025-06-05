@@ -1,0 +1,45 @@
+import { c as createComponent, r as renderComponent, a as renderTemplate, m as maybeRenderHead } from '../chunks/astro/server_D0p2hXWS.mjs';
+import 'kleur/colors';
+import { $ as $$Layout } from '../chunks/Layout_LuwkeAM4.mjs';
+import '@astrojs/internal-helpers/path';
+import '@astrojs/internal-helpers/remote';
+import { $ as $$Picture } from '../chunks/_astro_assets_aOvdlN-7.mjs';
+export { renderers } from '../renderers.mjs';
+
+const ImageContact = new Proxy({"src":"/_astro/contact.DSrAn_53.webp","width":366,"height":246,"format":"webp"}, {
+						get(target, name, receiver) {
+							if (name === 'clone') {
+								return structuredClone(target);
+							}
+							if (name === 'fsPath') {
+								return "/Users/arthurwicky/Documents/projet-co-s2-2025-02_nummy/src/assets/img/contact.webp";
+							}
+							
+							return target[name];
+						}
+					});
+
+const $$Contact = createComponent(($$result, $$props, $$slots) => {
+  return renderTemplate`${renderComponent($$result, "Layout", $$Layout, { "classBody": "colorNav" }, { "default": ($$result2) => renderTemplate` ${maybeRenderHead()}<div class="min-h-screen bg-white"> <div class="lg:grid gap-5 lg:grid-cols-11 lg:gap-5 lg: min-h-screen"> <div class="bg-[var(--color-orange)] py-20 col-start-0 lg:col-span-6 relative overflow-hidden rounded-b-3xl lg:rounded-none lg:min-h-screen"> <div class="absolute top-0 lg:mt-95 mt-55 -right-10 lg:-left-20 z-10"> ${renderComponent($$result2, "Picture", $$Picture, { "src": ImageContact, "width": 366, "height": 246, "alt": "T\xE9l\xE9phone jaune avec une banane", "class": "lg:scale-280 scale-120 lg:opacity-35" })} </div> <div class="px-6 pt-8 pb-16 lg:px-0 lg:-mt-25 lg:flex lg:flex-col lg:justify-center lg:h-full lg:pl-20 relative z-10"> <div class="lg:max-w-md"> <h1 class="text-white text-[45px] lg:text-[64px] mb-2">
+NOUS <br>CONTACTER !
+</h1> <div class="w-12 h-1 bg-white my-4"></div> <p class="text-white text-sm lg:text-base max-w-xs mb-8">
+Avez-vous des questions, des doutes, des plaintes ou des
+              réclamations ?
+</p> <p class="text-white font-bold">ÉCRIVEZ-NOUS !</p> </div> </div> </div> <div class="col-span-1 lg:col-start-7 lg:col-span-5 px-6 py-8 lg:pt-20 lg:px-15 lg:flex lg:items-center"> <form class="w-full max-w-md mx-auto lg:mx-0 space-y-6"> <div class="grid grid-cols-2 gap-4"> <div> <label for="nom" class="block text-gray-700 text-sm font-medium mb-1">NOM</label> <input type="text" id="nom" placeholder="Indiquez votre nom" class="w-full px-4 py-2 bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FFA500]"> </div> <div> <label for="prenom" class="block text-gray-700 text-sm font-medium mb-1">PRÉNOM</label> <input type="text" id="prenom" placeholder="Indiquez votre prénom" class="w-full px-4 py-2 bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FFA500]"> </div> </div> <div class="grid grid-cols-2 gap-4"> <div> <label for="telephone" class="block text-gray-700 text-sm font-medium mb-1">TÉLÉPHONE</label> <input type="tel" id="telephone" placeholder="Ex: 07 xx xx xx xx" class="w-full px-4 py-2 bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FFA500]"> </div> <div> <label for="email" class="block text-gray-700 text-sm font-medium mb-1">E-MAIL</label> <input type="email" id="email" placeholder="Ex: exemple@email.com" class="w-full px-4 py-2 bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FFA500]"> </div> </div> <div> <label for="sujet" class="block text-gray-700 text-sm font-medium mb-1">SUJET</label> <input type="text" id="sujet" placeholder="Veuillez indiquer le sujet de votre message" class="w-full px-4 py-2 bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FFA500]"> </div> <div> <label for="message" class="block text-gray-700 text-sm font-medium mb-1">MESSAGE</label> <textarea id="message" rows="5" placeholder="Veuillez indiquer votre message ici" class="w-full px-4 py-2 bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FFA500]"></textarea> </div> <div class="flex justify-center lg:justify-center"> <button type="submit" class="bg-[var(--color-orange)] text-black font-medium px-10 py-2 rounded-full">
+ENVOYER
+</button> </div> </form> </div> </div> </div> ` })}`;
+}, "/Users/arthurwicky/Documents/projet-co-s2-2025-02_nummy/src/pages/contact.astro", void 0);
+
+const $$file = "/Users/arthurwicky/Documents/projet-co-s2-2025-02_nummy/src/pages/contact.astro";
+const $$url = "/contact";
+
+const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+	__proto__: null,
+	default: $$Contact,
+	file: $$file,
+	url: $$url
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const page = () => _page;
+
+export { page };
