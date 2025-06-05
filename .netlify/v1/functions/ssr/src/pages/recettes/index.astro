@@ -1,0 +1,263 @@
+---
+export const prerender = false;
+
+import Layout from "../../layouts/Layout.astro";
+import Recettes from "../../components/Recettes.astro";
+import { Picture } from "astro:assets";
+import { getAllRecettes } from "../../js/backend.js";
+
+import AfriqueIcon from "../../assets/icones/AfriqueF.png";
+import AsieIcon from "../../assets/icones/AsieF.png";
+import AmeriqueIcon from "../../assets/icones/AmeriqueF.png";
+import AmeriqueLFIcon from "../../assets/icones/AmeriqueLF.png";
+import EuropeIcon from "../../assets/icones/EuropeF.png";
+
+const allRecettes = await getAllRecettes();
+
+const { searchParams } = Astro.url;
+const page = searchParams.get("page") || "1";
+const continent = searchParams.get("continent") || "";
+const currentPage = parseInt(page, 10);
+const itemsPerPage = 6;
+
+let filtered = [...allRecettes];
+if (continent) {
+  const continentMap = {
+    asie: "Asie",
+    afrique: "Afrique",
+    amerique: "Amérique du Nord",
+    "amerique-lf": "Amérique Latine",
+    europe: "Europe",
+  };
+
+  const dbValue = continentMap[continent];
+  if (dbValue) {
+    filtered = filtered.filter((r) => r.continent_recette === dbValue);
+  }
+}
+
+const totalItems = filtered.length;
+const totalPages = Math.ceil(totalItems / itemsPerPage);
+const validCurrentPage = Math.max(1, Math.min(currentPage, totalPages || 1));
+const startIndex = (validCurrentPage - 1) * itemsPerPage;
+const endIndex = startIndex + itemsPerPage;
+const currentRecettes = filtered.slice(startIndex, endIndex);
+
+function getPageUrl(pageNum) {
+  const url = new URL(Astro.url);
+  url.searchParams.set("page", pageNum.toString());
+  return url.pathname + url.search;
+}
+
+const featuredRecettes = allRecettes
+  .filter((r) => r.favori === true)
+  .slice(0, 3);
+---
+
+<Layout classBody="colorPage colorNav" title="Recettes du monde | Nummy">
+
+  <!-- header -->
+  <div class="bg-[var(--color-green)] text-[var(--color-blanc)] p-6 mt-22">
+    <h1 class="text-5xl font-light pt-6 -tracking-tighter">
+      Recettes<br />du monde
+    </h1>
+    <h2 class="p-body2 pt-6 lg:w-90">
+      Découvrez des recettes authentiques du monde entier et partagez vos
+      propres créations culinaires !
+    </h2>
+
+    <!-- Filtres de continents -->
+    <div class="mt-2">
+      <div class="flex overflow-x-auto gap-6 py-4 hide-scrollbar">
+        <a
+          href="/recettes"
+          class={`flex-shrink-0 w-32 ${!continent ? "bg-[var(--color-blanc)] bg-opacity-90" : "bg-[var(--color-lin)]"} rounded-xl px-6 py-2 flex flex-col items-center text-[var(--color-noir)] hover:shadow-md transition-shadow`}
+        >
+          <div class="rounded-full w-20 h-20 flex items-center justify-center mb-1">
+            <span class="text-4xl">🌍</span>
+          </div>
+          <span class="p-body2 text-center uppercase font-bold">Toutes</span>
+        </a>
+
+        {[
+          { name: "Asie", urlValue: "asie", icon: AsieIcon },
+          { name: "Afrique", urlValue: "afrique", icon: AfriqueIcon },
+          { name: "Amérique", urlValue: "amerique", icon: AmeriqueIcon },
+          { name: "Amérique Latine", urlValue: "amerique-lf", icon: AmeriqueLFIcon },
+          { name: "Europe", urlValue: "europe", icon: EuropeIcon },
+        ].map((item) => (
+          <a
+            href={`/recettes?continent=${item.urlValue}`}
+            class={`flex-shrink-0 w-32 ${continent === item.urlValue ? "bg-[var(--color-blanc)] bg-opacity-90" : "bg-[var(--color-lin)]"} rounded-xl px-6 py-2 flex flex-col items-center text-[var(--color-noir)] hover:shadow-md transition-shadow`}
+          >
+            <div class="rounded-full w-20 h-20 flex items-center justify-center mb-1">
+              <Picture
+                src={item.icon}
+                alt={item.name}
+                loading="lazy"
+                width={60}
+                height={60}
+                class="w-15 h-15 object-cover"
+              />
+            </div>
+            <span class="p-body2 text-center uppercase font-bold">{item.name}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- Section principale -->
+  <div class="px-4 md:px-20 py-4">
+    <div class="flex flex-col justify-between">
+      <div>
+        <h2 class="lg:text-4xl h2-header pt-12 pb-2">Nos recettes</h2>
+        <hr class="w-1/2 h-[8px] bg-[var(--color-green)] border-none mb-8" />
+        <p class="p-body2 text-[var(--color-green)]">
+          {totalItems} recette{totalItems !== 1 ? "s" : ""} trouvée{totalItems !== 1 ? "s" : ""}
+          {continent && ` pour ${[
+              { urlValue: "asie", name: "l'Asie" },
+              { urlValue: "afrique", name: "l'Afrique" },
+              { urlValue: "amerique", name: "l'Amérique du Nord" },
+              { urlValue: "amerique-lf", name: "l'Amérique Latine" },
+              { urlValue: "europe", name: "l'Europe" },
+            ].find((c) => c.urlValue === continent)?.name || continent}`}
+        </p>
+      </div>
+
+      <!-- Bouton ajouter recette -->
+      <a
+        href="/recettes/ajouter"
+        class="bg-[var(--color-green)] text-[var(--color-blanc)] px-6 py-3 lg:mt-5 mt-2 rounded-full hover:opacity-90 transition-all button flex items-center w-60"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5 mr-2"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+          ></path>
+        </svg>
+        Ajouter une recette
+      </a>
+    </div>
+  </div>
+
+  <!-- Grille de recettes -->
+  <div class="px-4 md:px-20">
+    {currentRecettes.length === 0 ? (
+      <div class="text-center py-10">
+        <p class="p-body2 text-[var(--color-green)] opacity-75">
+          Aucune recette trouvée pour cette sélection.
+        </p>
+        <a
+          href="/recettes/ajouter"
+          class="inline-block mt-4 bg-[var(--color-green)] text-[var(--color-blanc)] px-6 py-3 rounded-full hover:opacity-90 transition-all button"
+        >
+          Soyez le premier à ajouter une recette !
+        </a>
+      </div>
+    ) : (
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {currentRecettes.map((recette) => (
+          <Recettes recette={recette} />
+        ))}
+      </div>
+    )}
+  </div>
+
+  {totalPages > 1 && (
+    <div class="flex justify-center items-center space-x-2 mt-8 mb-8">
+      {validCurrentPage > 1 && (
+        <a
+          href={getPageUrl(validCurrentPage - 1)}
+          class="bg-[var(--color-argent)] rounded-full w-10 h-10 flex justify-center items-center hover:bg-[var(--color-lin)] button transition-colors"
+          title="Page précédente"
+        >
+          &laquo;
+        </a>
+      )}
+
+      {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => i + 1).map((num) => (
+        <a
+          href={getPageUrl(num)}
+          class={`rounded-full w-10 h-10 flex justify-center items-center button transition-colors ${
+            num === validCurrentPage
+              ? "bg-[var(--color-green)] text-[var(--color-blanc)]"
+              : "bg-[var(--color-argent)] hover:bg-[var(--color-lin)] text-[var(--color-noir)]"
+          }`}
+          title={`Page ${num}`}
+        >
+          {num}
+        </a>
+      ))}
+
+      {validCurrentPage < totalPages && (
+        <a
+          href={getPageUrl(validCurrentPage + 1)}
+          class="bg-[var(--color-argent)] rounded-full w-10 h-10 flex justify-center items-center hover:bg-[var(--color-lin)] button transition-colors"
+          title="Page suivante"
+        >
+          &raquo;
+        </a>
+      )}
+    </div>
+  )}
+
+  <!-- Recettes melas :D -->
+  {featuredRecettes.length > 0 && (
+    <section class="bg-[var(--color-lin)] py-12 mt-25">
+      <div class="px-4 md:px-20">
+        <h2 class="h3-header lg:text-4xl text-center mb-2 text-[var(--color-noir)]">
+          Recettes favorites
+        </h2>
+        <p class="p-body2 text-[var(--color-green)] text-center mb-8">
+          Les recettes les plus appréciées par notre communauté
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {featuredRecettes.map((recette) => (
+            <Recettes recette={recette} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Banner recettes -->
+  <section class="bg-gradient-to-r from-[var(--color-green)] to-[var(--color-bleu)] text-[var(--color-blanc)] py-12 mt-10">
+    <div class="px-4 md:px-20 text-center">
+      <h2 class="h2-header mb-4">Partagez vos créations culinaires</h2>
+      <p class="p-body1 mb-6">Rejoignez notre communauté de passionnés de cuisine du monde</p>
+      <div class="space-x-4">
+        <a 
+          href="/recettes/ajouter" 
+          class="inline-block bg-[var(--color-blanc)] text-[var(--color-green)] px-14 py-3 rounded-full hover:opacity-90 transition-all button ml-4 mb-4"
+        >
+          Ajouter ma recette
+        </a>
+        <a 
+          href="/etablissements" 
+          class="inline-block border-2 border-[var(--color-blanc)] text-[var(--color-blanc)] px-6 py-3 rounded-full hover:bg-[var(--color-blanc)] hover:text-[var(--color-green)] transition-all button"
+        >
+          Découvrir les établissements
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+</style>

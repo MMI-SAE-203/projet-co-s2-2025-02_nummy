@@ -1,0 +1,106 @@
+import { c as createComponent, r as renderComponent, a as renderTemplate, m as maybeRenderHead, e as renderScript } from '../chunks/astro/server_Ds7egGoB.mjs';
+import 'kleur/colors';
+import { $ as $$Layout } from '../chunks/Layout_CgWoF0WD.mjs';
+import { $ as $$Button } from '../chunks/Button_yD3ni9q3.mjs';
+import '@astrojs/internal-helpers/path';
+import '@astrojs/internal-helpers/remote';
+import { $ as $$Picture } from '../chunks/_astro_assets_DL_8c7iC.mjs';
+export { renderers } from '../renderers.mjs';
+
+const ImagePartenaires = new Proxy({"src":"/_astro/partenaires1.DsBZ193z.webp","width":353,"height":232,"format":"webp"}, {
+						get(target, name, receiver) {
+							if (name === 'clone') {
+								return structuredClone(target);
+							}
+							if (name === 'fsPath') {
+								return "/Users/arthurwicky/Documents/projet-co-s2-2025-02_nummy/src/assets/img/cardimg/partenaires1.webp";
+							}
+							
+							return target[name];
+						}
+					});
+
+const ImagePartenaires2 = new Proxy({"src":"/_astro/partenaires2.eGNhZNRu.webp","width":353,"height":232,"format":"webp"}, {
+						get(target, name, receiver) {
+							if (name === 'clone') {
+								return structuredClone(target);
+							}
+							if (name === 'fsPath') {
+								return "/Users/arthurwicky/Documents/projet-co-s2-2025-02_nummy/src/assets/img/cardimg/partenaires2.webp";
+							}
+							
+							return target[name];
+						}
+					});
+
+const ImagePartenaires3 = new Proxy({"src":"/_astro/partenaires3.uzmdY8A4.webp","width":353,"height":232,"format":"webp"}, {
+						get(target, name, receiver) {
+							if (name === 'clone') {
+								return structuredClone(target);
+							}
+							if (name === 'fsPath') {
+								return "/Users/arthurwicky/Documents/projet-co-s2-2025-02_nummy/src/assets/img/cardimg/partenaires3.webp";
+							}
+							
+							return target[name];
+						}
+					});
+
+const $$Partenaire = createComponent(($$result, $$props, $$slots) => {
+  return renderTemplate`${renderComponent($$result, "Layout", $$Layout, { "classBody": "colorPage colorNav" }, { "default": ($$result2) => renderTemplate` ${maybeRenderHead()}<div> <div class="px-8"> <!-- texte principal --> <div class="lg:flex lg:pt-32"> <div class="pt-32 lg:flex lg:pt-1"> <h1 class="tracking-wider">
+Rejoignez cette grande communauté et rendez votre entreprise <span class="text-[var(--color-orange)]">
+visible !</span> </h1> </div> <div> <hr class="h-[10px] w-60 bg-[var(--color-orange)] my-5"> <p class="p-body3 text-[16px]">
+Rejoignez notre projet et donnez de la visibilité à votre
+              entreprise ! Ensemble, mettons en avant vos produits et
+              savoir-faire auprès d'un public plus large ! Profitez d'une
+              plateforme dédiée pour toucher de nouveaux clients et partager
+              votre passion.
+</p> <div class="flex justify-center lg:justify-start items-center py-10"> ${renderComponent($$result2, "Button", $$Button, { "variant": "orange2" }, { "default": ($$result3) => renderTemplate`NOUS REJOINDRE !` })} </div> </div> </div> <hr class="relative bg-gray-600"> <div class="flex flex-col items-center justify-center text-center px-15 py-10"> <h2 class="h3-header lg:text-4xl lg:pb-10">
+"Quels sont les <span class="text-[var(--color-orange)]">avantages</span> de devenir partenaire ?"
+</h2> </div> <!-- card information --> <div class="space-y-10"> <!-- Card 1 --> <div class="flex flex-col lg:flex-row lg:items-center bg-[var(--color-argent)] border border-gray-200 shadow-sm rounded-lg overflow-hidden"> <div class="lg:w-1/3 lg:flex-shrink-0"> ${renderComponent($$result2, "Picture", $$Picture, { "src": ImagePartenaires2, "alt": "Visibilit\xE9 accrue", "loading": "lazy", "class": "w-full h-48 lg:h-full object-cover", "width": 800, "height": 700 })} </div> <!-- Contenido a la derecha en desktop --> <div class="p-6 lg:w-2/3"> <hr class="h-[4px] w-16 bg-[var(--color-orange)] mb-4"> <h3 class="font-bold text-xl mb-4 leading-tight lg:text-2xl">
+Visibilité accrue de vos produits et services !
+</h3> <p class="p-body3 text-black lg:text-[16px]">
+Augmentez la portée de votre entreprise grâce à notre plateforme
+                dédiée. Atteignez une audience plus large et touchez de nouveaux
+                clients intéressés par vos produits authentiques et votre
+                savoir-faire unique.
+</p> </div> </div> <!-- Card 2 --> <div class="flex flex-col lg:flex-row-reverse lg:items-center bg-[var(--color-argent)] border border-gray-200 shadow-sm rounded-lg overflow-hidden"> <div class="lg:w-1/3 lg:flex-shrink-0"> ${renderComponent($$result2, "Picture", $$Picture, { "src": ImagePartenaires, "alt": "R\xE9seau de partenaires", "loading": "lazy", "class": "w-full h-48 lg:h-full object-cover", "width": 800, "height": 700 })} </div> <div class="p-6 lg:w-2/3"> <hr class="h-[4px] w-16 bg-[var(--color-orange)] mb-4"> <h3 class="font-bold text-xl mb-4 leading-tight lg:text-2xl">
+Rejoignez un réseau de partenaires passionnés !
+</h3> <p class="p-body3 text-black lg:text-[16px]">
+Intégrez une communauté dynamique d'entrepreneurs culinaires.
+                Partagez vos expériences, échangez avec d'autres professionnels
+                et bénéficiez d'un soutien mutuel pour développer votre
+                activité.
+</p> </div> </div> <!-- Card 3 --> <div class="flex flex-col lg:flex-row lg:items-center bg-[var(--color-argent)] border border-gray-200 shadow-sm rounded-lg overflow-hidden"> <div class="lg:w-1/3 lg:flex-shrink-0"> ${renderComponent($$result2, "Picture", $$Picture, { "src": ImagePartenaires3, "alt": "Croissance business", "loading": "lazy", "class": "w-full h-48 lg:h-full object-cover", "width": 800, "height": 700 })} </div> <div class="p-6 lg:w-2/3"> <hr class="h-[4px] w-16 bg-[var(--color-orange)] mb-4"> <h3 class="font-bold text-xl mb-4 leading-tight lg:text-2xl">
+Boostez la croissance de votre business !
+</h3> <p class="p-body3 text-black lg:text-[16px]">
+Profitez d'outils marketing intégrés et d'une exposition
+                privilégiée sur notre plateforme. Augmentez vos ventes,
+                fidélisez votre clientèle et développez votre chiffre d'affaires
+                grâce à notre écosystème.
+</p> </div> </div> </div> </div> </div>  <div class="bg-[var(--color-orange)] text-black p-8 py-10 rounded-2xl lg:w-[930px] mx-auto mt-10 lg:mt-15 mb-10 lg:flex"> <div class="lg:mt-35 lg:pr-10"> <h2 class="h2-header mb-4 font-normal pr-10">
+"Devenez membre de cette grande famille !"
+</h2> <p class="p-body3 mb-6 text-sm">
+Envoyez-nous vos coordonnées professionnelles afin que nous puissions
+          vous contacter dans les plus brefs délais.
+</p> </div> <div> <form action="https://formspree.io/f/xnndjkql" method="POST" class="space-y-4"> <div> <label for="nom" class="block text-[12px] font-bold uppercase mb-1">Nom</label> <input type="text" id="nom" name="nom" placeholder="Indiquez votre nom de famille" required class="w-full p-small px-4 py-3 rounded-md bg-white border-0 focus:ring-2 focus:ring-[#FF7D00] placeholder-gray-400"> </div> <div> <label for="prenom" class="block text-[12px] font-bold uppercase mb-1">Prénom</label> <input type="text" id="prenom" name="prenom" placeholder="Indiquez votre prénom" required class="w-full p-small px-4 py-3 rounded-md bg-white border-0 focus:ring-2 focus:ring-[#FF7D00] placeholder-gray-400"> </div> <div class="grid grid-cols-2 gap-4"> <div> <label for="type_entreprise" class="block text-[12px] font-bold uppercase mb-1">Type d'entreprise</label> <input type="text" id="type_entreprise" name="type_entreprise" placeholder="Restaurant" required class="w-full p-small px-4 py-3 rounded-md bg-white border-0 focus:ring-2 focus:ring-[#FF7D00] placeholder-gray-400"> </div> <div> <label for="pays" class="block text-[12px] font-bold uppercase mb-1">Continent/Pays</label> <input type="text" id="pays" name="pays" placeholder="Indiquez le pays" required class="w-full p-small px-4 py-3 rounded-md bg-white border-0 focus:ring-2 focus:ring-[#FF7D00] placeholder-gray-400"> </div> </div> <div> <label for="telephone" class="block text-[12px] font-bold uppercase mb-1">Téléphone</label> <input type="tel" id="telephone" name="telephone" placeholder="(+33) xx xx xx xx" required class="w-full p-small px-4 py-3 rounded-md bg-white border-0 focus:ring-2 focus:ring-[#FF7D00] placeholder-gray-400"> </div> <div> <label for="email" class="block text-[12px] font-bold uppercase mb-1">E-mail</label> <input type="email" id="email" name="email" placeholder="E-mail: exemple@gmail.com" required class="w-full p-small px-4 py-3 rounded-md bg-white border-0 focus:ring-2 focus:ring-[#FF7D00] placeholder-gray-400"> </div> <div class="flex items-start mt-6"> <div class="flex items-center h-5"> <input id="terms" name="terms" type="checkbox" required class="w-4 h-4 border-gray-300 rounded focus:ring-[#FF7D00]"> </div> <div class="ml-3 text-xs"> <label for="terms" class="font-medium text-black">
+En cochant cette case, vous acceptez les termes et conditions
+                pour devenir membre de la société Ñummy, pour en savoir plus sur
+                nos politiques... <a href="#" class="text-blue-800 underline">En savoir plus</a> </label> </div> </div> <input type="hidden" name="_subject" value="Nouvelle demande de partenariat Nummy"> <div class="flex justify-center mt-8"> <button type="submit" class="px-10 py-3 bg-white text-black font-bold rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#FF7D00] uppercase">
+Envoyer
+</button> </div> </form> </div> </div> ${renderScript($$result2, "/Users/arthurwicky/Documents/projet-co-s2-2025-02_nummy/src/pages/partenaire.astro?astro&type=script&index=0&lang.ts")} ` })}`;
+}, "/Users/arthurwicky/Documents/projet-co-s2-2025-02_nummy/src/pages/partenaire.astro", void 0);
+
+const $$file = "/Users/arthurwicky/Documents/projet-co-s2-2025-02_nummy/src/pages/partenaire.astro";
+const $$url = "/partenaire";
+
+const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+	__proto__: null,
+	default: $$Partenaire,
+	file: $$file,
+	url: $$url
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const page = () => _page;
+
+export { page };

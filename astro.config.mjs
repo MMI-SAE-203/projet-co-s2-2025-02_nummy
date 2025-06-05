@@ -10,7 +10,7 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()]
   },
-  experimental: { svg: true },
+  experimental: { svg: true, session: true },
   output: 'server',
   adapter: netlify({
     edgeMiddleware: true
