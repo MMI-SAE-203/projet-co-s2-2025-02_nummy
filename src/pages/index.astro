@@ -304,8 +304,8 @@ import CardLP from "../components/CardLP.astro";
         /from-\[.*?\] from-40% to-\[.*?\] to-100%/,
         backgrounds[currentIndex],
       );
-
-      const newImg = new Image();
+      let newImg.src = images[currentIndex];
+      newImg = new Image();
       newImg.onload = () => {
         heroImage.src = newImg.src;
 
@@ -315,7 +315,7 @@ import CardLP from "../components/CardLP.astro";
         container.style.opacity = "1";
       };
 
-      newImg.src = images[currentIndex];
+      
 
       updateIndicators();
     }, 500);
