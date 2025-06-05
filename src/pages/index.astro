@@ -11,6 +11,7 @@ import ImageSoutien from "../assets/img/cardimg/soutenir.webp";
 import ImageMains from "../assets/img/cardimg/mains.webp";
 import ImageRecette from "../assets/img/cardimg/pokebowl.webp";
 import ImageLettre from "../assets/img/cardimg/lettre.webp";
+import ImageVegetales from "/src/assets/img/foodBK.webp";
 
 import { Picture } from "astro:assets";
 
@@ -119,34 +120,42 @@ import CardLP from "../components/CardLP.astro";
             <!-- icones -->
             <div class="grid grid-cols-2 lg:grid-cols-11 pt-13 gap-4">
               <!-- Icono 1: Partager vos opinions -->
-              <div class="col-span-1 lg:col-span-3 flex flex-col justify-center items-start">
+              <div
+                class="col-span-1 lg:col-span-3 flex flex-col justify-center items-start"
+              >
                 <IconBulle />
                 <p class="uppercase text-left text-white pt-3">
                   Partager vos opinions
                 </p>
               </div>
-            
+
               <!-- Icono 2: Trouver vos boutiques favoris -->
-              <div class="col-span-1 lg:col-span-3 flex flex-col justify-center items-start">
+              <div
+                class="col-span-1 lg:col-span-3 flex flex-col justify-center items-start"
+              >
                 <IconMap />
                 <p class="uppercase text-left text-white pt-3">
                   Trouver vos boutiques favoris
                 </p>
               </div>
-            
+
               <!-- Espacio vacío SOLO para desktop -->
               <div class="hidden lg:block lg:col-span-5"></div>
-            
+
               <!-- Icono 3: Delicieuses recettes -->
-              <div class="col-span-1 lg:col-span-3 flex flex-col justify-center items-start">
+              <div
+                class="col-span-1 lg:col-span-3 flex flex-col justify-center items-start"
+              >
                 <Iconfood1 />
                 <p class="uppercase text-left text-white pt-3">
                   Delicieuses recettes !
                 </p>
               </div>
-            
+
               <!-- Icono 4: Devenir partenaire -->
-              <div class="col-span-1 lg:col-span-3 flex flex-col justify-center items-start">
+              <div
+                class="col-span-1 lg:col-span-3 flex flex-col justify-center items-start"
+              >
                 <IconUser />
                 <p class="uppercase text-left text-white pt-3">
                   Devenir<br />partenaire
@@ -162,7 +171,7 @@ import CardLP from "../components/CardLP.astro";
           </div>
         </div>
         <img
-          src="/src/assets/img/foodBK.webp"
+          src={ImageVegetales.src}
           alt="Vegetales de fondo"
           class="md:block absolute bottom-0 right-0 lg:w-1/2 lg:h-auto object-cover"
           loading="lazy"
@@ -177,7 +186,7 @@ import CardLP from "../components/CardLP.astro";
       <h2 class="h2-header uppercase">et encore plus !</h2>
       <span class="flex h-[8px] w-50 bg-[var(--color-orange)] my-5"></span>
     </div>
-  
+
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
       <article>
         <CardLP bgColor="var(--color-orange)" href="/newsletter">
@@ -189,7 +198,7 @@ import CardLP from "../components/CardLP.astro";
           />
           <span slot="title">NEWSLETTER</span>
           <span slot="description">
-            Abonnez-vous à notre newsletter pour découvrir nos nouveautés, 
+            Abonnez-vous à notre newsletter pour découvrir nos nouveautés,
             offres exclusives et inspirations directement dans votre boîte mail.
           </span>
           <div slot="button">
@@ -197,7 +206,7 @@ import CardLP from "../components/CardLP.astro";
           </div>
         </CardLP>
       </article>
-  
+
       <article>
         <CardLP bgColor="var(--color-orange)" href="/partenaire">
           <Picture
@@ -208,14 +217,15 @@ import CardLP from "../components/CardLP.astro";
           />
           <span slot="title">Devenir partenaire</span>
           <span slot="description">
-            Découvrez comment collaborer avec nous pour donner plus d'ampleur à nos projets !
+            Découvrez comment collaborer avec nous pour donner plus d'ampleur à
+            nos projets !
           </span>
           <div slot="button">
             <Button variant="lin" href="/partenaire">CLIQUEZ ICI</Button>
           </div>
         </CardLP>
       </article>
-  
+
       <article>
         <CardLP bgColor="var(--color-orange)" href="/soutenir">
           <Picture
@@ -226,15 +236,15 @@ import CardLP from "../components/CardLP.astro";
           />
           <span slot="title">Nous soutenir !</span>
           <span slot="description">
-            Soutenez notre projet et participez à son développement ! 
-            Chaque contribution compte pour nous aider à grandir !
+            Soutenez notre projet et participez à son développement ! Chaque
+            contribution compte pour nous aider à grandir !
           </span>
           <div slot="button">
             <Button variant="lin" href="/soutenir">CLIQUEZ ICI</Button>
           </div>
         </CardLP>
       </article>
-  
+
       <article>
         <CardLP bgColor="var(--color-green)" href="/recettes">
           <Picture
@@ -245,8 +255,8 @@ import CardLP from "../components/CardLP.astro";
           />
           <span slot="title">Recettes Ñummy!</span>
           <span slot="description">
-            Découvrez nos délicieuses recettes du monde entier ! 
-            Des plats authentiques pour voyager depuis votre cuisine.
+            Découvrez nos délicieuses recettes du monde entier ! Des plats
+            authentiques pour voyager depuis votre cuisine.
           </span>
           <div slot="button">
             <Button variant="lin" href="/recettes">CLIQUEZ ICI</Button>
@@ -292,7 +302,7 @@ import CardLP from "../components/CardLP.astro";
 
       section.className = section.className.replace(
         /from-\[.*?\] from-40% to-\[.*?\] to-100%/,
-        backgrounds[currentIndex]
+        backgrounds[currentIndex],
       );
 
       const newImg = new Image();
