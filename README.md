@@ -4,8 +4,8 @@
 Éléménts à renseigner pour la soutenance :
 
 - [ ] Nom du projet : Ñummy
-- [ ] URL de la landing page : 
-- [ ] URL de l'application finale : 
+- [ ] URL de la landing page : https://nummy.netlify.app/
+- [ ] URL de l'application finale : https://nummy.netlify.app/continents
 - [ ] URL de connexion au back office : https://nummy.arthurwicky.fr/_/
 - [ ] Identifiant de connexion au backoffice : wickyarthur@gmail.com
 - [ ] Mot de passe de connexion au backoffice : Bombastica!
