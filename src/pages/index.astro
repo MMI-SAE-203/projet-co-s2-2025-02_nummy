@@ -2,6 +2,11 @@
 import Layout from "../layouts/Layout.astro";
 import Button from "../components/Button.astro";
 import imagefille from "../assets/img/image.webp";
+import imageAfr from "../assets/img/imageA.webp";
+import imageAs from "../assets/img/imagech.webp";
+import imageAm from "../assets/img/imageAM.webp";
+import imageUE from "../assets/img/imageUE.webp";
+import imageT from "../assets/img/imageT.webp";
 import IconPlanet from "../assets/icones/planet.svg";
 import IconBulle from "../assets/icones/bulle.svg";
 import IconMap from "../assets/icones/map.svg";
@@ -268,7 +273,16 @@ import CardLP from "../components/CardLP.astro";
 </Layout>
 
 <!-- script -->
-<script>
+<script
+  define:vars={{
+    imagefille,
+    imageAfr,
+    imageAs,
+    imageAm,
+    imageUE,
+    imageT,
+  }}
+>
   const backgrounds = [
     "from-[var(--color-orange)] from-40% to-[#F5B97D] to-100%",
     "from-[var(--color-rouge)] from-40% to-[var(--color-orange)] to-100%",
@@ -279,12 +293,12 @@ import CardLP from "../components/CardLP.astro";
   ];
 
   const images = [
-    "/src/assets/img/image.webp",
-    "/src/assets/img/imagech.webp",
-    "/src/assets/img/imageA.webp",
-    "/src/assets/img/imageAM.webp",
-    "/src/assets/img/imageT.webp",
-    "/src/assets/img/imageUE.webp",
+    imagefille.src,
+    imageAfr.src,
+    imageAs.src,
+    imageAm.src,
+    imageUE.src,
+    imageT.src,
   ];
 
   const section = document.getElementById("hero-section");
@@ -304,8 +318,8 @@ import CardLP from "../components/CardLP.astro";
         /from-\[.*?\] from-40% to-\[.*?\] to-100%/,
         backgrounds[currentIndex],
       );
-      let newImg.src = images[currentIndex];
-      newImg = new Image();
+
+      const newImg = new Image();
       newImg.onload = () => {
         heroImage.src = newImg.src;
 
@@ -315,7 +329,7 @@ import CardLP from "../components/CardLP.astro";
         container.style.opacity = "1";
       };
 
-      
+      newImg.src = images[currentIndex];
 
       updateIndicators();
     }, 500);
